@@ -45,3 +45,24 @@ http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=97934&url=http%3A%2F%2Fiee
 http://tocs.ulb.tu-darmstadt.de/71836187.pdf
 -HEAVILY cited book with the foundations(?) of neural networks
 
+9/16/14 =======================================================================
+
+(2011)
+http://dl.acm.org/citation.cfm?id=2207097
+-Minecraft paper, nothing to do with AI or research of any kind
+
+(2012)
+http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=6329841&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D6329841
+-Paper on using modding minecraft as a platform for actually implementing game AI for an upper level course at Rorchester I.T. (I think)
+
+(2011)
+http://www.ebooks.iospress.nl/publication/6611
+-Applying "OpenCog integrative AGI system" to control an agent in a "Minecraft-like" game (seemingly constructed by them?)
+
+(2008)
+http://www.aaai.org/Papers/AIIDE/2008/AIIDE08-036.pdf
+-Alternative to ANN: Monte Carlo Tree Search (random search with backpropogation)
+
+(2005)
+http://books.google.com/books?hl=en&lr=&id=gDLpyWtFacYC&oi=fnd&pg=PR13&dq=game+ai&ots=v0rheXUq0f&sig=Ffn72GERCLrOK7F-ZcUnWeOtfQk#v=onepage&q&f=false
+-Possibly a bit outdated, but seems very interesting when it comes to describing general principles of Game AI
