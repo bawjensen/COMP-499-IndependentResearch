@@ -66,3 +66,7 @@ http://www.aaai.org/Papers/AIIDE/2008/AIIDE08-036.pdf
 (2005)
 http://books.google.com/books?hl=en&lr=&id=gDLpyWtFacYC&oi=fnd&pg=PR13&dq=game+ai&ots=v0rheXUq0f&sig=Ffn72GERCLrOK7F-ZcUnWeOtfQk#v=onepage&q&f=false
 -Possibly a bit outdated, but seems very interesting when it comes to describing general principles of Game AI
+
+(2004)
+https://mzrtaiengine.googlecode.com/svn/trunk/Papers%20and%20Researches/General%20Games/Improving%20Adaptive%20Game%20AI%20With%20Evolutionary%20Lerning%20-%202004.pdf
+-PDF download, evolutionary learning, seems interesting
