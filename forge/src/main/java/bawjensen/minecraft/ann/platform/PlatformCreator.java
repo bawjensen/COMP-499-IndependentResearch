@@ -1,5 +1,6 @@
 package bawjensen.minecraft.ann.platform;
 
+import bawjensen.minecraft.ann.LifeTracker;
 import bawjensen.minecraft.ann.sacrifice.SacrificialVillager;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -102,6 +103,8 @@ public class PlatformCreator {
         SacrificialVillager villager = new SacrificialVillager(world);
         villager.setPositionAndUpdate(0, y+1, 0);
         world.spawnEntityInWorld(villager);
+
+        LifeTracker.getInstance().startTimer(System.currentTimeMillis());
 
 //        villager.onDeath();
 
