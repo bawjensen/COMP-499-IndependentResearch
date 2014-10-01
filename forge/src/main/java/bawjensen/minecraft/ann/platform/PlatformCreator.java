@@ -1,4 +1,4 @@
-package bawjensen.minecraft.hw.ann.platform;
+package bawjensen.minecraft.ann.platform;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;

@@ -1,6 +1,6 @@
 package bawjensen.minecraft.hw;
 
-import bawjensen.minecraft.hw.ann.platform.PlatformCreator;
+import bawjensen.minecraft.ann.platform.PlatformCreator;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.block.Block;
