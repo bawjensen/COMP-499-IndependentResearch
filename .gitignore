@@ -10,3 +10,5 @@ forge/eclipse/saves/
 forge/eclipse/logs/
 forge/eclipse/crash-reports
 
+# IDEA stuff
+forge/forge.iws
