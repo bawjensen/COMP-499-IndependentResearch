@@ -1,9 +1,9 @@
 package bawjensen.minecraft.ann.platform;
 
+import bawjensen.minecraft.ann.sacrifice.SacrificialVillager;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -99,11 +99,11 @@ public class PlatformCreator {
             world.spawnEntityInWorld(zombie2);
         }
 
-        EntityVillager villager = new EntityVillager(world);
+        SacrificialVillager villager = new SacrificialVillager(world);
         villager.setPositionAndUpdate(0, y+1, 0);
         world.spawnEntityInWorld(villager);
 
-//            villager.onDeath();
+//        villager.onDeath();
 
 
 //            player.setPositionAndUpdate(0, y+1, 0);
