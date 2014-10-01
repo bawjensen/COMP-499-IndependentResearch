@@ -1,1 +1,12 @@
+# Mac OSX Annoyance
 .DS_Store
+
+# Compiled files
+bin/
+
+# Eclipse stuff
+forge/eclipse/.metadata/
+forge/eclipse/saves/
+forge/eclipse/logs/
+forge/eclipse/crash-reports
+
