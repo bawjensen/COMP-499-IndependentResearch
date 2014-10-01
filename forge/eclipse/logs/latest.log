@@ -1,12 +1,12 @@
-[19:54:30] [main/INFO]: Setting user: Player216
-[19:54:31] [Client thread/INFO]: LWJGL Version: 2.9.1
-[19:54:37] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:HelloWorld
-[19:54:38] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[19:54:38] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[19:54:39] [Sound Library Loader/INFO]: Sound engine started
-[19:54:39] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:HelloWorld
-[19:54:39] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[19:54:39] [Client thread/ERROR]: Using missing texture, unable to load minecraft:textures/blocks/MISSING_ICON_BLOCK_165_My Beautiful Block.png
+[20:10:41] [main/INFO]: Setting user: Player742
+[20:10:41] [Client thread/INFO]: LWJGL Version: 2.9.1
+[20:10:48] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:HelloWorld
+[20:10:49] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[20:10:49] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[20:10:49] [Sound Library Loader/INFO]: Sound engine started
+[20:10:49] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:HelloWorld
+[20:10:49] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[20:10:49] [Client thread/ERROR]: Using missing texture, unable to load minecraft:textures/blocks/MISSING_ICON_BLOCK_165_My Beautiful Block.png
 java.io.FileNotFoundException: minecraft:textures/blocks/MISSING_ICON_BLOCK_165_My Beautiful Block.png
 	at net.minecraft.client.resources.FallbackResourceManager.getResource(FallbackResourceManager.java:65) ~[FallbackResourceManager.class:?]
 	at net.minecraft.client.resources.SimpleReloadableResourceManager.getResource(SimpleReloadableResourceManager.java:67) ~[SimpleReloadableResourceManager.class:?]
@@ -39,11 +39,23 @@ java.io.FileNotFoundException: minecraft:textures/blocks/MISSING_ICON_BLOCK_165_
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.7.0_45]
 	at java.lang.reflect.Method.invoke(Method.java:606) ~[?:1.7.0_45]
 	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:134) [idea_rt.jar:?]
-[19:54:39] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[19:54:40] [Sound Library Loader/INFO]: Sound engine started
-[19:54:45] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
-[19:54:45] [Server thread/INFO]: Generating keypair
-[19:54:45] [Server thread/INFO]: Preparing start region for level 0
-[19:54:46] [Server thread/INFO]: Changing view distance to 12, from 10
-[19:54:46] [Server thread/INFO]: Player216[local:E:0eb4ff48] logged in with entity id 30 at (0.04846739237756842, 201.0, 6.113054329103997)
-[19:54:46] [Server thread/INFO]: Player216 joined the game
+[20:10:49] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[20:10:50] [Sound Library Loader/INFO]: Sound engine started
+[20:11:01] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
+[20:11:01] [Server thread/INFO]: Generating keypair
+[20:11:02] [Server thread/INFO]: Preparing start region for level 0
+[20:11:03] [Server thread/INFO]: Changing view distance to 12, from 10
+[20:11:03] [Server thread/INFO]: Player742[local:E:71d3ee49] logged in with entity id 51 at (-8.301280254296685, 204.80529868097796, -8.80641863524679)
+[20:11:03] [Server thread/INFO]: Player742 joined the game
+[20:11:06] [Client thread/INFO]: Warning: Clientside chunk ticking took 124 ms
+[20:11:10] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 3218ms behind, skipping 64 tick(s)
+[20:11:13] [Server thread/INFO]: Saving and pausing game...
+[20:11:13] [Server thread/INFO]: Saving chunks for level 'BuggaBugga'/Overworld
+[20:11:13] [Server thread/INFO]: Saving chunks for level 'BuggaBugga'/Nether
+[20:11:13] [Server thread/INFO]: Saving chunks for level 'BuggaBugga'/The End
+[20:11:14] [Server thread/INFO]: Stopping server
+[20:11:14] [Server thread/INFO]: Saving players
+[20:11:14] [Server thread/INFO]: Saving worlds
+[20:11:14] [Server thread/INFO]: Saving chunks for level 'BuggaBugga'/Overworld
+[20:11:14] [Server thread/INFO]: Saving chunks for level 'BuggaBugga'/Nether
+[20:11:14] [Server thread/INFO]: Saving chunks for level 'BuggaBugga'/The End
