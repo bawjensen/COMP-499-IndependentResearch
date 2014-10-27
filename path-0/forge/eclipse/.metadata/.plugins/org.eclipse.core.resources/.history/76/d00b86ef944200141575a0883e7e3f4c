@@ -1,0 +1,25 @@
+package bawjensen.minecraft.hw;
+
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+
+public class TestBlock extends Block {
+	public TestBlock (Material material) {
+		super(material);
+		
+		setHarvestLevel("shovel", 2);
+		setBlockName("My Beautiful Block");
+		setHardness(3.0f);
+		setStepSound(soundTypeAnvil);
+		setCreativeTab(CreativeTabs.tabBlock);
+	}
+	
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+			
+	}
+
+}

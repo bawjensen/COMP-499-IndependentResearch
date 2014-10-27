@@ -1,0 +1,20 @@
+package bawjensen.minecraft.hw;
+
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+
+public class TestBlock extends Block {
+	public TestBlock (Material material) {
+		super(material);
+		
+		setHarvestLevel("shovel", 2);
+	}
+	
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+			
+	}
+
+}
