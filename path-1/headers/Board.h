@@ -21,6 +21,7 @@ public:
 
     bool addPiece(int x, int y);
     void addRandomTile();
+    void shiftDown();
 
     friend std::ostream& operator<<(std::ostream& out, Board& board);
 };

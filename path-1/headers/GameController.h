@@ -1,10 +1,11 @@
-#include "../headers/Board.h"
-#include "../headers/InputHandler.h"
+#include "Board.h"
+#include "InputHandler.h"
 
 class GameController {
 private:
     Board board;
     InputHandler iHandler;
+    const int numStartingTiles = 2;
 
 public:
     GameController();

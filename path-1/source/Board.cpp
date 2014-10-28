@@ -76,6 +76,42 @@ void Board::addRandomTile() {
     }
 }
 
+void Board::shiftDown() {
+    cout << "Shifting down!" << endl;
+    for (int j = 0; j < this->getWidth(); ++j) {
+        int i = this->getWidth() - 1;
+        int bottomSlot = this->getWidth() - 1;
+
+        while (i >= 0) {
+            while (i >= 0 && this->board[i][j] == 0) --i;
+            if (i < 0) break;
+
+            int pieceFoundValue = this->board[i][j];
+
+            if (bottomSlot != i) {
+                if (this->board[bottomSlot][j] == pieceFoundValue) {
+                    this->board[bottomSlot][j] *= 2;
+                    this->board[i][j] = 0;
+                    --bottomSlot;
+                }
+                else if (this->board[bottomSlot][j] == 0) {
+                    this->board[bottomSlot][j] = pieceFoundValue;
+                    this->board[i][j] = 0;
+                }
+                else {
+                    --bottomSlot;
+                    if (bottomSlot != i) {
+                        this->board[bottomSlot][j] = pieceFoundValue;
+                        this->board[i][j] = 0;
+                    }
+                }
+            }
+
+            --i;
+        }
+    }
+}
+
 ostream& operator<<(ostream& out, Board& board) {
     for (int i = 0; i < board.width; i++) {
         for (int j = 0; j < board.width; j++) {

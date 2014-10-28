@@ -22,6 +22,11 @@ void GameController::start() {
 void GameController::runGame() {
     char input;
 
+    for (int i = 0; i < this->numStartingTiles; i++)
+        this->board.addRandomTile();
+    cout << "Starting board:" << endl;
+    cout << endl << this->board << endl;
+
     cout << "Command: ";
     cin >> input;
 
@@ -41,11 +46,6 @@ void GameController::handleCommand(char input) {
 
 void GameController::shiftBoard(InputHandler::Direction dir) {
     if (dir == InputHandler::DOWN) {
-        for (int j = 0; j < this->board.getWidth(); ++j) {
-            
-            for (int i = this->board.getWidth()-2; i >= 0; --i) {
-
-            }
-        }
+        this->board.shiftDown();
     }
 }
