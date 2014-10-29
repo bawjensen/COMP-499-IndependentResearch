@@ -1,17 +1,25 @@
 #include "../headers/InputHandler.h"
 
-InputHandler::InputHandler() {
-}
+int InputHandler::convert(char input) {
+    int converted;
 
-InputHandler::Direction InputHandler::convert(char input) {
-    Direction converted;
+    switch (input) {
+        case 'w':
+            converted = 0;
+            break;
+        case 'a':
+            converted = 1;
+            break;
+        case 's':
+            converted = 2;
+            break;
+        case 'd':
+            converted = 3;
+            break;
+        default:
+            converted = -1;
+            break;
+    }
 
-    if (input == 'w')
-        converted = UP;
-    else if (input == 'a')
-        converted = LEFT;
-    else if (input == 's')
-        converted = DOWN;
-    else if (input == 'd')
-        converted = RIGHT;
+    return converted;
 }

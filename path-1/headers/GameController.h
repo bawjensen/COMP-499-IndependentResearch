@@ -4,16 +4,16 @@
 class GameController {
 private:
     Board board;
-    InputHandler iHandler;
     const int numStartingTiles = 2;
+    int score;
 
 public:
     GameController();
 
-    void handleInput();
+    void reset();
     bool gameEnded();
     void start();
     void runGame();
-    void handleCommand(char input);
-    void shiftBoard(InputHandler::Direction dir);
+    bool handleCommand(char input);
+    bool movesAvailable();
 };

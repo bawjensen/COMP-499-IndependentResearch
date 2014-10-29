@@ -16,12 +16,25 @@ public:
     int getWidth() { return this->width; };
 
     void initialize();
+    void reset();
 
     std::vector<int*> getAvailableCells();
 
     bool addPiece(int x, int y);
+    bool addPieceManual(int x, int y, int value);
     void addRandomTile();
-    void shiftDown();
+
+    std::pair<bool, int> shift(int dir);
+    std::pair<int, int> findShiftDestination(int x, int y, std::pair<int, int> vec);
+
+    std::pair<int, int> getVector(int dir);
+    void getXTraversals(std::pair<int, int> vec, int* traversals);
+    void getYTraversals(std::pair<int, int> vec, int* traversals);
+    bool coordsInBounds(std::pair<int, int> vec);
+    bool slotOccupied(std::pair<int, int> vec);
+
+    bool slotsAvailable();
+    bool matchesPossible();
 
     friend std::ostream& operator<<(std::ostream& out, Board& board);
 };
