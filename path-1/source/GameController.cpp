@@ -25,11 +25,13 @@ void GameController::start() {
     long start = chrono::system_clock::now().time_since_epoch().count();
     srand(start);
 
-    for (int i = 0; i < 10; ++i) {
+    int numRuns = 1000000;
+
+    for (int i = numRuns; i > 0; --i) {
         this->reset();
         this->board.reset();
         this->runGame();
-        cout << "Got score: " << this->score  << "!" << endl;
+        // cout << "Got score: " << this->score  << "!" << endl;
     }
 
     long end = chrono::system_clock::now().time_since_epoch().count();
@@ -50,11 +52,11 @@ void GameController::runGame() {
 
         this->board.wipeMergedStatus();
 
-        cout << "Current board (" << this->score << "):" << endl;
-        cout << endl << this->board << endl;
-        cout << "Command: ";
-        cin >> input;
-        // input = rand() % 4;
+        // cout << "Current board (" << this->score << "):" << endl;
+        // cout << endl << this->board << endl;
+        // cout << "Command: ";
+        // cin >> input;
+        input = rand() % 4;
     }
 
     // if (this->gameEnded()) {
