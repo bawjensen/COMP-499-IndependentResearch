@@ -22,12 +22,12 @@ void Board::initialize() {
 
     if (!this->board) {
         allocating = true;
-        this->board = new int*[this->width];
+        this->board = new Tile*[this->width];
     }
 
     for (int i = 0; i < this->width; i++) {
         if (allocating)
-            this->board[i] = new int[this->width];
+            this->board[i] = new Tile[this->width];
 
         for (int j = 0; j < this->width; j++) {
             this->board[i][j] = NULL;
@@ -44,7 +44,7 @@ vector<int*> Board::getAvailableCells() {
 
     for (int i = 0; i < this->width; i++) {
         for (int j = 0; j < this->width; j++) {
-            if (this->board[i][j] == 0) {
+            if (this->board[i][j].isEmpty()) {
                 int xyPair[2] = { i, j };
                 openCells.push_back(xyPair);
             }
@@ -59,7 +59,7 @@ bool Board::addPiece(int x, int y) {
 }
 
 bool Board::addPieceManual(int x, int y, int value) {
-    bool success = (this->board[x][y] == NULL) ? true : false;
+    bool success = (this->board[x][y].isEmpty()) ? true : false;
 
     if (success)
         this->board[x][y] = value;
@@ -71,7 +71,7 @@ void Board::addRandomTile() {
     int randX = rand() % 4;
     int randY = rand() % 4;
 
-    while (this->board[randX][randY] != 0) {
+    while (!this->board[randX][randY].isEmpty()) {
         randX = rand() % 4;
         randY = rand() % 4;
     }
@@ -136,7 +136,7 @@ bool Board::coordsInBounds(pair<int, int> pos) {
 }
 
 bool Board::slotOccupied(pair<int, int> pos) {
-    return this->board[pos.first][pos.second] != NULL;
+    return !this->board[pos.first][pos.second].isEmpty();
 }
 
 pair<int, int> Board::findShiftDestination(int x, int y, pair<int, int> vec) {
@@ -171,14 +171,18 @@ pair<bool, int> Board::shift(int dir) {
         for (int j = 0; j < this->width; ++j) {
             int y = yTraversals[j];
 
-            if (this->board[x][y] == NULL) continue;
+            if (this->board[x][y].isEmpty()) continue;
 
             pair<int, int> farthestOpen = this->findShiftDestination(x, y, vec);
             pair<int, int> next = make_pair(farthestOpen.first + vec.first, farthestOpen.second + vec.second);
 
 
-            if ( this->coordsInBounds(next) && (this->board[next.first][next.second] == this->board[x][y]) ) {
+            if ( this->coordsInBounds(next) &&
+                 !this->board[next.first][next.second].isMerged() &&
+                 this->board[next.first][next.second] == this->board[x][y] ) {
+
                 this->board[next.first][next.second] *= 2;
+                this->board[next.first][next.second].setMerged(true);
                 score += this->board[next.first][next.second];
                 this->board[x][y] = NULL;
                 someTileMoved = true;
@@ -197,7 +201,7 @@ pair<bool, int> Board::shift(int dir) {
 bool Board::slotsAvailable() {
     for (int x = 0; x < this->width; ++x) {
         for (int y = 0; y < this->width; ++y) {
-            if (this->board[x][y] == NULL)
+            if (this->board[x][y].isEmpty())
                 return true;
         }
     }
@@ -207,7 +211,7 @@ bool Board::slotsAvailable() {
 bool Board::matchesPossible() {
     for (int x = 0; x < this->width; ++x) {
         for (int y = 0; y < this->width; ++y) {
-            if (this->board[x][y] == NULL) continue;
+            if (this->board[x][y].isEmpty()) continue;
 
             for (int dir = 0; dir < 4; ++dir) {
                 pair<int, int> vec = this->getVector(dir);
@@ -220,6 +224,14 @@ bool Board::matchesPossible() {
         }
     }
     return false;
+}
+
+void Board::wipeMergedStatus() {
+    for (int x = 0; x < this->width; ++x) {
+        for (int y = 0; y < this->width; ++y) {
+            this->board[x][y].setMerged(false);
+        }
+    }
 }
 
 ostream& operator<<(ostream& out, Board& board) {

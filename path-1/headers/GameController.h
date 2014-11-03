@@ -15,5 +15,6 @@ public:
     void start();
     void runGame();
     bool handleCommand(char input);
+    bool handleCommand(int direction);
     bool movesAvailable();
 };

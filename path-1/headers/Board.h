@@ -1,10 +1,29 @@
 #include <iostream>
 #include <vector>
 
+class Tile {
+private:
+    bool merged;
+    int value;
+public:
+    Tile() { this->value = NULL; this->merged = false; };
+    Tile(int value) { this->value = value; this->merged = false; };
+
+    bool isEmpty() { return this->value == NULL; };
+    bool isMerged() { return this->merged; };
+    void setMerged(bool merged) { this->merged = merged; };
+
+    bool operator==(Tile& other) { return this->value == other.value; };
+    Tile& operator *=(int magnitude) { this->value *= magnitude; return *this; };
+
+    friend std::ostream& operator<<(std::ostream& co, Tile& tile) { co << tile.value; return co; };
+    friend int& operator+=(int& value, Tile& tile) { value += tile.value; return value; };
+};
+
 class Board {
 private:
     int width;
-    int** board;
+    Tile** board;
     static const int numPossiblePieces = 2;
     int possiblePieces[numPossiblePieces];
 
@@ -35,6 +54,8 @@ public:
 
     bool slotsAvailable();
     bool matchesPossible();
+
+    void wipeMergedStatus();
 
     friend std::ostream& operator<<(std::ostream& out, Board& board);
 };

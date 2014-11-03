@@ -23,3 +23,16 @@ int InputHandler::convert(char input) {
 
     return converted;
 }
+
+// int InputHandler::convert(int input) {
+//     int converted;
+
+//     if (input <= 3 && input >= 0) {
+//         converted = input;
+//     }
+//     else {
+//         converted = -1;
+//     }
+
+//     return converted;
+// }
