@@ -6,6 +6,7 @@ private:
     Board board;
     const int numStartingTiles = 2;
     int score;
+    int numMoves;
 
 public:
     GameController();

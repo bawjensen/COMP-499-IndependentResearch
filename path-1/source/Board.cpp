@@ -54,17 +54,13 @@ vector<int*> Board::getAvailableCells() {
     return openCells;
 }
 
-bool Board::addPiece(int x, int y) {
-    return this->addPieceManual(x, y, (rand() % 10) < 9 ? 2 : 4);
+void Board::addPiece(int x, int y) {
+    this->addPieceManual(x, y, (rand() % 10) < 9 ? 2 : 4);
 }
 
-bool Board::addPieceManual(int x, int y, int value) {
-    bool success = (this->board[x][y].isEmpty()) ? true : false;
-
-    if (success)
+void Board::addPieceManual(int x, int y, int value) {
+    if (this->board[x][y].isEmpty())
         this->board[x][y] = value;
-
-    return success;
 }
 
 void Board::addRandomTile() {
@@ -76,11 +72,7 @@ void Board::addRandomTile() {
         randY = rand() % 4;
     }
 
-    bool success = this->addPiece(randX, randY);
-    if (!success) {
-        cout << "Error with adding piece" << endl;
-        exit(1);
-    }
+    this->addPiece(randX, randY);
 }
 
 pair<int, int> Board::getVector(int dir) {
@@ -172,6 +164,8 @@ pair<bool, int> Board::shift(int dir) {
             int y = yTraversals[j];
 
             if (this->board[x][y].isEmpty()) continue;
+
+            this->board[x][y].setMerged(false);
 
             pair<int, int> farthestOpen = this->findShiftDestination(x, y, vec);
             pair<int, int> next = make_pair(farthestOpen.first + vec.first, farthestOpen.second + vec.second);

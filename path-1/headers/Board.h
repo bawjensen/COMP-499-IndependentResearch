@@ -39,8 +39,8 @@ public:
 
     std::vector<int*> getAvailableCells();
 
-    bool addPiece(int x, int y);
-    bool addPieceManual(int x, int y, int value);
+    void addPiece(int x, int y);
+    void addPieceManual(int x, int y, int value);
     void addRandomTile();
 
     std::pair<bool, int> shift(int dir);
