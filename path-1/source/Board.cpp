@@ -39,13 +39,13 @@ void Board::reset() {
     this->initialize();
 }
 
-vector<int*> Board::getAvailableCells() {
-    vector<int*> openCells;
+vector< pair<int, int> > Board::getAvailableCells() {
+    vector< pair<int, int> > openCells;
 
     for (int i = 0; i < this->width; i++) {
         for (int j = 0; j < this->width; j++) {
             if (this->board[i][j].isEmpty()) {
-                int xyPair[2] = { i, j };
+                pair<int, int> xyPair = make_pair(i, j);
                 openCells.push_back(xyPair);
             }
         }
@@ -64,15 +64,11 @@ void Board::addPieceManual(int x, int y, int value) {
 }
 
 void Board::addRandomTile() {
-    int randX = rand() % 4;
-    int randY = rand() % 4;
+    vector< pair<int, int> > openCells = this->getAvailableCells();
 
-    while (!this->board[randX][randY].isEmpty()) {
-        randX = rand() % 4;
-        randY = rand() % 4;
-    }
+    pair<int, int> randomCell = openCells[rand() % openCells.size()];
 
-    this->addPiece(randX, randY);
+    this->addPiece(randomCell.first, randomCell.second);
 }
 
 pair<int, int> Board::getVector(int dir) {

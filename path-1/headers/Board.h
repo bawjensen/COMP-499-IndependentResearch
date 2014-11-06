@@ -37,7 +37,7 @@ public:
     void initialize();
     void reset();
 
-    std::vector<int*> getAvailableCells();
+    std::vector< std::pair<int, int> > getAvailableCells();
 
     void addPiece(int x, int y);
     void addPieceManual(int x, int y, int value);
