@@ -59,8 +59,6 @@ void GameController::runGame() {
             this->board.addRandomTile();
         }
 
-        // this->board.wipeMergedStatus();
-
         // cout << "Current board (" << this->score << "):" << endl;
         // cout << endl << this->board << endl;
         // cout << "Command: ";
