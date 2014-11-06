@@ -27,16 +27,17 @@ void GameController::start() {
     long start = chrono::system_clock::now().time_since_epoch().count();
     srand(start);
 
-    int numRuns = 100000;
+    int numRuns = 1;
     int numMoves = 0;
 
-    for (int i = numRuns; i != 0; --i) {
+    NeuralNet* nets = new NeuralNet[numRuns];
+
+    for (int i = 0; i < numRuns; ++i) {
         this->reset();
         this->board.reset();
-        this->runGame();
+        // this->runGame();
+        this->runGameWithNet(nets[i]);
         numMoves += this->numMoves;
-        // cout << endl << this->board << endl;
-        // cout << "Got score: " << this->score  << "!" << endl;
     }
 
     long end = chrono::system_clock::now().time_since_epoch().count();
@@ -46,8 +47,6 @@ void GameController::start() {
 }
 
 void GameController::runGame() {
-    // char inputs[4] = { 'w', 'a', 's', 'd' };
-
     for (int i = 0; i < this->numStartingTiles; i++)
         this->board.addRandomTile();
 
@@ -63,10 +62,26 @@ void GameController::runGame() {
     }
 }
 
-bool GameController::handleCommand(char input) {
-    int direction = InputHandler::convert(input);
+void GameController::runGameWithNet(NeuralNet net) {
+    for (int i = 0; i < this->numStartingTiles; i++)
+        this->board.addRandomTile();
 
-    return this->handleCommand(direction);
+    int input = -1;
+    float netOutput;
+
+    while ( !this->gameEnded() ) {
+        if (this->handleCommand(input)) {
+            ++this->numMoves;
+            this->board.addRandomTile();
+        }
+
+        // input = rand() % 4;
+        netOutput = net.run(this->board.flatten());
+        input = ((int)(netOutput * 4)) % 4;
+        cout << "Net returned " << netOutput << endl;
+        cout << "Input was " << input << endl;
+        cout << "Board was:" << endl << this->board << endl;
+    }
 }
 
 bool GameController::handleCommand(int direction) {

@@ -9,6 +9,8 @@ public:
     Tile() { this->value = 0; this->merged = false; };
     Tile(int value) { this->value = value; this->merged = false; };
 
+    int getValue() { return this->value; };
+
     bool isEmpty() { return this->value == 0; };
     bool isMerged() { return this->merged; };
     void setMerged(bool merged) { this->merged = merged; };
@@ -18,6 +20,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& co, Tile& tile) { co << tile.value; return co; };
     friend int& operator+=(int& value, Tile& tile) { value += tile.value; return value; };
+    // friend int& operator=(int& value, Tile& tile) { value = tile.value; return value; };
 };
 
 class Board {
@@ -36,6 +39,8 @@ public:
 
     void initialize();
     void reset();
+
+    float* flatten();
 
     std::vector<int*> getAvailableCells();
 

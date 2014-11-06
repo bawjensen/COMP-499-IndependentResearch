@@ -1,5 +1,5 @@
 #include "Board.h"
-#include "InputHandler.h"
+#include "NeuralNet.h"
 
 class GameController {
 private:
@@ -15,6 +15,7 @@ public:
     bool gameEnded();
     void start();
     void runGame();
+    void runGameWithNet(NeuralNet net);
     bool handleCommand(char input);
     bool handleCommand(int direction);
     bool movesAvailable();

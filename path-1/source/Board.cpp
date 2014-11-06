@@ -39,6 +39,18 @@ void Board::reset() {
     this->initialize();
 }
 
+float* Board::flatten() {
+    float* flattened = new float[this->width * this->width];
+
+    for (int i = 0; i < this->width; ++i) {
+        for (int j = 0; j < this->width; ++j) {
+            flattened[ (i * this->width) + j ] = this->board[i][j].getValue();
+        }
+    }
+
+    return flattened;
+}
+
 vector<int*> Board::getAvailableCells() {
     vector<int*> openCells;
 
