@@ -30,7 +30,7 @@ void Board::initialize() {
             this->board[i] = new Tile[this->width];
 
         for (int j = 0; j < this->width; j++) {
-            this->board[i][j] = NULL;
+            this->board[i][j] = 0;
         }
     }
 }
@@ -178,12 +178,12 @@ pair<bool, int> Board::shift(int dir) {
                 this->board[next.first][next.second] *= 2;
                 this->board[next.first][next.second].setMerged(true);
                 score += this->board[next.first][next.second];
-                this->board[x][y] = NULL;
+                this->board[x][y] = 0;
                 someTileMoved = true;
             }
             else if ( !(x == farthestOpen.first && y == farthestOpen.second) ) {
                 this->board[farthestOpen.first][farthestOpen.second] = this->board[x][y];
-                this->board[x][y] = NULL;
+                this->board[x][y] = 0;
                 someTileMoved = true;
             }
         }
@@ -218,14 +218,6 @@ bool Board::matchesPossible() {
         }
     }
     return false;
-}
-
-void Board::wipeMergedStatus() {
-    for (int x = 0; x < this->width; ++x) {
-        for (int y = 0; y < this->width; ++y) {
-            this->board[x][y].setMerged(false);
-        }
-    }
 }
 
 ostream& operator<<(ostream& out, Board& board) {

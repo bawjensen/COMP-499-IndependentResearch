@@ -10,7 +10,10 @@ else # Linux
 endif
 
 2048:		source/driver.cpp source/GameController.cpp source/InputHandler.cpp source/Board.cpp headers/Board.h source/NeuralNet.cpp headers/NeuralNet.h
-			g++ -std=c++11 source/driver.cpp source/GameController.cpp source/InputHandler.cpp source/Board.cpp source/NeuralNet.cpp -o 2048 -w
+			g++ -std=c++11 source/driver.cpp source/GameController.cpp source/InputHandler.cpp source/Board.cpp source/NeuralNet.cpp -o 2048
+
+2048f:		source/driver.cpp source/GameController.cpp source/InputHandler.cpp source/Board.cpp headers/Board.h source/NeuralNet.cpp headers/NeuralNet.h
+			g++ -std=c++11 -O3 source/driver.cpp source/GameController.cpp source/InputHandler.cpp source/Board.cpp source/NeuralNet.cpp -o 2048
 
 clean:
 			rm *.o

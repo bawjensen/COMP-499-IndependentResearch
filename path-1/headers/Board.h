@@ -6,10 +6,10 @@ private:
     bool merged;
     int value;
 public:
-    Tile() { this->value = NULL; this->merged = false; };
+    Tile() { this->value = 0; this->merged = false; };
     Tile(int value) { this->value = value; this->merged = false; };
 
-    bool isEmpty() { return this->value == NULL; };
+    bool isEmpty() { return this->value == 0; };
     bool isMerged() { return this->merged; };
     void setMerged(bool merged) { this->merged = merged; };
 
@@ -54,8 +54,6 @@ public:
 
     bool slotsAvailable();
     bool matchesPossible();
-
-    void wipeMergedStatus();
 
     friend std::ostream& operator<<(std::ostream& out, Board& board);
 };

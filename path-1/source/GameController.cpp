@@ -27,7 +27,7 @@ void GameController::start() {
     long start = chrono::system_clock::now().time_since_epoch().count();
     srand(start);
 
-    int numRuns = 10000;
+    int numRuns = 100000;
     int numMoves = 0;
 
     for (int i = numRuns; i != 0; --i) {
@@ -42,7 +42,7 @@ void GameController::start() {
     long end = chrono::system_clock::now().time_since_epoch().count();
 
     float numSec = (end - start) / (float)1000000;
-    cout << numMoves << " moves in " << numSec << " sec (" << numMoves / numSec << " moves per second)" << endl;
+    cout << numMoves << " moves in " << numSec << " sec (" << (int)(numMoves / numSec) << " moves per second)" << endl;
 }
 
 void GameController::runGame() {
@@ -59,18 +59,8 @@ void GameController::runGame() {
             this->board.addRandomTile();
         }
 
-        // cout << "Current board (" << this->score << "):" << endl;
-        // cout << endl << this->board << endl;
-        // cout << "Command: ";
-        // cin >> input;
         input = rand() % 4;
     }
-
-    // if (this->gameEnded()) {
-    //     // cout << "Game over! Score: " << this->score << endl;
-    //     cout << "Final board: " << endl;
-    //     cout << endl << this->board << endl;
-    // }
 }
 
 bool GameController::handleCommand(char input) {
