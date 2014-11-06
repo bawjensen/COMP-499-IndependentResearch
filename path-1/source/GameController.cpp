@@ -68,19 +68,26 @@ void GameController::runGameWithNet(NeuralNet net) {
 
     int input = -1;
     float netOutput;
+    bool success;
 
     while ( !this->gameEnded() ) {
-        if (this->handleCommand(input)) {
+        success = this->handleCommand(input);
+
+        if (success) {
             ++this->numMoves;
             this->board.addRandomTile();
         }
 
-        // input = rand() % 4;
-        netOutput = net.run(this->board.flatten());
-        input = ((int)(netOutput * 4)) % 4;
-        cout << "Net returned " << netOutput << endl;
-        cout << "Input was " << input << endl;
-        cout << "Board was:" << endl << this->board << endl;
+        if (success) {
+            netOutput = net.run(this->board.flatten());
+            input = ((int)(netOutput * 4)) % 4;
+            cout << "Net returned " << netOutput << endl;
+            cout << "Input was " << input << endl;
+            cout << "Board was:" << endl << this->board << endl;
+        }
+        else { // If board can't make a correct move, make a random one for it
+            input = rand() % 4;
+        }
     }
 }
 
