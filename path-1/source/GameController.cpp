@@ -85,7 +85,7 @@ void GameController::runGameWithNet(NeuralNet net) {
             cout << "Input was " << input << endl;
             cout << "Board was:" << endl << this->board << endl;
         }
-        else { // If board can't make a correct move, make a random one for it
+        else { // If board can't make an effective move, make a random one for it
             input = rand() % 4;
         }
     }
