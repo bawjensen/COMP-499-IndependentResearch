@@ -7,7 +7,6 @@
 using namespace std;
 
 GameController::GameController() {
-    // this->score = 0;
     this->reset();
 }
 
@@ -24,15 +23,13 @@ bool GameController::gameEnded() {
 }
 
 void GameController::start() {
-    int numGenerations = 3;
-    int numNets = 4;
+    int numGenerations = 1000;
+    int numNets = 100;
     int score;
     int avgScore;
 
     // NeuralNet* nets = new NeuralNet[numNets];
     NetManager mgr(numNets);
-
-    mgr.mutateWinners();
 
     long start = chrono::system_clock::now().time_since_epoch().count();
     srand(start);
@@ -43,11 +40,11 @@ void GameController::start() {
             this->board.reset();
             score = this->runGameWithNet(mgr[j]);
             mgr.keepScore(score, j);
-            cout << "Net (" << &mgr[j] << ") scored: " << score << endl;
+            // cout << "Net (" << &mgr[j] << ") scored: " << score << endl;
             avgScore += score;
         }
         cout << "Nets of generation " << i << " averaged: " << (float)avgScore / numNets << endl;
-        // mgr.mutateWinners();
+        mgr.selectAndMutateSurvivors();
     }
 
     long end = chrono::system_clock::now().time_since_epoch().count();

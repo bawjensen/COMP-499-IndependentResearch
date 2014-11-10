@@ -16,7 +16,7 @@ public:
     void initialize(int& numNets);
 
     void keepScore(int& score, int& index);
-    void mutateWinners();
+    void selectAndMutateSurvivors();
 
     NeuralNet& operator[](int& index);
 };

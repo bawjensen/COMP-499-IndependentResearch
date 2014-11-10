@@ -84,7 +84,7 @@ bool compare(const pair<int, NeuralNet*>& first, const pair<int, NeuralNet*>& se
     return first.first > second.first;
 }
 
-void NetManager::mutateWinners() {
+void NetManager::selectAndMutateSurvivors() {
     int k = this->numNets / 2;
 
     // Partial sorts it, not worrying about order but keeping everything less than the kth element to the first half
