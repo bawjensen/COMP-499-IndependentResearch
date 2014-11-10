@@ -42,9 +42,6 @@ void NeuralNet::initialize() {
 
     // Hidden layer
     this->hiddenLayer = new float[this->hiddenSize];
-    // for (int i = 0; i < this->hiddenSize; ++i) {
-        // this->
-    // }
 }
 
 float NeuralNet::run(float* inputLayer) {

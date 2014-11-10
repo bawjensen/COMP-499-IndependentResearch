@@ -1,3 +1,5 @@
+#pragma once
+
 class NeuralNet {
 private:
     float*** edgeWeights;
@@ -9,7 +11,10 @@ private:
     void initialize();
 public:
     NeuralNet();
+    NeuralNet(NeuralNet& other);
 
     float run(float* inputLayer);
     float activate(float value);
+
+    void mutate();
 };

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Board.h"
 #include "NeuralNet.h"
 
@@ -14,9 +16,9 @@ public:
     void reset();
     bool gameEnded();
     void start();
-    void runGame();
-    void runGameWithNet(NeuralNet net);
-    bool handleCommand(char input);
-    bool handleCommand(int direction);
+    // void runGame();
+    int runGameWithNet(NeuralNet& net);
+    bool handleCommand(char& input);
+    std::pair<bool, int> handleCommand(int& direction);
     bool movesAvailable();
 };
