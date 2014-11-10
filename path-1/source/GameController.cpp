@@ -24,9 +24,10 @@ bool GameController::gameEnded() {
 }
 
 void GameController::start() {
-    int numGenerations = 10;
+    int numGenerations = 3;
     int numNets = 4;
     int score;
+    int avgScore;
 
     // NeuralNet* nets = new NeuralNet[numNets];
     NetManager mgr(numNets);
@@ -37,18 +38,22 @@ void GameController::start() {
     srand(start);
 
     for (int i = 0; i < numGenerations; ++i) {
+        avgScore = 0;
         for (int j = 0; j < numNets; ++j) {
             this->board.reset();
             score = this->runGameWithNet(mgr[j]);
             mgr.keepScore(score, j);
+            cout << "Net (" << &mgr[j] << ") scored: " << score << endl;
+            avgScore += score;
         }
+        cout << "Nets of generation " << i << " averaged: " << (float)avgScore / numNets << endl;
+        // mgr.mutateWinners();
     }
 
     long end = chrono::system_clock::now().time_since_epoch().count();
 
     float numSec = (end - start) / (float)1000000;
     cout << this->numMoves << " moves in " << numSec << " sec (" << (int)(this->numMoves / numSec) << " moves per second)" << endl;
-    // delete[] nets;
 }
 
 // void GameController::runGame() {

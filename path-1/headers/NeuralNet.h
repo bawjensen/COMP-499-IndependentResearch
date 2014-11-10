@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 class NeuralNet {
 private:
     float*** edgeWeights;
@@ -9,12 +11,20 @@ private:
     int numHiddenLayers;
 
     void initialize();
+    void initializeFrom(const NeuralNet& other);
+
+    void destroy();
 public:
     NeuralNet();
-    NeuralNet(NeuralNet& other);
+    NeuralNet(const NeuralNet& other);
+    ~NeuralNet();
 
     float run(float* inputLayer);
     float activate(float value);
 
     void mutate();
+
+    NeuralNet& operator=(const NeuralNet& other);
+
+    friend std::ostream& operator<<(std::ostream& co, const NeuralNet& net);
 };

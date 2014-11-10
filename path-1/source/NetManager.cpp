@@ -2,6 +2,7 @@
 #include "../headers/NeuralNet.h"
 
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -66,36 +67,43 @@ NetManager::NetManager(int& numNets) {
 
 NetManager::~NetManager() {
     delete[] this->nets;
-    delete[] this->scores;
+    delete[] this->scoreNetPairs;
 }
 
 void NetManager::initialize(int& numNets) {
     this->numNets = numNets;
     this->nets = new NeuralNet[numNets];
-    this->scores = new int[numNets];
+    this->scoreNetPairs = new pair<int, NeuralNet*>[numNets];
+
+    for (int i = 0; i < this->numNets; i++) {
+        this->scoreNetPairs[i] = make_pair(0, &this->nets[i]);
+    }
+}
+
+bool compare(const pair<int, NeuralNet*>& first, const pair<int, NeuralNet*>& second) {
+    return first.first > second.first;
 }
 
 void NetManager::mutateWinners() {
     int k = this->numNets / 2;
 
-    int* tempScores = new int[this->numNets];
-    for (int i = 0; i < this->numNets; ++i) {
-        tempScores[i] = this->scores[i];
-    }
+    // Partial sorts it, not worrying about order but keeping everything less than the kth element to the first half
+    // Performs a little like quicksort
+    nth_element(this->scoreNetPairs, this->scoreNetPairs + k, this->scoreNetPairs + this->numNets, compare);
 
-    int kthSmallest = select(tempScores, 0, this->numNets - 1, k);
+    for (int i = 0; i < k; ++i) {
+        // Second element of pairs is the net
+        (*this->scoreNetPairs[i+k].second) = (*this->scoreNetPairs[i].second);
 
-    for (int i = 0; i < this->numNets; ++i) {
-        if (this->scores[i] < kthSmallest) {
-            // TODO: Move the nets over, and mutate the winners
-        }
+        // Mutate one copy of the net
+        this->scoreNetPairs[i].second->mutate();
     }
 }
 
-void NetManager::keepScore(int& score, int& index) {
-    this->scores[index] = score;
+void NetManager::keepScore(int& score, int& i) {
+    this->scoreNetPairs[i] = make_pair(score, &this->nets[i]);
 }
 
-NeuralNet& NetManager::operator[](int& index) {
-    return this->nets[index];
+NeuralNet& NetManager::operator[](int& i) {
+    return this->nets[i];
 }

@@ -8,6 +8,15 @@ NeuralNet::NeuralNet() {
     this->initialize();
 }
 
+NeuralNet::NeuralNet(const NeuralNet& other) {
+    cout << "Called copy constructor" << endl;
+    this->initializeFrom(other);
+}
+
+NeuralNet::~NeuralNet() {
+    this->destroy();
+}
+
 void NeuralNet::initialize() {
     // Sizes
     this->inputSize = 16;
@@ -44,6 +53,28 @@ void NeuralNet::initialize() {
     this->hiddenLayer = new float[this->hiddenSize];
 }
 
+void NeuralNet::initializeFrom(const NeuralNet& other) {
+    // Copy over layers of edge weights, except the last one
+    for (int n = 0; n < this->numHiddenLayers; ++n ) {
+        for (int i = 0; i < this->hiddenSize; ++i) {
+            for (int j = 0; j < this->inputSize; ++j) {
+                this->edgeWeights[n][i][j] = other.edgeWeights[n][i][j];
+            }
+        }
+    }
+}
+
+void NeuralNet::destroy() {
+    // Copy over layers of edge weights, except the last one
+    for (int n = 0; n < this->numHiddenLayers; ++n ) {
+        for (int i = 0; i < this->hiddenSize; ++i) {
+            delete[] this->edgeWeights[n][i];
+        }
+        delete[] this->edgeWeights[n];
+    }
+    delete[] this->edgeWeights;
+}
+
 float NeuralNet::run(float* inputLayer) {
     float sum;
     for (int i = 0; i < this->hiddenSize; ++i) {
@@ -69,4 +100,36 @@ float NeuralNet::run(float* inputLayer) {
 
 float NeuralNet::activate(float value) {
     return value;
+}
+
+void NeuralNet::mutate() {
+    // Set up layers of edge weights, except the last one
+    for (int n = 0; n < this->numHiddenLayers; ++n ) {
+        for (int i = 0; i < this->hiddenSize; ++i) {
+            for (int j = 0; j < this->inputSize; ++j) {
+                this->edgeWeights[n][i][j] += (rand() / (float)RAND_MAX) - 0.5f;
+            }
+        }
+    }
+}
+
+NeuralNet& NeuralNet::operator=(const NeuralNet& other) {
+    this->initializeFrom(other);
+    return *this;
+}
+
+ostream& operator<<(ostream& co, const NeuralNet& net) {
+    co << "Displaying net at: " << &net << endl;
+    co << "Edge weights at: " << &(net.edgeWeights) << endl;
+    for (int n = 0; n < net.numHiddenLayers; ++n ) {
+        for (int i = 0; i < net.hiddenSize; ++i) {
+            for (int j = 0; j < net.inputSize; ++j) {
+                co << net.edgeWeights[n][i][j] << " ";
+            }
+            co << endl;
+        }
+        co << endl;
+    }
+
+    return co;
 }

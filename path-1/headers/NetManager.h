@@ -5,7 +5,7 @@
 class NetManager {
 private:
     NeuralNet* nets;
-    int* scores;
+    std::pair<int, NeuralNet*>* scoreNetPairs;
     int numNets;
 
 public:
