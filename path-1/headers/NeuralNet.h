@@ -23,7 +23,7 @@ private:
     void destroy();
 public:
     NeuralNet();
-    NeuralNet(const NeuralNet& other);
+    // NeuralNet(const NeuralNet& other);
     ~NeuralNet();
 
     float run(float* inputLayer);

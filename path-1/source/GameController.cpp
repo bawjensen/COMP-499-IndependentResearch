@@ -23,8 +23,8 @@ bool GameController::gameEnded() {
 }
 
 void GameController::start() {
-    int numGenerations = 1;
-    int numNets = 4;
+    int numGenerations = 100;
+    int numNets = 100;
     int score;
     int avgScore;
 
@@ -33,6 +33,7 @@ void GameController::start() {
 
     long start = chrono::system_clock::now().time_since_epoch().count();
     srand(start);
+
 
     for (int i = 0; i < numGenerations; ++i) {
         avgScore = 0;
@@ -97,6 +98,7 @@ int GameController::runGameWithNet(NeuralNet& net) {
             // cout << "Board was:" << endl << this->board << endl;
         }
         else { // If board can't make an effective move, make a random one for it
+            // cout << "Resorting to random movement" << endl;
             input = rand() % 4;
         }
     }
