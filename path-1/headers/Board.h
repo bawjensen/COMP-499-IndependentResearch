@@ -35,11 +35,13 @@ private:
 public:
     Board();
     Board(int width);
+    ~Board();
 
     void setWidth(int width) { this->width = width; };
     int getWidth() { return this->width; };
 
     void initialize();
+    void destroy();
     void reset();
 
     float* flatten();

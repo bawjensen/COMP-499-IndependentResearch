@@ -13,18 +13,21 @@ private:
     int inputSize;
     int hiddenSize;
 
+    bool initialized;
+
     float generateRand();
     float mutationValue();
     float biasMutationValue();
 
-    void initialize();
-    void initializeFrom(const NeuralNet& other);
+    void copyFrom(const NeuralNet& other);
 
     void destroy();
 public:
     NeuralNet();
     // NeuralNet(const NeuralNet& other);
     ~NeuralNet();
+
+    void initialize(int inputSize, int hiddenSize);
 
     float run(float* inputLayer);
     float activate(float value);

@@ -76,6 +76,7 @@ void NetManager::initialize(int& numNets) {
     this->scoreNetPairs = new pair<int, NeuralNet*>[numNets];
 
     for (int i = 0; i < this->numNets; i++) {
+        this->nets[i].initialize(16, 16);
         this->scoreNetPairs[i] = make_pair(0, &this->nets[i]);
     }
 }

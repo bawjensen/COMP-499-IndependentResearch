@@ -44,7 +44,7 @@ void GameController::start() {
             // cout << "Net (" << &mgr[j] << ") scored: " << score << endl;
             avgScore += score;
         }
-        cout << "Nets of generation " << i << " averaged: " << (float)avgScore / numNets << endl;
+        // cout << "Nets of generation " << i << " averaged: " << (float)avgScore / numNets << endl;
         mgr.selectAndMutateSurvivors();
     }
 

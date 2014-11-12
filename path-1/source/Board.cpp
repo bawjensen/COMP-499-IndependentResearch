@@ -15,27 +15,33 @@ Board::Board(int width) {
     this->initialize();
 }
 
+Board::~Board() {
+    this->destroy();
+}
+
 void Board::initialize() {
     srand(chrono::system_clock::now().time_since_epoch().count());
     
-    bool allocating = false;
+    this->board = new Tile*[this->width];
 
-    if (!this->board) {
-        allocating = true;
-        this->board = new Tile*[this->width];
-    }
+    for (int i = 0; i < this->width; ++i) {
+        this->board[i] = new Tile[this->width];
 
-    for (int i = 0; i < this->width; i++) {
-        if (allocating)
-            this->board[i] = new Tile[this->width];
-
-        for (int j = 0; j < this->width; j++) {
+        for (int j = 0; j < this->width; ++j) {
             this->board[i][j] = 0;
         }
     }
 }
 
+void Board::destroy() {
+    for (int i = 0; i < this->width; ++i) {
+        delete[] this->board[i];
+    }
+    delete[] this->board;
+}
+
 void Board::reset() {
+    this->destroy();
     this->initialize();
 }
 

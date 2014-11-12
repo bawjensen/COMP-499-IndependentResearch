@@ -5,12 +5,12 @@
 using namespace std;
 
 NeuralNet::NeuralNet() {
-    this->initialize();
+    this->initialized = false;
 }
 
 // NeuralNet::NeuralNet(const NeuralNet& other) {
 //     cout << "Called copy constructor" << endl;
-//     this->initializeFrom(other);
+//     this->copyFrom(other);
 // }
 
 NeuralNet::~NeuralNet() {
@@ -21,10 +21,18 @@ float NeuralNet::generateRand() {
     return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
 }
 
-void NeuralNet::initialize() {
+void NeuralNet::initialize(int inputSize, int hiddenSize) {
+    if (this->initialized) {
+        cout << "Can't reinitialize a net!" << endl;
+        exit(1);
+    }
+    else {
+        this->initialized = true;
+    }
+
     // Sizes
-    this->inputSize = 16;
-    this->hiddenSize = 4;
+    this->inputSize = inputSize;
+    this->hiddenSize = hiddenSize;
 
     // Edges and weights
 
@@ -59,7 +67,7 @@ void NeuralNet::initialize() {
     }
 }
 
-void NeuralNet::initializeFrom(const NeuralNet& other) {
+void NeuralNet::copyFrom(const NeuralNet& other) {
     // Sizes
     if (this->inputSize != other.inputSize || this->hiddenSize != other.hiddenSize) {
         cout << "Trying to copy incorrectly sized nets" << endl;
@@ -110,6 +118,11 @@ void NeuralNet::destroy() {
 }
 
 float NeuralNet::run(float* inputLayer) {
+    if (!initialized) {
+        cout << "Can't run an uninitialized net!" << endl;
+        exit(1);
+    }
+
     // Compute input layer to hidden layer values
     for (int j = 0; j < this->hiddenSize; ++j) {
         this->hiddenLayer[j] = 0.0f;
@@ -130,11 +143,11 @@ float NeuralNet::run(float* inputLayer) {
 
     delete[] inputLayer; // TODO: Figure out a better deletion system to avoid memory leaks
 
-    return output;
+    return this->output;
 }
 
 float NeuralNet::activate(float value) {
-    return value;
+    return value > 0 ? 1 : 0;
 }
 
 float NeuralNet::mutationValue() {
@@ -167,7 +180,7 @@ void NeuralNet::mutate() {
 }
 
 NeuralNet& NeuralNet::operator=(const NeuralNet& other) {
-    this->initializeFrom(other);
+    this->copyFrom(other);
     return *this;
 }
 
@@ -179,20 +192,20 @@ ostream& operator<<(ostream& co, const NeuralNet& net) {
     co << "Input to hidden: " << endl;
     for (int i = 0; i < net.inputSize; ++i) {
         for (int j = 0; j < net.hiddenSize; ++j) {
-            co << net.edgeWeights[0][i][j];
+            co << net.edgeWeights[0][i][j] << " ";
         }
         co << endl;
     }
 
     co << "Hidden to output: ";
     for (int i = 0; i < net.hiddenSize; ++i) {
-        co << net.edgeWeights[1][i][0];
+        co << net.edgeWeights[1][i][0] << " ";
     }
     co << endl;
 
     co << "Hidden biases: ";
     for (int i = 0; i < net.hiddenSize; ++i) {
-        co << net.hiddenBiases[i];
+        co << net.hiddenBiases[i] << " ";
     }
     co << endl;
 
