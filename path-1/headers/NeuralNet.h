@@ -8,6 +8,8 @@ private:
     float* hiddenLayer;
     float* hiddenBiases;
 
+    float output;
+
     int inputSize;
     int hiddenSize;
 

@@ -23,8 +23,8 @@ bool GameController::gameEnded() {
 }
 
 void GameController::start() {
-    int numGenerations = 1000;
-    int numNets = 100;
+    int numGenerations = 1;
+    int numNets = 4;
     int score;
     int avgScore;
 
