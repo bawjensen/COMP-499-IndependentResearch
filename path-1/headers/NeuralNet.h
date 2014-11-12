@@ -6,9 +6,14 @@ class NeuralNet {
 private:
     float*** edgeWeights;
     float* hiddenLayer;
+    float* hiddenBiases;
+
     int inputSize;
     int hiddenSize;
-    int numHiddenLayers;
+
+    float generateRand();
+    float mutationValue();
+    float biasMutationValue();
 
     void initialize();
     void initializeFrom(const NeuralNet& other);

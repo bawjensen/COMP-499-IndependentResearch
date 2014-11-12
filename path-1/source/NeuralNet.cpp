@@ -17,61 +17,110 @@ NeuralNet::~NeuralNet() {
     this->destroy();
 }
 
+float NeuralNet::generateRand() {
+    return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+}
+
 void NeuralNet::initialize() {
     // Sizes
     this->inputSize = 16;
     this->hiddenSize = 4;
-    this->numHiddenLayers = 1;
 
     // Edges and weights
 
-    this->edgeWeights = new float**[this->numHiddenLayers+1];
+    // Set up full array of edge weight arrays
+    int n = 2; // 2 sets of edge weights, input->hidden and hidden->output
 
-    // Set up layers of edge weights, except the last one
-    for (int n = 0; n < this->numHiddenLayers; ++n ) {
-        this->edgeWeights[n] = new float*[this->hiddenSize];
-        
-        for (int i = 0; i < this->hiddenSize; ++i) {
-            this->edgeWeights[n][i] = new float[this->inputSize];
+    this->edgeWeights = new float**[n]; 
 
-            for (int j = 0; j < this->inputSize; ++j) {
-                this->edgeWeights[n][i][j] = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-            }
+    // Set up input layer to hidden layer edge weights
+    this->edgeWeights[0] = new float*[this->inputSize];
+    
+    for (int i = 0; i < this->inputSize; ++i) {
+        this->edgeWeights[0][i] = new float[this->hiddenSize];
+
+        for (int j = 0; j < this->hiddenSize; ++j) {
+            this->edgeWeights[0][i][j] = this->generateRand();
         }
     }
 
-    // Set up final layer of edge weights
-    int n = this->numHiddenLayers;
-    this->edgeWeights[n] = new float*[1];
-    this->edgeWeights[n][0] = new float[this->inputSize];
+    // Set up hidden layer to output layer edge weights
+    this->edgeWeights[n-1] = new float*[1]; // Only one output node
 
-    for (int j = 0; j < this->hiddenSize; ++j) {
-        this->edgeWeights[n][0][j] = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+    this->edgeWeights[n-1][0] = new float[this->hiddenSize];
+
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        this->edgeWeights[n-1][0][i] = this->generateRand();
     }
 
-    // Hidden layer
+    // Hidden layer and biases
     this->hiddenLayer = new float[this->hiddenSize];
+    this->hiddenBiases = new float[this->hiddenSize];
+
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        this->hiddenBiases[i] = this->generateRand();
+    }
 }
 
 void NeuralNet::initializeFrom(const NeuralNet& other) {
-    // Copy over layers of edge weights, except the last one
-    for (int n = 0; n < this->numHiddenLayers; ++n ) {
-        for (int i = 0; i < this->hiddenSize; ++i) {
-            for (int j = 0; j < this->inputSize; ++j) {
-                this->edgeWeights[n][i][j] = other.edgeWeights[n][i][j];
-            }
+    // Sizes
+    this->inputSize = other.inputSize;
+    this->hiddenSize = other.hiddenSize;
+
+    // Edges and weights
+
+    // Set up full array of edge weight arrays
+    int n = 2; // 2 sets of edge weights, input->hidden and hidden->output
+
+    this->edgeWeights = new float**[n]; 
+
+    // Set up input layer to hidden layer edge weights
+    this->edgeWeights[0] = new float*[this->inputSize];
+    
+    for (int i = 0; i < this->inputSize; ++i) {
+        this->edgeWeights[0][i] = new float[this->hiddenSize];
+
+        for (int j = 0; j < this->hiddenSize; ++j) {
+            this->edgeWeights[0][i][j] = other.edgeWeights[0][i][j];
         }
+    }
+
+    // Set up hidden layer to output layer edge weights
+    this->edgeWeights[n-1] = new float*[1]; // Only one output node
+
+    this->edgeWeights[n-1][0] = new float[this->hiddenSize];
+
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        this->edgeWeights[n-1][0][i] = other.edgeWeights[n-1][0][i];
+    }
+
+    // Hidden layer and biases
+    this->hiddenLayer = new float[this->hiddenSize];
+    this->hiddenBiases = new float[this->hiddenSize];
+
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        this->hiddenBiases[i] = other.hiddenBiases[i];
     }
 }
 
 void NeuralNet::destroy() {
-    // Copy over layers of edge weights, except the last one
-    for (int n = 0; n < this->numHiddenLayers; ++n ) {
-        for (int i = 0; i < this->hiddenSize; ++i) {
-            delete[] this->edgeWeights[n][i];
-        }
-        delete[] this->edgeWeights[n];
+    int n = 2; // 2 sets of edge weights, input->hidden and hidden->output
+
+    // Delete input layer to hidden layer edge weights
+    for (int i = 0; i < this->inputSize; ++i) {
+        delete[] this->edgeWeights[0][i];
     }
+    delete[] this->edgeWeights[0];
+
+    // Delete hidden layer to output layer edge weights
+    delete[] this->edgeWeights[n-1][0];
+    delete[] this->edgeWeights[n-1];
+
+    // Delete hidden layer and biases
+    delete[] this->hiddenLayer;
+    delete[] this->hiddenBiases;
+
+    // Delete all
     delete[] this->edgeWeights;
 }
 
@@ -102,14 +151,33 @@ float NeuralNet::activate(float value) {
     return value;
 }
 
+float NeuralNet::mutationValue() {
+    return (rand() / (float)RAND_MAX) - 0.5f;
+}
+
+float NeuralNet::biasMutationValue() {
+    return this->mutationValue();
+}
+
 void NeuralNet::mutate() {
-    // Set up layers of edge weights, except the last one
-    for (int n = 0; n < this->numHiddenLayers; ++n ) {
-        for (int i = 0; i < this->hiddenSize; ++i) {
-            for (int j = 0; j < this->inputSize; ++j) {
-                this->edgeWeights[n][i][j] += (rand() / (float)RAND_MAX) - 0.5f;
-            }
+    // Mutate full array of edge weight arrays
+    int n = 2; // 2 sets of edge weights, input->hidden and hidden->output
+
+    // Mutate input layer to hidden layer edge weights
+    for (int i = 0; i < this->inputSize; ++i) {
+        for (int j = 0; j < this->hiddenSize; ++j) {
+            this->edgeWeights[0][i][j] += this->mutationValue();
         }
+    }
+
+    // Mutate hidden layer to output layer edge weights
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        this->edgeWeights[n-1][0][i] = this->mutationValue();
+    }
+
+    // Mutate hidden layer bias values
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        this->hiddenBiases[i] = this->biasMutationValue();
     }
 }
 
@@ -121,15 +189,29 @@ NeuralNet& NeuralNet::operator=(const NeuralNet& other) {
 ostream& operator<<(ostream& co, const NeuralNet& net) {
     co << "Displaying net at: " << &net << endl;
     co << "Edge weights at: " << &(net.edgeWeights) << endl;
-    for (int n = 0; n < net.numHiddenLayers; ++n ) {
-        for (int i = 0; i < net.hiddenSize; ++i) {
-            for (int j = 0; j < net.inputSize; ++j) {
-                co << net.edgeWeights[n][i][j] << " ";
-            }
-            co << endl;
+
+    int n = 2; // 2 sets of edge weights, input->hidden and hidden->output
+
+    // Edges and weights
+    co << "Input to hidden: " << endl;
+    for (int i = 0; i < net.inputSize; ++i) {
+        for (int j = 0; j < net.hiddenSize; ++j) {
+            co << net.edgeWeights[0][i][j];
         }
         co << endl;
     }
+
+    co << "Hidden to output: ";
+    for (int i = 0; i < net.hiddenSize; ++i) {
+        co << net.edgeWeights[n-1][0][i];
+    }
+    co << endl;
+
+    co << "Hidden biases: ";
+    for (int i = 0; i < net.hiddenSize; ++i) {
+        co << net.hiddenBiases[i];
+    }
+    co << endl;
 
     return co;
 }
