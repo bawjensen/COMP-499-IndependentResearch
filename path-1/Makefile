@@ -9,11 +9,14 @@ else # Linux
 	# CFLAGS=		$(CPATHS)$(CLIBS)
 endif
 
-2048:		source/driver.cpp source/GameController.cpp source/Board.cpp headers/Board.h source/NetManager.cpp headers/NetManager.h source/NeuralNet.cpp headers/NeuralNet.h
-			g++ -std=c++11 source/driver.cpp source/GameController.cpp source/Board.cpp source/NetManager.cpp source/NeuralNet.cpp -o 2048
+sources = source/driver.cpp source/Board.cpp source/GameController.cpp source/GameTreeManager.cpp source/NetManager.cpp source/NeuralNet.cpp
+headers = headers/Board.h headers/GameController.h headers/GameTreeManager.h headers/NetManager.h headers/NeuralNet.h
 
-2048f:		source/driver.cpp source/GameController.cpp source/Board.cpp headers/Board.h source/NetManager.cpp headers/NetManager.h source/NeuralNet.cpp headers/NeuralNet.h
-			g++ -std=c++11 -O3 source/driver.cpp source/GameController.cpp source/Board.cpp source/NetManager.cpp source/NeuralNet.cpp -o 2048f
+2048:		$(headers) $(sources)
+			g++ -std=c++11 $(sources) -o 2048
+
+2048f:		$(headers) $(sources)
+			g++ -std=c++11 -O3 $(sources) -o 2048f
 
 clean:
 			rm *.o
