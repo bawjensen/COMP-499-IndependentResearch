@@ -1,4 +1,3 @@
-// #include "../headers/board.h"
 #include "../headers/GameController.h"
 
 #include <iostream>

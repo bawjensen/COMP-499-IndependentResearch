@@ -13,10 +13,10 @@ sources = source/driver.cpp source/Board.cpp source/GameController.cpp source/Ga
 headers = headers/Board.h headers/GameController.h headers/GameTreeManager.h headers/NetManager.h headers/NeuralNet.h
 
 2048:		$(headers) $(sources)
-			g++ $(CFLAGS) $(sources) -o 2048
+			g++ $(CFLAGS) $(sources) -o bin/2048
 
 2048f:		$(headers) $(sources)
-			g++ $(CFLAGS) -O3 $(sources) -o 2048f
+			g++ $(CFLAGS) -O3 $(sources) -o bin/2048f
 
 clean:
 			rm *.o
