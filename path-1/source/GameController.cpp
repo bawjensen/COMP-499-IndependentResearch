@@ -1,4 +1,5 @@
 #include "../headers/GameController.h"
+#include "../headers/GameTreeManager.h"
 #include "../headers/NetManager.h"
 
 #include <iostream>
