@@ -24,8 +24,8 @@ bool GameController::gameEnded() {
 }
 
 void GameController::start() {
-    int numGenerations = 10;
-    int numNets = 100;
+    int numGenerations = 100;
+    int numNets = 10;
     int score;
     int avgScore;
 
@@ -84,15 +84,15 @@ int GameController::runGameWithNet(NeuralNet& net) {
     while ( !this->gameEnded() ) {
         result = this->handleCommand(input);
         success = result.first;
-        score += result.second;
 
         if (success) {
+            score += result.second;
+
             ++this->numMoves;
             this->board.addRandomTile();
-        }
 
-        if (success) {
             netOutput = net.run(this->board.flatten());
+
             input = (((int)netOutput) * 4) % 4;
             // cout << "Net returned " << netOutput << endl;
             // cout << "Input was " << input << endl;
