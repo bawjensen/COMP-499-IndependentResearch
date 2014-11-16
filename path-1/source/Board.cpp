@@ -9,11 +9,10 @@ Board::Board() {
     this->initialize();
 }
 
-// Call default constructor before doing anything else
-Board::Board(int width) {
-    this->setWidth(width);
-    this->initialize();
-}
+// Board::Board(int width) {
+//     this->setWidth(width);
+//     this->initialize();
+// }
 
 Board::~Board() {
     this->destroy();
@@ -45,7 +44,7 @@ void Board::reset() {
     this->initialize();
 }
 
-float* Board::flatten() {
+float* Board::flatten() const {
     float* flattened = new float[this->width * this->width];
 
     for (int i = 0; i < this->width; ++i) {
@@ -76,9 +75,14 @@ void Board::addPiece(int x, int y) {
     this->addPieceManual(x, y, (rand() % 10) < 9 ? 2 : 4);
 }
 
-void Board::addPieceManual(int x, int y, int value) {
-    if (this->board[x][y].isEmpty())
+bool Board::addPieceManual(int x, int y, int value) {
+    if (this->board[x][y].isEmpty()) {
         this->board[x][y] = value;
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 void Board::addRandomTile() {
@@ -238,7 +242,19 @@ bool Board::matchesPossible() {
     return false;
 }
 
-ostream& operator<<(ostream& out, Board& board) {
+Board& Board::operator=(const Board& other) {
+    srand(chrono::system_clock::now().time_since_epoch().count());
+    
+    for (int i = 0; i < this->width; ++i) {
+        for (int j = 0; j < this->width; ++j) {
+            this->board[i][j] = other.board[i][j];
+        }
+    }
+
+    return *this;
+}
+
+ostream& operator<<(ostream& out, const Board& board) {
     for (int i = 0; i < board.width; i++) {
         for (int j = 0; j < board.width; j++) {
             out << setw(4) << board.board[i][j];

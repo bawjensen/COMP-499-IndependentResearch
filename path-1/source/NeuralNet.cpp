@@ -1,6 +1,7 @@
 #include "../headers/NeuralNet.h"
 
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -117,7 +118,7 @@ void NeuralNet::destroy() {
     delete[] this->edgeWeights;
 }
 
-float NeuralNet::run(float* inputLayer) {
+float NeuralNet::run(float* inputLayer) const {
     if (!initialized) {
         cout << "Can't run an uninitialized net!" << endl;
         exit(1);
@@ -135,19 +136,20 @@ float NeuralNet::run(float* inputLayer) {
     }
 
     // Compute hidden layer to output layer values
-    this->output = 0.0f;
+    float output = 0.0f;
     for (int i = 0; i < this->hiddenSize; ++i) {
-        this->output += this->edgeWeights[1][i][0] * this->hiddenLayer[i];
+        output += this->edgeWeights[1][i][0] * this->hiddenLayer[i];
     }
-    this->output = this->activate(this->output);
+    output = this->activate(output);
 
     delete[] inputLayer; // TODO: Figure out a better deletion system to avoid memory leaks
 
-    return this->output;
+    return output;
 }
 
-float NeuralNet::activate(float value) {
-    return value > 0 ? 1 : 0;
+float NeuralNet::activate(float value) const {
+    // return value > 0 ? 1 : 0;
+    return (float)1 / (1 + exp(-value));
 }
 
 float NeuralNet::mutationValue() {

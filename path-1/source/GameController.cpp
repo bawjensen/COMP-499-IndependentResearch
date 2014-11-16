@@ -24,8 +24,8 @@ bool GameController::gameEnded() {
 }
 
 void GameController::start() {
-    int numGenerations = 100;
-    int numNets = 10;
+    int numGenerations = 1;
+    int numNets = 4;
     int score;
     int avgScore;
 
@@ -59,15 +59,15 @@ void GameController::start() {
 //     for (int i = 0; i < this->numStartingTiles; i++)
 //         this->board.addRandomTile();
 
-//     int input = -1;
+//     int direction = -1;
 
 //     while ( !this->gameEnded() ) {
-//         if (this->handleCommand(input)) {
+//         if (this->handleCommand(direction)) {
 //             ++this->numMoves;
 //             this->board.addRandomTile();
 //         }
 
-//         input = rand() % 4;
+//         direction = rand() % 4;
 //     }
 // }
 
@@ -75,14 +75,14 @@ int GameController::runGameWithNet(NeuralNet& net) {
     for (int i = 0; i < this->numStartingTiles; i++)
         this->board.addRandomTile();
 
-    int input = -1;
+    int direction = -1;
     int score = 0;
     float netOutput;
     bool success;
     pair<bool, int> result;
 
     while ( !this->gameEnded() ) {
-        result = this->handleCommand(input);
+        result = this->handleCommand(direction);
         success = result.first;
 
         if (success) {
@@ -91,16 +91,18 @@ int GameController::runGameWithNet(NeuralNet& net) {
             ++this->numMoves;
             this->board.addRandomTile();
 
-            netOutput = net.run(this->board.flatten());
+            // netOutput = net.run(this->board.flatten());
 
-            input = (((int)netOutput) * 4) % 4;
+            direction = GameTreeManager::determineBestMove(board, net);
+
+            // direction = (((int)netOutput) * 4) % 4;
             // cout << "Net returned " << netOutput << endl;
-            // cout << "Input was " << input << endl;
+            // cout << "Input was " << direction << endl;
             // cout << "Board was:" << endl << this->board << endl;
         }
         else { // If board can't make an effective move, make a random one for it
             // cout << "Resorting to random movement" << endl;
-            input = rand() % 4;
+            direction = rand() % 4;
         }
     }
 

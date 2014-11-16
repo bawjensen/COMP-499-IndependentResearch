@@ -34,22 +34,22 @@ private:
 
 public:
     Board();
-    Board(int width);
+    // Board(int width);
     ~Board();
 
     void setWidth(int width) { this->width = width; };
-    int getWidth() { return this->width; };
+    int getWidth() const { return this->width; };
 
     void initialize();
     void destroy();
     void reset();
 
-    float* flatten();
+    float* flatten() const;
 
     std::vector<int*> getAvailableCells();
 
     void addPiece(int x, int y);
-    void addPieceManual(int x, int y, int value);
+    bool addPieceManual(int x, int y, int value);
     void addRandomTile();
 
     std::pair<bool, int> shift(int dir);
@@ -64,5 +64,7 @@ public:
     bool slotsAvailable();
     bool matchesPossible();
 
-    friend std::ostream& operator<<(std::ostream& out, Board& board);
+    Board& operator=(const Board& other);
+
+    friend std::ostream& operator<<(std::ostream& out, const Board& board);
 };

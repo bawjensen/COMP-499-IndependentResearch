@@ -8,7 +8,7 @@ private:
     float* hiddenLayer;
     float* hiddenBiases;
 
-    float output;
+    // float output;
 
     int inputSize;
     int hiddenSize;
@@ -29,8 +29,8 @@ public:
 
     void initialize(int inputSize, int hiddenSize);
 
-    float run(float* inputLayer);
-    float activate(float value);
+    float run(float* inputLayer) const;
+    float activate(float value) const;
 
     void mutate();
 
