@@ -41,6 +41,7 @@ public:
     int getWidth() const { return this->width; };
 
     void initialize();
+    void seed();
     void destroy();
     void reset();
 

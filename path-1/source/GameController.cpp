@@ -24,7 +24,7 @@ bool GameController::gameEnded() {
 }
 
 void GameController::start() {
-    int numGenerations = 1;
+    int numGenerations = 10;
     int numNets = 4;
     int score;
     int avgScore;
@@ -35,6 +35,8 @@ void GameController::start() {
     long start = chrono::system_clock::now().time_since_epoch().count();
     srand(start);
 
+    this->board.initialize();
+    this->board.seed();
 
     for (int i = 0; i < numGenerations; ++i) {
         avgScore = 0;

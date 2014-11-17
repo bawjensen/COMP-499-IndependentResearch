@@ -5,8 +5,8 @@
 using namespace std;
 
 Board::Board() {
-    this->setWidth(4);
-    this->initialize();
+    // this->setWidth(4);
+    // this->initialize();
 }
 
 // Board::Board(int width) {
@@ -19,13 +19,16 @@ Board::~Board() {
 }
 
 void Board::initialize() {
-    srand(chrono::system_clock::now().time_since_epoch().count());
-    
+    this->width = 4;
     this->board = new Tile*[this->width];
 
     for (int i = 0; i < this->width; ++i) {
         this->board[i] = new Tile[this->width];
+    }
+}
 
+void Board::seed() {
+    for (int i = 0; i < this->width; ++i) {
         for (int j = 0; j < this->width; ++j) {
             this->board[i][j] = 0;
         }
@@ -243,8 +246,6 @@ bool Board::matchesPossible() {
 }
 
 Board& Board::operator=(const Board& other) {
-    srand(chrono::system_clock::now().time_since_epoch().count());
-    
     for (int i = 0; i < this->width; ++i) {
         for (int j = 0; j < this->width; ++j) {
             this->board[i][j] = other.board[i][j];
