@@ -95,15 +95,11 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net)
     for (int i = 0; i < numChildren; ++i) {
         tempVal = minimax(children[i], net, depth - 1, false);
 
-        // cout << "Option: " << endl << children[i] << endl;
-
         if (tempVal > bestVal) {
             bestVal = tempVal;
             bestOption = i;
         }
     }
-
-    // cout << "Best option had value of: " << bestVal << " and was in direction: " << children[bestOption].getLastMove() << endl;
 
     delete[] children;
 
