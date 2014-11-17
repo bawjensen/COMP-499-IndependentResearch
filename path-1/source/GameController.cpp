@@ -24,8 +24,8 @@ bool GameController::gameEnded() {
 }
 
 void GameController::start() {
-    int numGenerations = 10;
-    int numNets = 4;
+    int numGenerations = 100;
+    int numNets = 40;
     int score;
     int avgScore;
 
@@ -104,6 +104,9 @@ int GameController::runGameWithNet(NeuralNet& net) {
         }
         else { // If board can't make an effective move, make a random one for it
             // cout << "Resorting to random movement" << endl;
+            cout << "Board tried a bad direction: " << direction << endl;
+            cout << this->board << endl;
+            // exit(1);
             direction = rand() % 4;
         }
     }
