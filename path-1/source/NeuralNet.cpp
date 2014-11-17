@@ -68,6 +68,27 @@ void NeuralNet::initialize(int inputSize, int hiddenSize) {
     }
 }
 
+void NeuralNet::destroy() {
+    // Delete input layer to hidden layer edge weights
+    for (int i = 0; i < this->inputSize; ++i) {
+        delete[] this->edgeWeights[0][i];
+    }
+    delete[] this->edgeWeights[0];
+
+    // Delete hidden layer to output layer edge weights
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        delete[] this->edgeWeights[1][i]; // Deleting the single allocated node
+    }
+    delete[] this->edgeWeights[1];
+
+    // Delete hidden layer and biases
+    delete[] this->hiddenLayer;
+    delete[] this->hiddenBiases;
+
+    // Delete all
+    delete[] this->edgeWeights;
+}
+
 void NeuralNet::copyFrom(const NeuralNet& other) {
     // Sizes
     if (this->inputSize != other.inputSize || this->hiddenSize != other.hiddenSize) {
@@ -95,27 +116,6 @@ void NeuralNet::copyFrom(const NeuralNet& other) {
     for (int i = 0; i < this->hiddenSize; ++i) {
         this->hiddenBiases[i] = other.hiddenBiases[i];
     }
-}
-
-void NeuralNet::destroy() {
-    // Delete input layer to hidden layer edge weights
-    for (int i = 0; i < this->inputSize; ++i) {
-        delete[] this->edgeWeights[0][i];
-    }
-    delete[] this->edgeWeights[0];
-
-    // Delete hidden layer to output layer edge weights
-    for (int i = 0; i < this->hiddenSize; ++i) {
-        delete[] this->edgeWeights[1][i]; // Deleting the single allocated node
-    }
-    delete[] this->edgeWeights[1];
-
-    // Delete hidden layer and biases
-    delete[] this->hiddenLayer;
-    delete[] this->hiddenBiases;
-
-    // Delete all
-    delete[] this->edgeWeights;
 }
 
 float NeuralNet::run(float* inputLayer) const {

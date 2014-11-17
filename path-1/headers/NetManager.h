@@ -13,7 +13,7 @@ public:
     NetManager(int& numNets);
     ~NetManager();
 
-    void initialize(int& numNets);
+    void initialize(const int& numNets);
 
     void keepScore(int& score, int& index);
     void selectAndMutateSurvivors();

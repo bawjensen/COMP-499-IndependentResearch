@@ -57,6 +57,8 @@ int select(int* arr, int left, int right, int k) {
     return arr[pivotIndex];
 }
 
+// =============================================================================
+
 NetManager::NetManager() {
 
 }
@@ -70,7 +72,7 @@ NetManager::~NetManager() {
     delete[] this->scoreNetPairs;
 }
 
-void NetManager::initialize(int& numNets) {
+void NetManager::initialize(const int& numNets) {
     this->numNets = numNets;
     this->nets = new NeuralNet[numNets];
     this->scoreNetPairs = new pair<int, NeuralNet*>[numNets];

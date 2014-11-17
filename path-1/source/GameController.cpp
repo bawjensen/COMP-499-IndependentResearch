@@ -77,11 +77,13 @@ int GameController::runGameWithNet(NeuralNet& net) {
     for (int i = 0; i < this->numStartingTiles; i++)
         this->board.addRandomTile();
 
-    int direction = -1;
+    int direction;
     int score = 0;
     float netOutput;
     bool success;
     pair<bool, int> result;
+
+    direction = GameTreeManager::determineBestMove(board, net);
 
     while ( !this->gameEnded() ) {
         result = this->handleCommand(direction);
@@ -106,7 +108,7 @@ int GameController::runGameWithNet(NeuralNet& net) {
             // cout << "Resorting to random movement" << endl;
             cout << "Board tried a bad direction: " << direction << endl;
             cout << this->board << endl;
-            // exit(1);
+            exit(1);
             direction = rand() % 4;
         }
     }

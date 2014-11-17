@@ -220,6 +220,10 @@ pair<bool, int> Board::shift(int dir) {
         }
     }
 
+    if (someTileMoved) {
+        lastMove = dir;
+    }
+
     return make_pair(someTileMoved, score);
 }
 
@@ -253,7 +257,7 @@ bool Board::matchesPossible() {
 
 Board& Board::operator=(const Board& other) {
     if (!this->initialized) this->initialize();
-    
+
     for (int i = 0; i < this->width; ++i) {
         for (int j = 0; j < this->width; ++j) {
             this->board[i][j] = other.board[i][j];

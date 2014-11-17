@@ -30,13 +30,18 @@ private:
     int width;
     Tile** board;
     bool initialized;
+    int lastMove;
 
 public:
     Board();
     ~Board();
 
     void setWidth(int width) { this->width = width; };
+    void setLastMove(int lastMove) { this->lastMove = lastMove; };
+
     int getWidth() const { return this->width; };
+    int getLastMove() const { return this->lastMove; };
+
 
     void initialize();
     void seed();
