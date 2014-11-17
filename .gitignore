@@ -5,7 +5,7 @@
 bin/
 
 # Serialized nets
-nets/
+nets/*.net
 
 # Eclipse stuff
 forge/eclipse/.metadata/
