@@ -272,6 +272,10 @@ bool Board::matchesPossible() {
     return false;
 }
 
+bool Board::movesAvailable() {
+    return this->slotsAvailable() || this->matchesPossible();
+}
+
 Board& Board::operator=(const Board& other) {
     if (!this->initialized) this->initialize();
 

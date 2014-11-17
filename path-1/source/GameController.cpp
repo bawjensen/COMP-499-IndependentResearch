@@ -23,12 +23,8 @@ void GameController::reset() {
     this->numMoves = 0;
 }
 
-bool GameController::movesAvailable() {
-    return this->board.slotsAvailable() || this->board.matchesPossible();
-}
-
 bool GameController::gameEnded() {
-    return !this->movesAvailable();
+    return !this->board.movesAvailable();
 }
 
 void GameController::testNetByName(string netFileName) {

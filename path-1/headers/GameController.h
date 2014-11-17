@@ -23,5 +23,5 @@ public:
     
     bool handleCommand(char& input);
     std::pair<bool, int> handleCommand(int& direction);
-    bool movesAvailable();
+    // bool movesAvailable();
 };

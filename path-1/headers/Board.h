@@ -72,6 +72,7 @@ public:
 
     bool slotsAvailable();
     bool matchesPossible();
+    bool movesAvailable();
 
     Board& operator=(const Board& other);
 
