@@ -6,23 +6,17 @@
 
 using namespace std;
 
-void GameTreeManager::findChildren(const Board& parent, Board*& children, int& numChildren, bool playerMove) {
+void GameTreeManager::findChildren(const Board& parent, Board* children, int& numChildren, bool playerMove) {
     if (playerMove) {
-        int numPossibleChildren = 4; // One for each direciton (up, left, down, right)
-
-        children = new Board[numPossibleChildren];
-
         pair<bool, int> result;
 
-        children[0].initialize(); // Initialize first manually
-
         int i = 0;
-        for (int dir = 0; dir < numPossibleChildren; ++dir) {
+        for (int dir = 0; dir < 4; ++dir) { // 4 directions
             children[i] = parent;
             result = children[i].shift(dir);
 
             if (result.first) { // Bool in pair represents success of move
-                children[++i].initialize(); // Shift index and initialize next
+                ++i; // Shift index
             }
         }
 
@@ -30,14 +24,8 @@ void GameTreeManager::findChildren(const Board& parent, Board*& children, int& n
     }
 
     else {
-        int numPossibleChildren = 2 * 16; // One for each possible piece to be added, for each slot in table
-
-        children = new Board[numPossibleChildren];
-
         numChildren = 0;
         int possiblePieces[2] = { 2, 4 };
-
-        children[0].initialize(); // Initialize first manually
 
         for (int i = 0; i < parent.getWidth(); ++i) {
             for (int j = 0; j < parent.getWidth(); ++j) {
@@ -45,52 +33,75 @@ void GameTreeManager::findChildren(const Board& parent, Board*& children, int& n
                     children[numChildren] = parent;
 
                     if (children[numChildren].addPieceManual(i, j, possiblePieces[k])) {
-                        children[++numChildren].initialize(); // Shift index and initialize next
+                        ++numChildren; // Shift index
                     }
                 }
             }
         }
-
-        // numChildren++;
     }
 }
 
 float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizing) {
-    if (depth == 0) {
-        return net.run(board.flatten());
-    }
-
     float bestVal;
-    float tempVal;
-    if (maximizing) {
+    if (depth == 0) {
+        bestVal = net.run(board.flatten());
+    }
+    else if (maximizing) {
+        float tempVal;
         bestVal = -INFINITY;
 
         int numChildren;
-        Board* children;
+        Board* children = new Board[4];
         GameTreeManager::findChildren(board, children, numChildren, maximizing);
 
         for (int i = 0; i < numChildren; ++i) {
             tempVal = minimax(children[i], net, depth - 1, false);
             bestVal = max(bestVal, tempVal);
         }
+
+        delete[] children;
     }
     else {
+        float tempVal;
         bestVal = INFINITY;
 
         int numChildren;
-        Board* children;
+        Board* children = new Board[32];
         GameTreeManager::findChildren(board, children, numChildren, maximizing);
 
         for (int i = 0; i < numChildren; ++i) {
             tempVal = minimax(children[i], net, depth - 1, true);
             bestVal = min(bestVal, tempVal);
         }
+
+        delete[] children;
     }
 
     return bestVal;
 }
 
 int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net) {
-    float bestVal = minimax(board, net, 2, true);
-    return bestVal;
+    int bestDir;
+    int depth = 1;
+
+    // Manually perform first layer of minimax, in order to know which direction to go
+    float tempVal,
+        bestVal = -INFINITY;
+
+    int numChildren;
+    Board* children = new Board[4];
+    GameTreeManager::findChildren(board, children, numChildren, true);
+
+    for (int i = 0; i < numChildren; ++i) {
+        tempVal = minimax(children[i], net, depth - 1, false);
+
+        if (tempVal > bestVal) {
+            bestVal = tempVal;
+            bestDir = i;
+        }
+    }
+
+    delete[] children;
+
+    return bestDir;
 }

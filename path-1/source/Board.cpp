@@ -5,26 +5,27 @@
 using namespace std;
 
 Board::Board() {
-    // this->setWidth(4);
-    // this->initialize();
+    this->initialized = false;
 }
-
-// Board::Board(int width) {
-//     this->setWidth(width);
-//     this->initialize();
-// }
 
 Board::~Board() {
     this->destroy();
 }
 
 void Board::initialize() {
+    if (this->initialized) {
+        cout << "ERROR: Trying to reinitialize" << endl;
+        exit(1);
+    }
+
     this->width = 4;
     this->board = new Tile*[this->width];
 
     for (int i = 0; i < this->width; ++i) {
         this->board[i] = new Tile[this->width];
     }
+
+    this->initialized = true;
 }
 
 void Board::seed() {
@@ -36,15 +37,20 @@ void Board::seed() {
 }
 
 void Board::destroy() {
-    for (int i = 0; i < this->width; ++i) {
-        delete[] this->board[i];
+    if (this->initialized) {
+        for (int i = 0; i < this->width; ++i) {
+            delete[] this->board[i];
+        }
+        delete[] this->board;
+
+        this->initialized = false;
     }
-    delete[] this->board;
 }
 
 void Board::reset() {
     this->destroy();
     this->initialize();
+    this->seed();
 }
 
 float* Board::flatten() const {
@@ -246,6 +252,8 @@ bool Board::matchesPossible() {
 }
 
 Board& Board::operator=(const Board& other) {
+    if (!this->initialized) this->initialize();
+    
     for (int i = 0; i < this->width; ++i) {
         for (int j = 0; j < this->width; ++j) {
             this->board[i][j] = other.board[i][j];

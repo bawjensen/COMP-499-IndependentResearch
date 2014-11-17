@@ -29,12 +29,10 @@ class Board {
 private:
     int width;
     Tile** board;
-    static const int numPossiblePieces = 2;
-    int possiblePieces[numPossiblePieces];
+    bool initialized;
 
 public:
     Board();
-    // Board(int width);
     ~Board();
 
     void setWidth(int width) { this->width = width; };
