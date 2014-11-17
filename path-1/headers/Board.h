@@ -31,6 +31,7 @@ private:
     Tile** board;
     bool initialized;
     int lastMove;
+    int highestValue;
 
     static const int numStartingTiles = 2;
 
@@ -40,9 +41,11 @@ public:
 
     void setWidth(int width) { this->width = width; };
     void setLastMove(int lastMove) { this->lastMove = lastMove; };
+    void setHighestValue(int highestValue) { this->highestValue = highestValue; };
 
     int getWidth() const { return this->width; };
     int getLastMove() const { return this->lastMove; };
+    int getHighestValue() const { return this->highestValue; };
 
 
     void initialize();
@@ -54,6 +57,7 @@ public:
     void manualSet(int x1, int y1, int val1, int x2, int y2, int val2);
 
     float* flatten() const;
+    float* flattenNormalize() const;
 
     std::vector<int*> getAvailableCells();
 

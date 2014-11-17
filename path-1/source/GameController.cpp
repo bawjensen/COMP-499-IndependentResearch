@@ -75,8 +75,9 @@ void GameController::testNetByName(string netFileName) {
 }
 
 void GameController::start() {
-    int numGenerations = 10000;
+    int numGenerations = 1000;
     int numNets = 100;
+    int numGamesPerNet = 10;
 
     NetManager mgr(numNets);
 
@@ -87,19 +88,23 @@ void GameController::start() {
     // this->board.seed();
 
     int score;
-    int avgScore;
+    int totalScore;
+    int netTotalScore;
     // Run generations and mutations training
     for (int i = 0; i < numGenerations; ++i) {
-        avgScore = 0;
+        totalScore = 0;
         for (int j = 0; j < numNets; ++j) {
-            this->board.reset();
-            score = this->runGameWithNet(mgr[j]);
-            mgr.keepScore(score, j);
+            netTotalScore = 0;
+            for (int k = 0; k < numGamesPerNet; ++k) {
+                this->board.reset();
+                netTotalScore += this->runGameWithNet(mgr[j]);
+            }
+            mgr.keepScore((float)netTotalScore / numGamesPerNet, j);
             // cout << "Net (" << &mgr[j] << ") scored: " << score << endl;
             // cout << "Final board: " << endl << this->board << endl;
-            avgScore += score;
+            totalScore += netTotalScore;
         }
-        cout << "Nets of generation " << i << " averaged: " << (float)avgScore / numNets << endl;
+        cout << "Nets of generation " << i << " averaged: " << (float)totalScore / (numNets * numGamesPerNet) << endl;
         mgr.selectAndMutateSurvivors();
     }
 
@@ -136,10 +141,10 @@ int GameController::runGameWithNet(NeuralNet& net) {
     bool success;
     pair<bool, int> result;
 
-    direction = GameTreeManager::determineBestMove(board, net);
-
     while ( !this->gameEnded() ) {
         // cout << "Going direction: " << direction << endl;
+        direction = GameTreeManager::determineBestMove(board, net);
+
         result = this->handleCommand(direction);
         success = result.first;
 
@@ -153,8 +158,6 @@ int GameController::runGameWithNet(NeuralNet& net) {
 
         ++this->numMoves;
         this->board.addRandomTile();
-
-        direction = GameTreeManager::determineBestMove(board, net);
     }
 
     return score;

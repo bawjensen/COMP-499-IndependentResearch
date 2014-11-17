@@ -3,8 +3,18 @@
 #include "../headers/NeuralNet.h"
 
 #include <cmath>
+#include <sstream>
 
 using namespace std;
+
+string printArray(float* array, int size) {
+    ostringstream buffer;
+    for (int i = 0; i < size; ++i) {
+        buffer << array[i] << " ";
+    }
+
+    return buffer.str();
+}
 
 void GameTreeManager::findChildren(const Board& parent, Board* children, int& numChildren, bool playerMove) {
     if (playerMove) {
@@ -44,8 +54,10 @@ void GameTreeManager::findChildren(const Board& parent, Board* children, int& nu
 float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizing) {
     float bestVal;
     if (depth == 0) {
-        bestVal = net.run(board.flatten());
-        // cout << "Board evalled to: " << bestVal << endl;// << board << endl;
+        // bestVal = net.run(board.flatten());
+        bestVal = net.run(board.flattenNormalize());
+        // cout << "Board evalled to: " << bestVal << endl << printArray(board.flatten(), 16) << endl;
+        // cout << "Board evalled to: " << bestVal << endl << printArray(board.flattenNormalize(), 16) << endl;
     }
     else if (maximizing) {
         float tempVal;
@@ -82,7 +94,7 @@ float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizi
 }
 
 int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net) {
-    int bestOption;
+    int bestOption = -1;
     int depth = 1;
 
     // Manually perform first layer of minimax, in order to know which direction to go
@@ -96,14 +108,11 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net)
     for (int i = 0; i < numChildren; ++i) {
         tempVal = minimax(children[i], net, depth - 1, false);
 
-        // cout << "tempVal: " << tempVal << endl << children[i] << endl;
-
         if (tempVal > bestVal) {
             bestVal = tempVal;
             bestOption = i;
         }
     }
-    // cout << "bestVal: " << bestVal << endl;
 
     delete[] children;
 

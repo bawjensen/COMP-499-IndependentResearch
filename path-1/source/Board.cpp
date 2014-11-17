@@ -1,6 +1,7 @@
 #include "../headers/Board.h"
 
 #include <iomanip>
+#include <cmath>
 
 using namespace std;
 
@@ -14,12 +15,13 @@ Board::~Board() {
 
 void Board::initialize() {
     if (this->initialized) {
-        cout << "ERROR: Trying to reinitialize" << endl;
+        cout << "ERROR: Trying to reinitialize a board" << endl;
         exit(1);
     }
 
     this->width = 4;
     this->board = new Tile*[this->width];
+    this->highestValue = 0;
 
     for (int i = 0; i < this->width; ++i) {
         this->board[i] = new Tile[this->width];
@@ -69,13 +71,32 @@ void Board::manualSet(int x1, int y1, int val1, int x2, int y2, int val2) {
     this->board[x2][y2] = val2;
 }
 
-
 float* Board::flatten() const {
     float* flattened = new float[this->width * this->width];
 
     for (int i = 0; i < this->width; ++i) {
         for (int j = 0; j < this->width; ++j) {
             flattened[ (i * this->width) + j ] = this->board[i][j].getValue();
+        }
+    }
+
+    return flattened;
+}
+
+float* Board::flattenNormalize() const {
+    float* flattened = new float[this->width * this->width];
+
+    int tempInt;
+    float tempFloat;
+
+    for (int i = 0; i < this->width; ++i) {
+        for (int j = 0; j < this->width; ++j) {
+            tempInt = this->board[i][j].getValue();
+            if (tempInt == 0)
+                tempFloat = 0.0f;
+            else
+                tempFloat = log2(tempInt) / log2(this->highestValue);
+            flattened[ (i * this->width) + j ] = tempFloat;
         }
     }
 
@@ -104,6 +125,8 @@ void Board::addPiece(int x, int y) {
 bool Board::addPieceManual(int x, int y, int value) {
     if (this->board[x][y].isEmpty()) {
         this->board[x][y] = value;
+        if (value > this->highestValue)
+            this->highestValue = value;
         return true;
     }
     else {
@@ -225,8 +248,12 @@ pair<bool, int> Board::shift(int dir) {
 
                 this->board[next.first][next.second] *= 2;
                 this->board[next.first][next.second].setMerged(true);
-                score += this->board[next.first][next.second];
+                int newVal = this->board[next.first][next.second].getValue();
+                score += newVal;
                 this->board[x][y] = 0;
+                if (newVal > this->highestValue) {
+                    this->highestValue = newVal;
+                }
                 someTileMoved = true;
             }
             else if ( !(x == farthestOpen.first && y == farthestOpen.second) ) {
@@ -278,6 +305,8 @@ bool Board::movesAvailable() {
 
 Board& Board::operator=(const Board& other) {
     if (!this->initialized) this->initialize();
+
+    this->highestValue = other.highestValue;
 
     for (int i = 0; i < this->width; ++i) {
         for (int j = 0; j < this->width; ++j) {

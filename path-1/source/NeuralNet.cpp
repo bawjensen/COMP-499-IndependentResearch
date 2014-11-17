@@ -23,7 +23,7 @@ NeuralNet::~NeuralNet() {
 
 float NeuralNet::generateRand() {
     // return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-    return (*RandomGen::getInstance())(5.0f);
+    return (*RandomGen::getInstance())(0.5f);
 }
 
 void NeuralNet::initialize(int inputSize, int hiddenSize) {
@@ -162,11 +162,11 @@ float NeuralNet::activate(float value) const {
 
 float NeuralNet::mutationValue() {
     // return (rand() / (float)RAND_MAX) - 0.5f;
-    return (*RandomGen::getInstance())(1.0f);
+    return (*RandomGen::getInstance())(0.5f);
 }
 
 float NeuralNet::biasMutationValue() {
-    return (*RandomGen::getInstance())(1.0f);
+    return (*RandomGen::getInstance())(2.0f);
 }
 
 void NeuralNet::mutate() {

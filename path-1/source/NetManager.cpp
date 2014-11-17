@@ -6,12 +6,6 @@
 
 using namespace std;
 
-void printArray(int* arr, int left, int right) {
-    for (int i = left; i <= right; ++i) {
-        cout << arr[i] << ", ";
-    }
-}
-
 int partition(int* arr, int left, int right, int pivotIndex) {
     int pivotVal = arr[pivotIndex];
 
@@ -75,7 +69,7 @@ NetManager::~NetManager() {
 void NetManager::initialize(const int& numNets) {
     this->numNets = numNets;
     this->nets = new NeuralNet[numNets];
-    this->scoreNetPairs = new pair<int, NeuralNet*>[numNets];
+    this->scoreNetPairs = new pair<float, NeuralNet*>[numNets];
 
     for (int i = 0; i < this->numNets; i++) {
         this->nets[i].initialize(16, 16);
@@ -83,7 +77,7 @@ void NetManager::initialize(const int& numNets) {
     }
 }
 
-bool compare(const pair<int, NeuralNet*>& first, const pair<int, NeuralNet*>& second) {
+bool compare(const pair<float, NeuralNet*>& first, const pair<float, NeuralNet*>& second) {
     return first.first > second.first;
 }
 
@@ -103,10 +97,10 @@ void NetManager::selectAndMutateSurvivors() {
     }
 }
 
-void NetManager::keepScore(int& score, int& i) {
+void NetManager::keepScore(const float& score, const int& i) {
     this->scoreNetPairs[i] = make_pair(score, &this->nets[i]);
 }
 
-NeuralNet& NetManager::operator[](int& i) {
+NeuralNet& NetManager::operator[](const int& i) {
     return this->nets[i];
 }

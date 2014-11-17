@@ -1,0 +1,275 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4ED6CC211A1A894500EB06BB /* Board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ED6CC1A1A1A894500EB06BB /* Board.cpp */; };
+		4ED6CC221A1A894500EB06BB /* GameTreeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ED6CC1B1A1A894500EB06BB /* GameTreeManager.cpp */; };
+		4ED6CC231A1A894500EB06BB /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ED6CC1C1A1A894500EB06BB /* GameController.cpp */; };
+		4ED6CC241A1A894500EB06BB /* NetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ED6CC1D1A1A894500EB06BB /* NetManager.cpp */; };
+		4ED6CC251A1A894500EB06BB /* driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ED6CC1E1A1A894500EB06BB /* driver.cpp */; };
+		4ED6CC261A1A894500EB06BB /* NeuralNet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ED6CC1F1A1A894500EB06BB /* NeuralNet.cpp */; };
+		4ED6CC271A1A894500EB06BB /* RandomGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ED6CC201A1A894500EB06BB /* RandomGen.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4ED6CC0E1A1A892700EB06BB /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4ED6CC101A1A892700EB06BB /* 2048-NN */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "2048-NN"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ED6CC1A1A1A894500EB06BB /* Board.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Board.cpp; path = ../../source/Board.cpp; sourceTree = "<group>"; };
+		4ED6CC1B1A1A894500EB06BB /* GameTreeManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameTreeManager.cpp; path = ../../source/GameTreeManager.cpp; sourceTree = "<group>"; };
+		4ED6CC1C1A1A894500EB06BB /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameController.cpp; path = ../../source/GameController.cpp; sourceTree = "<group>"; };
+		4ED6CC1D1A1A894500EB06BB /* NetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetManager.cpp; path = ../../source/NetManager.cpp; sourceTree = "<group>"; };
+		4ED6CC1E1A1A894500EB06BB /* driver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = driver.cpp; path = ../../source/driver.cpp; sourceTree = "<group>"; };
+		4ED6CC1F1A1A894500EB06BB /* NeuralNet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NeuralNet.cpp; path = ../../source/NeuralNet.cpp; sourceTree = "<group>"; };
+		4ED6CC201A1A894500EB06BB /* RandomGen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomGen.cpp; path = ../../source/RandomGen.cpp; sourceTree = "<group>"; };
+		4ED6CC281A1A896300EB06BB /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Board.h; path = ../headers/Board.h; sourceTree = "<group>"; };
+		4ED6CC291A1A896300EB06BB /* NetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetManager.h; path = ../headers/NetManager.h; sourceTree = "<group>"; };
+		4ED6CC2A1A1A896300EB06BB /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameController.h; path = ../headers/GameController.h; sourceTree = "<group>"; };
+		4ED6CC2B1A1A896300EB06BB /* NeuralNet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NeuralNet.h; path = ../headers/NeuralNet.h; sourceTree = "<group>"; };
+		4ED6CC2C1A1A896300EB06BB /* RandomGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandomGen.h; path = ../headers/RandomGen.h; sourceTree = "<group>"; };
+		4ED6CC2D1A1A896300EB06BB /* GameTreeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameTreeManager.h; path = ../headers/GameTreeManager.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4ED6CC0D1A1A892700EB06BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4ED6CC071A1A892700EB06BB = {
+			isa = PBXGroup;
+			children = (
+				4ED6CC281A1A896300EB06BB /* Board.h */,
+				4ED6CC291A1A896300EB06BB /* NetManager.h */,
+				4ED6CC2A1A1A896300EB06BB /* GameController.h */,
+				4ED6CC2B1A1A896300EB06BB /* NeuralNet.h */,
+				4ED6CC2C1A1A896300EB06BB /* RandomGen.h */,
+				4ED6CC2D1A1A896300EB06BB /* GameTreeManager.h */,
+				4ED6CC121A1A892700EB06BB /* 2048-NN */,
+				4ED6CC111A1A892700EB06BB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4ED6CC111A1A892700EB06BB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4ED6CC101A1A892700EB06BB /* 2048-NN */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4ED6CC121A1A892700EB06BB /* 2048-NN */ = {
+			isa = PBXGroup;
+			children = (
+				4ED6CC1A1A1A894500EB06BB /* Board.cpp */,
+				4ED6CC1B1A1A894500EB06BB /* GameTreeManager.cpp */,
+				4ED6CC1C1A1A894500EB06BB /* GameController.cpp */,
+				4ED6CC1D1A1A894500EB06BB /* NetManager.cpp */,
+				4ED6CC1E1A1A894500EB06BB /* driver.cpp */,
+				4ED6CC1F1A1A894500EB06BB /* NeuralNet.cpp */,
+				4ED6CC201A1A894500EB06BB /* RandomGen.cpp */,
+			);
+			path = "2048-NN";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4ED6CC0F1A1A892700EB06BB /* 2048-NN */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4ED6CC171A1A892700EB06BB /* Build configuration list for PBXNativeTarget "2048-NN" */;
+			buildPhases = (
+				4ED6CC0C1A1A892700EB06BB /* Sources */,
+				4ED6CC0D1A1A892700EB06BB /* Frameworks */,
+				4ED6CC0E1A1A892700EB06BB /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "2048-NN";
+			productName = "2048-NN";
+			productReference = 4ED6CC101A1A892700EB06BB /* 2048-NN */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4ED6CC081A1A892700EB06BB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Bryan Jensen";
+				TargetAttributes = {
+					4ED6CC0F1A1A892700EB06BB = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = 4ED6CC0B1A1A892700EB06BB /* Build configuration list for PBXProject "2048-NN" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4ED6CC071A1A892700EB06BB;
+			productRefGroup = 4ED6CC111A1A892700EB06BB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4ED6CC0F1A1A892700EB06BB /* 2048-NN */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4ED6CC0C1A1A892700EB06BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4ED6CC241A1A894500EB06BB /* NetManager.cpp in Sources */,
+				4ED6CC271A1A894500EB06BB /* RandomGen.cpp in Sources */,
+				4ED6CC221A1A894500EB06BB /* GameTreeManager.cpp in Sources */,
+				4ED6CC261A1A894500EB06BB /* NeuralNet.cpp in Sources */,
+				4ED6CC231A1A894500EB06BB /* GameController.cpp in Sources */,
+				4ED6CC211A1A894500EB06BB /* Board.cpp in Sources */,
+				4ED6CC251A1A894500EB06BB /* driver.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4ED6CC151A1A892700EB06BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4ED6CC161A1A892700EB06BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4ED6CC181A1A892700EB06BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4ED6CC191A1A892700EB06BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4ED6CC0B1A1A892700EB06BB /* Build configuration list for PBXProject "2048-NN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4ED6CC151A1A892700EB06BB /* Debug */,
+				4ED6CC161A1A892700EB06BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4ED6CC171A1A892700EB06BB /* Build configuration list for PBXNativeTarget "2048-NN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4ED6CC181A1A892700EB06BB /* Debug */,
+				4ED6CC191A1A892700EB06BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4ED6CC081A1A892700EB06BB /* Project object */;
+}

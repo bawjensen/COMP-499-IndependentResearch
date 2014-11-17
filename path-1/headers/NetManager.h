@@ -5,7 +5,7 @@
 class NetManager {
 private:
     NeuralNet* nets;
-    std::pair<int, NeuralNet*>* scoreNetPairs;
+    std::pair<float, NeuralNet*>* scoreNetPairs;
     int numNets;
 
 public:
@@ -15,8 +15,8 @@ public:
 
     void initialize(const int& numNets);
 
-    void keepScore(int& score, int& index);
+    void keepScore(const float& score, const int& index);
     void selectAndMutateSurvivors();
 
-    NeuralNet& operator[](int& index);
+    NeuralNet& operator[](const int& index);
 };
