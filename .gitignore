@@ -4,6 +4,9 @@
 # Compiled files
 bin/
 
+# Serialized nets
+nets/
+
 # Eclipse stuff
 forge/eclipse/.metadata/
 forge/eclipse/saves/

@@ -100,6 +100,7 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net)
             bestOption = i;
         }
     }
+    // cout << "bestVal: " << bestVal << endl;
 
     delete[] children;
 

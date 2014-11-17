@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <cmath>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -16,7 +18,7 @@ NeuralNet::NeuralNet() {
 // }
 
 NeuralNet::~NeuralNet() {
-    this->destroy();
+    if (this->initialized) this->destroy();
 }
 
 float NeuralNet::generateRand() {
@@ -71,6 +73,10 @@ void NeuralNet::initialize(int inputSize, int hiddenSize) {
 }
 
 void NeuralNet::destroy() {
+    if (!this->initialized) {
+        cout << "Can't destroy an uninitialized net!" << endl;
+        exit(1);
+    }
     // Delete input layer to hidden layer edge weights
     for (int i = 0; i < this->inputSize; ++i) {
         delete[] this->edgeWeights[0][i];
@@ -187,6 +193,89 @@ void NeuralNet::mutate() {
 NeuralNet& NeuralNet::operator=(const NeuralNet& other) {
     this->copyFrom(other);
     return *this;
+}
+
+string NeuralNet::serialize() {
+    ostringstream strBuffer;
+
+    strBuffer << this->inputSize << endl;
+    strBuffer << this->hiddenSize << endl;
+
+    // strBuffer << "0:" << endl;
+    for (int i = 0; i < this->inputSize; ++i) {
+        // strBuffer << i << " ";
+        for (int j = 0; j < this->hiddenSize; ++j) {
+            strBuffer << this->edgeWeights[0][i][j] << " ";
+        }
+        strBuffer << endl;
+    }
+
+    // strBuffer << "0:" << endl;
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        // strBuffer << i << " ";
+        strBuffer << this->edgeWeights[1][i][0];
+        strBuffer << endl;
+    }
+    // strBuffer << "B:" << endl;
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        strBuffer << this->hiddenBiases[i] << " ";
+    }
+    strBuffer << endl;
+
+    return strBuffer.str();
+}
+
+void NeuralNet::deserialize(ifstream& file) {
+    if (this->initialized) this->destroy();
+
+    int tempInt;
+    float tempFloat;
+
+    file >> this->inputSize;
+    file >> this->hiddenSize;
+
+    this->initialize(this->inputSize, this->hiddenSize);
+
+    for (int i = 0; i < this->inputSize; ++i) {
+        for (int j = 0; j < this->hiddenSize; ++j) {
+            file >> this->edgeWeights[0][i][j];
+        }
+    }
+
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        file >> this->edgeWeights[1][i][0];
+    }
+
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        file >> this->hiddenBiases[i];
+    }
+
+    cout << *this << endl;
+    // ostringstream strBuffer;
+
+    // strBuffer << "0:" << endl;
+    // for (int i = 0; i < this->inputSize; ++i) {
+    //     for (int j = 0; j < this->hiddenSize; ++j) {
+    //         strBuffer << this->edgeWeights[0][i][j] << " ";
+    //     }
+    //     strBuffer << endl;
+    // }
+
+    // strBuffer << endl;
+    // strBuffer << "1:" << endl;
+    // for (int i = 0; i < this->hiddenSize; ++i) {
+    //     strBuffer << this->edgeWeights[1][i][0] << " ";
+    // }
+    // strBuffer << endl;
+
+    // strBuffer << endl;
+    // strBuffer << "B:" << endl;
+    // for (int i = 0; i < this->hiddenSize; ++i) {
+    //     strBuffer << this->hiddenBiases[i] << " ";
+    // }
+    // strBuffer << endl;
+
+    // return strBuffer.str();
 }
 
 ostream& operator<<(ostream& co, const NeuralNet& net) {

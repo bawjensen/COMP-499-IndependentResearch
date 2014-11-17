@@ -10,7 +10,8 @@ int main() {
 
     // board.addPiece();
 
-    gc.start();
+    // gc.start();
+    gc.testNetByName("0.net");
 
     // for (int i = 0; i < 5; i++) {
         // board.addRandomTile();

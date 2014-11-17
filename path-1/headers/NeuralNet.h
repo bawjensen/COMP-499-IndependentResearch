@@ -36,5 +36,7 @@ public:
 
     NeuralNet& operator=(const NeuralNet& other);
 
+    std::string serialize();
+    void deserialize(std::ifstream&);
     friend std::ostream& operator<<(std::ostream& co, const NeuralNet& net);
 };

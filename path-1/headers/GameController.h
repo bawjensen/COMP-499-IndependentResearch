@@ -16,8 +16,12 @@ public:
     void reset();
     bool gameEnded();
     void start();
+
+    void testNetByName(std::string netFileName);
+
     // void runGame();
     int runGameWithNet(NeuralNet& net);
+    
     bool handleCommand(char& input);
     std::pair<bool, int> handleCommand(int& direction);
     bool movesAvailable();
