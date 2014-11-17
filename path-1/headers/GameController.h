@@ -6,7 +6,6 @@
 class GameController {
 private:
     Board board;
-    static const int numStartingTiles = 2;
     int score;
     int numMoves;
 

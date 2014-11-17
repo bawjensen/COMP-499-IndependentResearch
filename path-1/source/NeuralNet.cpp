@@ -148,7 +148,7 @@ float NeuralNet::run(float* inputLayer) const {
     for (int i = 0; i < this->hiddenSize; ++i) {
         output += this->edgeWeights[1][i][0] * this->hiddenLayer[i];
     }
-    output = this->activate(output);
+    // output = this->activate(output);
 
     delete[] inputLayer; // TODO: Figure out a better deletion system to avoid memory leaks
 
@@ -249,33 +249,6 @@ void NeuralNet::deserialize(ifstream& file) {
     for (int i = 0; i < this->hiddenSize; ++i) {
         file >> this->hiddenBiases[i];
     }
-
-    cout << *this << endl;
-    // ostringstream strBuffer;
-
-    // strBuffer << "0:" << endl;
-    // for (int i = 0; i < this->inputSize; ++i) {
-    //     for (int j = 0; j < this->hiddenSize; ++j) {
-    //         strBuffer << this->edgeWeights[0][i][j] << " ";
-    //     }
-    //     strBuffer << endl;
-    // }
-
-    // strBuffer << endl;
-    // strBuffer << "1:" << endl;
-    // for (int i = 0; i < this->hiddenSize; ++i) {
-    //     strBuffer << this->edgeWeights[1][i][0] << " ";
-    // }
-    // strBuffer << endl;
-
-    // strBuffer << endl;
-    // strBuffer << "B:" << endl;
-    // for (int i = 0; i < this->hiddenSize; ++i) {
-    //     strBuffer << this->hiddenBiases[i] << " ";
-    // }
-    // strBuffer << endl;
-
-    // return strBuffer.str();
 }
 
 ostream& operator<<(ostream& co, const NeuralNet& net) {

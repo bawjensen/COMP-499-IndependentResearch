@@ -28,11 +28,17 @@ void Board::initialize() {
     this->initialized = true;
 }
 
-void Board::seed() {
+void Board::wipe() {
     for (int i = 0; i < this->width; ++i) {
         for (int j = 0; j < this->width; ++j) {
             this->board[i][j] = 0;
         }
+    }
+}
+
+void Board::seed() {
+    for (int i = 0; i < this->numStartingTiles; ++i) {
+        this->addRandomTile();
     }
 }
 
@@ -48,10 +54,21 @@ void Board::destroy() {
 }
 
 void Board::reset() {
-    this->destroy();
-    this->initialize();
+    // this->destroy();
+    if (!this->initialized) this->initialize();
+    this->wipe();
     this->seed();
 }
+
+void Board::manualSet(int x1, int y1, int val1, int x2, int y2, int val2) {
+    if (!this->initialized) this->initialize();
+
+    this->wipe();
+
+    this->board[x1][y1] = val1;
+    this->board[x2][y2] = val2;
+}
+
 
 float* Board::flatten() const {
     float* flattened = new float[this->width * this->width];
@@ -270,7 +287,7 @@ Board& Board::operator=(const Board& other) {
 ostream& operator<<(ostream& out, const Board& board) {
     for (int i = 0; i < board.width; i++) {
         for (int j = 0; j < board.width; j++) {
-            out << setw(4) << board.board[i][j];
+            out << setw(5) << board.board[i][j];
         }
         out << endl << endl;
     }

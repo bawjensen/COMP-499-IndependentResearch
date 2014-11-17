@@ -45,6 +45,7 @@ float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizi
     float bestVal;
     if (depth == 0) {
         bestVal = net.run(board.flatten());
+        // cout << "Board evalled to: " << bestVal << endl;// << board << endl;
     }
     else if (maximizing) {
         float tempVal;
@@ -94,6 +95,8 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net)
 
     for (int i = 0; i < numChildren; ++i) {
         tempVal = minimax(children[i], net, depth - 1, false);
+
+        // cout << "tempVal: " << tempVal << endl << children[i] << endl;
 
         if (tempVal > bestVal) {
             bestVal = tempVal;

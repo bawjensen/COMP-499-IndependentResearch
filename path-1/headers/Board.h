@@ -32,6 +32,8 @@ private:
     bool initialized;
     int lastMove;
 
+    static const int numStartingTiles = 2;
+
 public:
     Board();
     ~Board();
@@ -44,9 +46,12 @@ public:
 
 
     void initialize();
+    void wipe();
     void seed();
     void destroy();
     void reset();
+
+    void manualSet(int x1, int y1, int val1, int x2, int y2, int val2);
 
     float* flatten() const;
 
