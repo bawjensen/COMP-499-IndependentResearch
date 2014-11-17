@@ -45,6 +45,7 @@ void GameController::start() {
             score = this->runGameWithNet(mgr[j]);
             mgr.keepScore(score, j);
             // cout << "Net (" << &mgr[j] << ") scored: " << score << endl;
+            // cout << "Final board: " << endl << this->board << endl;
             avgScore += score;
         }
         cout << "Nets of generation " << i << " averaged: " << (float)avgScore / numNets << endl;

@@ -9,7 +9,7 @@ h_dir = headers
 VPATH = $(src_dir):$(h_dir)
 
 # Names of the libraries
-projs = Board GameController GameTreeManager NetManager NeuralNet
+projs = Board GameController GameTreeManager NetManager NeuralNet RandomGen
 libs = $(foreach proj,$(projs),$(out_dir)/$(proj).lib)
 libsf = $(foreach proj,$(projs),$(out_dir)/$(proj)f.lib)
 
