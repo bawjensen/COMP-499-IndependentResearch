@@ -18,6 +18,7 @@ string str(int i) {
 }
 
 GameController::GameController() {
+    this->testingNets = false;
     this->reset();
 }
 
