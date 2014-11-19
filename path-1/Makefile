@@ -19,7 +19,7 @@ ifeq ($(OS), Darwin) # OSX
 else # Linux
 	CLIBS= 		-std=c++11 # Untested
 	CPATHS=		-I/usr/include -L/usr/lib
-	CFLAGS=		$(CPATHS)$(CLIBS)
+	CFLAGS=		$(CPATHS) $(CLIBS)
 endif
 
 # Compile any lib
