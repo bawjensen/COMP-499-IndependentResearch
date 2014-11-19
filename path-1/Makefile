@@ -49,7 +49,7 @@ $(out_dir)/%.lib: %.cpp %.h
 	g++ -O3 $(CFLAGS) $(src_dir)/driver.cpp $(libsf) -o $(out_dir)/2048f
 
 2048f-r: 2048f-b
-	bin/2048f 10000 100 10
+	bin/2048f 1000 100 10
 
 2048f-rn: 2048f-b
 	bin/2048f -d -n
