@@ -84,6 +84,10 @@ float* Board::flatten() const {
 }
 
 float* Board::flattenNormalize() const {
+    return flattenNormalize_v2();
+}
+
+float* Board::flattenNormalize_v1() const {
     float* flattened = new float[this->width * this->width];
 
     int tempInt;
@@ -96,6 +100,26 @@ float* Board::flattenNormalize() const {
                 tempFloat = 0.0f;
             else
                 tempFloat = log2(tempInt) / log2(this->highestValue);
+            flattened[ (i * this->width) + j ] = tempFloat;
+        }
+    }
+
+    return flattened;
+}
+
+float* Board::flattenNormalize_v2() const {
+    float* flattened = new float[this->width * this->width];
+
+    int tempInt;
+    float tempFloat;
+
+    for (int i = 0; i < this->width; ++i) {
+        for (int j = 0; j < this->width; ++j) {
+            tempInt = this->board[i][j].getValue();
+            if (tempInt == 0)
+                tempFloat = 0.0f;
+            else
+                tempFloat = log2(tempInt) / log2(8192);
             flattened[ (i * this->width) + j ] = tempFloat;
         }
     }
@@ -211,9 +235,6 @@ pair<int, int> Board::findShiftDestination(int x, int y, pair<int, int> vec) {
         dest.first  += vec.first;
         dest.second += vec.second;
     } while ( this->coordsInBounds(dest) && !(this->slotOccupied(dest)) );
-
-    // cout << "Blocked at: " << dest.first << ", " << dest.second << endl;
-    // cout << this->coordsInBounds(dest) << " - " << this->slotOccupied(dest) << endl;
 
     return curr;
 }

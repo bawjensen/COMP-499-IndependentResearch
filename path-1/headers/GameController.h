@@ -9,14 +9,25 @@ private:
     int score;
     int numMoves;
 
+    bool testingNets;
+
 public:
+    static bool debug;
+
     GameController();
+
+    void setTestingNets(bool testingNets) { this->testingNets = testingNets; };
+    void setDebug(bool debug) { this->debug = debug; };
+
+    bool getTestingNets() { return this->testingNets; };
+    bool getDebug() { return this->debug; };
 
     void reset();
     bool gameEnded();
     void start();
 
-    void testNetByName(std::string netFileName);
+    void testNets();
+    void runTraining();
 
     // void runGame();
     int runGameWithNet(NeuralNet& net);

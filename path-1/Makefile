@@ -38,11 +38,11 @@ $(out_dir)/%.lib: %.cpp %.h
 
 # Compile 2048
 2048-r: 2048-b
-	bin/2048
+	bin/2048 1000 100 10
 
 # Compile 2048
-2048-rd: 2048-b
-	bin/2048 -d
+2048-rn: 2048-b
+	bin/2048 -d -n
 
 # Compile 2048 with compiler optimization flags to make it faster
 2048f-b: $(libsf) $(src_dir)/driver.cpp
@@ -51,8 +51,8 @@ $(out_dir)/%.lib: %.cpp %.h
 2048f-r: 2048f-b
 	bin/2048f
 
-2048f-rd: 2048f-b
-	bin/2048f -d
+2048f-rn: 2048f-b
+	bin/2048f -d -n
 
 # Clean up
 clean:

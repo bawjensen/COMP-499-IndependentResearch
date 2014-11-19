@@ -9,6 +9,8 @@
 
 using namespace std;
 
+bool GameController::debug = false;
+
 string str(int i) {
     ostringstream convert;
     convert << i;
@@ -27,8 +29,17 @@ bool GameController::gameEnded() {
     return !this->board.movesAvailable();
 }
 
-void GameController::testNetByName(string netFileName) {
-    ifstream inFile("nets/" + netFileName);
+void GameController::start() {
+    if (GameController::testingNets) {
+        this->testNets();
+    }
+    else {
+        this->runTraining();
+    }
+}
+
+void GameController::testNets() {
+    ifstream inFile("nets/0.net");
     NeuralNet net;
 
     if (!inFile.is_open()) {
@@ -49,32 +60,14 @@ void GameController::testNetByName(string netFileName) {
     for (int i = 0; i < numRuns; ++i) {
         this->board.reset();
         this->board.manualSet(0, 0, 2, 0, 1, 2);
-        // cout << "Starting board: " << endl << board << endl;
         score = this->runGameWithNet(net);
         cout << "Run " << i << " got score: " << score << endl;
     }
 
-    // this->board.reset();
-
-    // int width = this->board.getWidth();
-
-    // for (int i1 = 0; i1 < width; ++i1) {
-    //     for (int j1 = 0; j1 < width; ++j1) {
-    //         for (int i2 = 0; i2 < width; ++i2) {
-    //             for (int j2 = 0; j2 < width; ++j2) {
-    //                 if (i1 == i2 || j1 == j2) continue;
-    //                 this->board.manualSet(i1, j1, 2, i2, j2, 2);
-    //                 float eval = net.run(this->board.flatten());
-    //                 cout << i1 << ", " << j1 << " - " << i2 << ", " << j2 << " evalled to: " << eval << endl;
-    //             }
-    //         }
-    //     }
-    // }
-
     inFile.close();
 }
 
-void GameController::start() {
+void GameController::runTraining() {
     int numGenerations = 1000;
     int numNets = 100;
     int numGamesPerNet = 10;
@@ -100,8 +93,6 @@ void GameController::start() {
                 netTotalScore += this->runGameWithNet(mgr[j]);
             }
             mgr.keepScore((float)netTotalScore / numGamesPerNet, j);
-            // cout << "Net (" << &mgr[j] << ") scored: " << score << endl;
-            // cout << "Final board: " << endl << this->board << endl;
             totalScore += netTotalScore;
         }
         cout << "Nets of generation " << i << " averaged: " << (float)totalScore / (numNets * numGamesPerNet) << endl;
@@ -142,10 +133,11 @@ int GameController::runGameWithNet(NeuralNet& net) {
     pair<bool, int> result;
 
     while ( !this->gameEnded() ) {
-        // cout << "Going direction: " << direction << endl;
         direction = GameTreeManager::determineBestMove(board, net);
 
         result = this->handleCommand(direction);
+
+        if (GameController::debug) cout << "Move: " << endl << board << endl;
         success = result.first;
 
         if (!success) {
@@ -158,6 +150,7 @@ int GameController::runGameWithNet(NeuralNet& net) {
 
         ++this->numMoves;
         this->board.addRandomTile();
+        if (GameController::debug) cout << "Added: " << endl << board << endl;
     }
 
     return score;

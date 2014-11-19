@@ -58,6 +58,8 @@ public:
 
     float* flatten() const;
     float* flattenNormalize() const;
+    float* flattenNormalize_v1() const;
+    float* flattenNormalize_v2() const;
 
     std::vector<int*> getAvailableCells();
 

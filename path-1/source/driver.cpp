@@ -4,29 +4,23 @@
 
 using namespace std;
 
+bool debug;
+
 int main(int argc, char** argv) {
-    // Board board(4);
     GameController gc;
 
-    // board.addPiece();
-
-    // cout << ""
-    // for (int i = 0; i < argc; ++i) {
-        // cout << argv[i] << endl;
-    // }
-
-    if (argc > 1 && string(argv[1]) == "-d") {
-        gc.testNetByName("0.net");
+    std::vector<std::string> args(argv, argv+argc);
+    for (size_t i = 1; i < args.size(); ++i) {
+        if (args[i] == "-d") {
+            GameController::debug = true;
+        }
+        else if (args[i] == "-n") {
+            gc.setTestingNets(true);
+        }
     }
-    else {
-        gc.start();
-    }
+    
+    gc.start();
 
-
-    // for (int i = 0; i < 5; i++) {
-        // board.addRandomTile();
-
-    // }
     cout << "...done." << endl;
 
 }
