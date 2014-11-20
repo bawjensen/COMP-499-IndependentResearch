@@ -3,6 +3,12 @@
 #include "Board.h"
 #include "NeuralNet.h"
 
+enum EMode {
+    HIGHEST,
+    TOTAL,
+    AVERAGE // No real difference from total
+};
+
 class GameController {
 private:
     Board board;
@@ -13,6 +19,8 @@ private:
     int numGenerations;
     int numGamesPerNet;
     int netHiddenLayerSize;
+
+    EMode mode;
 
     bool testingNets;
 
@@ -27,6 +35,7 @@ public:
     void setNumGenerations(int numGenerations) { this->numGenerations = numGenerations; };
     void setNumGamesPerNet(int numGamesPerNet) { this->numGamesPerNet = numGamesPerNet; };
     void setNetHiddenLayerSize(int netHiddenLayerSize) { this->netHiddenLayerSize = netHiddenLayerSize; };
+    void setEvaluationMode(char chMode);
 
     bool getTestingNets() { return this->testingNets; };
     bool getDebug() { return this->debug; };

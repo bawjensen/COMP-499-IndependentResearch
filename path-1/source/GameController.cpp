@@ -30,6 +30,22 @@ GameController::GameController() {
     this->reset();
 }
 
+void GameController::setEvaluationMode(char chMode) {
+    switch (chMode) {
+        case 'h':
+            this->mode = HIGHEST;
+            break;
+        case 't':
+            this->mode = TOTAL;
+            break;
+        case 'a':
+            this->mode = AVERAGE;
+            break;
+        default:
+            throw runtime_error("Impossible mode for evaluation.");
+    }
+}
+
 void GameController::reset() {
     this->numMoves = 0;
 }
@@ -76,7 +92,6 @@ void GameController::testNets() {
 }
 
 void GameController::runTraining() {
-    cout << "this->netHiddenLayerSize: " << this->netHiddenLayerSize << endl;
     NetManager mgr(this->numNets, this->netHiddenLayerSize);
 
     long start = chrono::system_clock::now().time_since_epoch().count();
@@ -88,16 +103,37 @@ void GameController::runTraining() {
     int score;
     int totalScore;
     int netTotalScore;
+    int highest;
+    int tempScore;
     // Run generations and mutations training
     for (int i = 0; i < this->numGenerations; ++i) {
         totalScore = 0;
+
         for (int j = 0; j < this->numNets; ++j) {
             netTotalScore = 0;
+            highest = 0;
+
             for (int k = 0; k < this->numGamesPerNet; ++k) {
                 this->board.reset();
-                netTotalScore += this->runGameWithNet(mgr[j]);
+                tempScore = this->runGameWithNet(mgr[j]);
+                netTotalScore += tempScore;
+
+                if (this->mode == HIGHEST)
+                    highest = tempScore > highest ? tempScore : highest;
             }
-            mgr.keepScore((float)netTotalScore / this->numGamesPerNet, j);
+
+            switch (this->mode) {
+                case HIGHEST:
+                    mgr.keepScore(highest, j);
+                    break;
+                case AVERAGE:
+                    mgr.keepScore((float)totalScore / this->numGamesPerNet, j);
+                    break;
+                case TOTAL:
+                    mgr.keepScore(totalScore, j);
+
+            }
+            
             totalScore += netTotalScore;
         }
         cout << "Nets of generation " << i << " averaged: " << (float)totalScore / (this->numNets * this->numGamesPerNet) << endl;
