@@ -2,6 +2,7 @@
 #include "../headers/RandomGen.h"
 
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
