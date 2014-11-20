@@ -6,6 +6,10 @@ using namespace std;
 
 bool debug;
 
+int toInt(string input) {
+    return stoi(input);
+}
+
 int main(int argc, char** argv) {
     // Initialize game controller
     GameController gc;
@@ -26,31 +30,31 @@ int main(int argc, char** argv) {
                     cout << "Enabling game controller debug mode" << endl;
                     GameController::debug = true;
                     break;
-                case 'n':
+                case 't':
                     cout << "Enabling net testing mode" << endl;
                     gc.setTestingNets(true);
                     break;
-            }
-        }
-        else {
-            if ((i > 0) && (args[i-1].length() > 0) && (args[i-1][0] != '-')) {
-                cout << "Ended flags, grabbing cmd line args" << endl;
-                break; // Finished with flags, time to grab cmd line args
+                case 'g':
+                    if (i+1 < args.size())
+                        gc.setNumGenerations(toInt(args[i+1]));
+                    else
+                        throw invalid_argument("Incorrect formatting of cmd line args");
+                    break;
+                case 'n':
+                    if (i+1 < args.size())
+                        gc.setNumNets(toInt(args[i+1]));
+                    else
+                        throw invalid_argument("Incorrect formatting of cmd line args");
+                    break;
+                case 'p':
+                    if (i+1 < args.size())
+                        gc.setNumGamesPerNet(toInt(args[i+1]));
+                    else
+                        throw invalid_argument("Incorrect formatting of cmd line args");
+                    break;
             }
         }
     }
-
-    // if (i+3 >= args.size()) {
-    //     cout << "Warning: Too few parameters, defaulting to 10 generations, 10 nets and 10 games" << endl;
-    //     gc.setNumGenerations(10);
-    //     gc.setNumNets(10);
-    //     gc.setNumGamesPerNet(10);
-    // }
-    // else {
-    //     gc.setNumGenerations(args[i]);
-    //     gc.setNumNets(args[i+1]);
-    //     gc.setNumGamesPerNet(args[i+2]);
-    // }
 
     gc.start();
 

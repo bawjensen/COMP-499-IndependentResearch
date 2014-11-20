@@ -17,8 +17,15 @@ string str(int i) {
     return convert.str();
 }
 
+// =============================================================================
+
 GameController::GameController() {
     this->testingNets = false;
+
+    numNets = 0;
+    numGenerations = 0;
+    numGamesPerNet = 0;
+
     this->reset();
 }
 
@@ -69,11 +76,7 @@ void GameController::testNets() {
 }
 
 void GameController::runTraining() {
-    int numGenerations = 1000;
-    int numNets = 100;
-    int numGamesPerNet = 10;
-
-    NetManager mgr(numNets);
+    NetManager mgr(this->numNets);
 
     long start = chrono::system_clock::now().time_since_epoch().count();
     srand(start);
@@ -85,23 +88,23 @@ void GameController::runTraining() {
     int totalScore;
     int netTotalScore;
     // Run generations and mutations training
-    for (int i = 0; i < numGenerations; ++i) {
+    for (int i = 0; i < this->numGenerations; ++i) {
         totalScore = 0;
-        for (int j = 0; j < numNets; ++j) {
+        for (int j = 0; j < this->numNets; ++j) {
             netTotalScore = 0;
-            for (int k = 0; k < numGamesPerNet; ++k) {
+            for (int k = 0; k < this->numGamesPerNet; ++k) {
                 this->board.reset();
                 netTotalScore += this->runGameWithNet(mgr[j]);
             }
-            mgr.keepScore((float)netTotalScore / numGamesPerNet, j);
+            mgr.keepScore((float)netTotalScore / this->numGamesPerNet, j);
             totalScore += netTotalScore;
         }
-        cout << "Nets of generation " << i << " averaged: " << (float)totalScore / (numNets * numGamesPerNet) << endl;
+        cout << "Nets of generation " << i << " averaged: " << (float)totalScore / (this->numNets * this->numGamesPerNet) << endl;
         mgr.selectAndMutateSurvivors();
     }
 
     // Serialize and save nets
-    for (int i = 0; i < numNets; ++i) {
+    for (int i = 0; i < this->numNets; ++i) {
         ofstream outFile("nets/" + str(i) + ".net");
         outFile << mgr[i].serialize();
         outFile.close();
