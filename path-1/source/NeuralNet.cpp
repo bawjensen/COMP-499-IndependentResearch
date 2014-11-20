@@ -28,8 +28,10 @@ float NeuralNet::generateRand() {
 
 void NeuralNet::initialize(int inputSize, int hiddenSize) {
     if (this->initialized) {
-        cout << "Can't reinitialize a net!" << endl;
-        exit(1);
+        throw runtime_error("Cannot reinitialize a net!");
+    }
+    else if (inputSize == 0 || hiddenSize == 0) {
+        throw invalid_argument("Cannot create a new with a layer of size 0");
     }
     else {
         this->initialized = true;
@@ -74,8 +76,7 @@ void NeuralNet::initialize(int inputSize, int hiddenSize) {
 
 void NeuralNet::destroy() {
     if (!this->initialized) {
-        cout << "Can't destroy an uninitialized net!" << endl;
-        exit(1);
+        throw runtime_error("Cannot destroy an uninitialized net!");
     }
     // Delete input layer to hidden layer edge weights
     for (int i = 0; i < this->inputSize; ++i) {
@@ -100,8 +101,7 @@ void NeuralNet::destroy() {
 void NeuralNet::copyFrom(const NeuralNet& other) {
     // Sizes
     if (this->inputSize != other.inputSize || this->hiddenSize != other.hiddenSize) {
-        cout << "Trying to copy incorrectly sized nets" << endl;
-        exit(1);
+        throw runtime_error("Trying to copy incorrectly sized nets");
     }
 
     // Edges and weights
@@ -128,8 +128,7 @@ void NeuralNet::copyFrom(const NeuralNet& other) {
 
 float NeuralNet::run(float* inputLayer) const {
     if (!initialized) {
-        cout << "Can't run an uninitialized net!" << endl;
-        exit(1);
+        throw runtime_error("Cannot run an uninitialized net");
     }
 
     // Compute input layer to hidden layer values

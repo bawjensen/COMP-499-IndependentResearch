@@ -16,8 +16,7 @@ Board::~Board() {
 
 void Board::initialize() {
     if (this->initialized) {
-        cout << "ERROR: Trying to reinitialize a board" << endl;
-        exit(1);
+        throw runtime_error("Cannot reinitialize a board");
     }
 
     this->width = 4;

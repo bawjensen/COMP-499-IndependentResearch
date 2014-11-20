@@ -52,8 +52,7 @@ void GameController::testNets() {
     NeuralNet net;
 
     if (!inFile.is_open()) {
-        cout << "Problem opening serialized net" << endl;
-        exit(1);
+        throw runtime_error("Problem opening serialized net");
     }
 
     net.deserialize(inFile);
@@ -147,9 +146,8 @@ int GameController::runGameWithNet(NeuralNet& net) {
         success = result.first;
 
         if (!success) {
-            cout << "Board tried a bad direction: " << direction << endl;
             cout << this->board << endl;
-            exit(1);
+            throw runtime_error("^Board tried a bad direction");
         }
 
         score += result.second;
