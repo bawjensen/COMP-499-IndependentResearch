@@ -1,6 +1,7 @@
 #include "../headers/RandomGen.h"
 
 #include <random>
+#include <stdexcept>
 
 using namespace std;
 
