@@ -33,11 +33,11 @@ int main(int argc, char** argv) {
     GameController gc;
 
     // Default values
-    gc.setNumGenerations(10);
-    gc.setNumNets(10);
+    gc.setNumGenerations(1000);
+    gc.setNumNets(100);
     gc.setNumGamesPerNet(10);
     gc.setNetHiddenLayerSize(16);
-    gc.setEvaluationMode('a');
+    gc.setEvaluationMode('h');
 
     // Create vector from argv
     std::vector<std::string> args(argv, argv+argc);

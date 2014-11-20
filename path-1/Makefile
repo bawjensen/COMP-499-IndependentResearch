@@ -38,7 +38,7 @@ $(out_dir)/%.lib: %.cpp %.h
 
 # Compile 2048
 2048-r: 2048-b
-	bin/2048 -g 1000 -n 100 -p 10
+	bin/2048
 
 # Compile 2048
 2048-rn: 2048-b
@@ -49,7 +49,7 @@ $(out_dir)/%.lib: %.cpp %.h
 	g++ -O3 $(CFLAGS) $(src_dir)/driver.cpp $(libsf) -o $(out_dir)/2048f
 
 2048f-r: 2048f-b
-	bin/2048f -g 1000 -n 100 -p 10
+	bin/2048f
 
 2048f-rn: 2048f-b
 	bin/2048f -d -t
