@@ -77,6 +77,7 @@ void GameController::testNets() {
 }
 
 void GameController::runTraining() {
+    cout << "this->netHiddenLayerSize: " << this->netHiddenLayerSize << endl;
     NetManager mgr(this->numNets, this->netHiddenLayerSize);
 
     long start = chrono::system_clock::now().time_since_epoch().count();

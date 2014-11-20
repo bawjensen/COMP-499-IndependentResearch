@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
     gc.setNumGenerations(10);
     gc.setNumNets(10);
     gc.setNumGamesPerNet(10);
+    gc.setNetHiddenLayerSize(16);
 
     // Create vector from argv
     std::vector<std::string> args(argv, argv+argc);

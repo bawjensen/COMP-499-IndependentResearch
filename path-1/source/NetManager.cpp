@@ -71,6 +71,8 @@ void NetManager::initialize(const int& numNets, const int& hiddenLayerSize) {
     this->nets = new NeuralNet[numNets];
     this->scoreNetPairs = new pair<float, NeuralNet*>[numNets];
 
+    cout << "Creating nets with sizes: " << hiddenLayerSize << endl;
+
     for (int i = 0; i < this->numNets; i++) {
         this->nets[i].initialize(16, hiddenLayerSize); // 16 is size of board flattened
         this->scoreNetPairs[i] = make_pair(0, &this->nets[i]);
