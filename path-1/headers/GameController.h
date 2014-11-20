@@ -12,6 +12,7 @@ private:
     int numNets;
     int numGenerations;
     int numGamesPerNet;
+    int netHiddenLayerSize;
 
     bool testingNets;
 
@@ -25,6 +26,7 @@ public:
     void setNumNets(int numNets) { this->numNets = numNets; };
     void setNumGenerations(int numGenerations) { this->numGenerations = numGenerations; };
     void setNumGamesPerNet(int numGamesPerNet) { this->numGamesPerNet = numGamesPerNet; };
+    void setNetHiddenLayerSize(int netHiddenLayerSize) { this->netHiddenLayerSize = netHiddenLayerSize; };
 
     bool getTestingNets() { return this->testingNets; };
     bool getDebug() { return this->debug; };

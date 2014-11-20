@@ -30,28 +30,30 @@ int main(int argc, char** argv) {
                     cout << "Enabling game controller debug mode" << endl;
                     GameController::debug = true;
                     break;
+
                 case 't':
                     cout << "Enabling net testing mode" << endl;
                     gc.setTestingNets(true);
                     break;
+
                 case 'g':
-                    if (i+1 < args.size())
-                        gc.setNumGenerations(toInt(args[i+1]));
-                    else
-                        throw invalid_argument("Incorrect formatting of cmd line args");
+                    if (i+1 < args.size()) gc.setNumGenerations(toInt(args[i+1]));
+                    else throw invalid_argument("Incorrect formatting of cmd line args");
                     break;
+
                 case 'n':
-                    if (i+1 < args.size())
-                        gc.setNumNets(toInt(args[i+1]));
-                    else
-                        throw invalid_argument("Incorrect formatting of cmd line args");
+                    if (i+1 < args.size()) gc.setNumNets(toInt(args[i+1]));
+                    else throw invalid_argument("Incorrect formatting of cmd line args");
                     break;
+
                 case 'p':
-                    if (i+1 < args.size())
-                        gc.setNumGamesPerNet(toInt(args[i+1]));
-                    else
-                        throw invalid_argument("Incorrect formatting of cmd line args");
+                    if (i+1 < args.size()) gc.setNumGamesPerNet(toInt(args[i+1]));
+                    else throw invalid_argument("Incorrect formatting of cmd line args");
                     break;
+
+                case 'h':
+                    if (i+1 < args.size()) gc.setNetHiddenLayerSize(toInt(args[i+1]));
+                    else throw invalid_argument("Incorrect formatting of cmd line args");
             }
         }
     }

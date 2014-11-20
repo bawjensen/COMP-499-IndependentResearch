@@ -25,6 +25,7 @@ GameController::GameController() {
     numNets = 0;
     numGenerations = 0;
     numGamesPerNet = 0;
+    netHiddenLayerSize = 0;
 
     this->reset();
 }
@@ -76,7 +77,7 @@ void GameController::testNets() {
 }
 
 void GameController::runTraining() {
-    NetManager mgr(this->numNets);
+    NetManager mgr(this->numNets, this->netHiddenLayerSize);
 
     long start = chrono::system_clock::now().time_since_epoch().count();
     srand(start);

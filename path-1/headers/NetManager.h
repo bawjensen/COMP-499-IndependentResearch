@@ -8,12 +8,17 @@ private:
     std::pair<float, NeuralNet*>* scoreNetPairs;
     int numNets;
 
+    int hiddenLayerSize;
+
 public:
     NetManager();
-    NetManager(int& numNets);
+    NetManager(const int& numNets, const int& hiddenLayerSize);
     ~NetManager();
 
-    void initialize(const int& numNets);
+    void setNumNets(int numNets) { this->numNets = numNets; };
+    void setHiddenLayerSize(int hiddenLayerSize) { this->hiddenLayerSize = hiddenLayerSize; };
+
+    void initialize(const int& numNets, const int& hiddenLayerSize);
 
     void keepScore(const float& score, const int& index);
     void selectAndMutateSurvivors();

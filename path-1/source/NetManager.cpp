@@ -57,8 +57,8 @@ NetManager::NetManager() {
 
 }
 
-NetManager::NetManager(int& numNets) {
-    this->initialize(numNets);
+NetManager::NetManager(const int& numNets, const int& hiddenLayerSize) {
+    this->initialize(numNets, hiddenLayerSize);
 }
 
 NetManager::~NetManager() {
@@ -66,13 +66,13 @@ NetManager::~NetManager() {
     delete[] this->scoreNetPairs;
 }
 
-void NetManager::initialize(const int& numNets) {
+void NetManager::initialize(const int& numNets, const int& hiddenLayerSize) {
     this->numNets = numNets;
     this->nets = new NeuralNet[numNets];
     this->scoreNetPairs = new pair<float, NeuralNet*>[numNets];
 
     for (int i = 0; i < this->numNets; i++) {
-        this->nets[i].initialize(16, 16);
+        this->nets[i].initialize(16, hiddenLayerSize); // 16 is size of board flattened
         this->scoreNetPairs[i] = make_pair(0, &this->nets[i]);
     }
 }
