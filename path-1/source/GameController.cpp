@@ -76,8 +76,8 @@ void GameController::testNets() {
 
     int numRuns = 10;
 
-    long start = chrono::system_clock::now().time_since_epoch().count();
-    srand(start);
+    auto start = chrono::system_clock::now();
+    srand(start.time_since_epoch().count());
 
     this->board.initialize();
 
@@ -95,8 +95,8 @@ void GameController::testNets() {
 void GameController::runTraining() {
     NetManager mgr(this->numNets, this->netHiddenLayerSize);
 
-    long start = chrono::system_clock::now().time_since_epoch().count();
-    srand(start);
+    auto start = chrono::steady_clock::now();
+    srand(start.time_since_epoch().count());
 
     this->board.initialize();
     // this->board.seed();
@@ -153,9 +153,9 @@ void GameController::runTraining() {
         outFile.close();
     }
 
-    long end = chrono::system_clock::now().time_since_epoch().count();
+    auto end = chrono::steady_clock::now();
 
-    float numSec = (end - start) / (float)1000000;
+    double numSec = chrono::duration<double>(end - start).count();
     cout << this->numMoves << " moves in " << numSec << " sec (" << (int)(this->numMoves / numSec) << " moves per second)" << endl;
 }
 
