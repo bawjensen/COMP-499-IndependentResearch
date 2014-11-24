@@ -104,40 +104,45 @@ void GameController::runTraining() {
     int score;
     int totalScore;
     int netTotalScore;
-    int highest;
+    int netHighest;
     int tempScore;
+    int genHighest;
     // Run generations and mutations training
     for (int i = 0; i < this->numGenerations; ++i) {
         totalScore = 0;
+        genHighest = 0;
 
         for (int j = 0; j < this->numNets; ++j) {
             netTotalScore = 0;
-            highest = 0;
+            netHighest = 0;
 
             for (int k = 0; k < this->numGamesPerNet; ++k) {
                 this->board.reset();
                 tempScore = this->runGameWithNet(mgr[j]);
                 netTotalScore += tempScore;
 
-                if (this->mode == HIGHEST)
-                    highest = tempScore > highest ? tempScore : highest;
+                if (this->mode == HIGHEST) 
+                    netHighest = tempScore > netHighest ? tempScore : netHighest;
             }
 
             switch (this->mode) {
                 case HIGHEST:
-                    mgr.keepScore(highest, j);
+                    mgr.keepScore(netHighest, j);
                     break;
                 case AVERAGE:
                     mgr.keepScore((float)totalScore / this->numGamesPerNet, j);
                     break;
                 case TOTAL:
                     mgr.keepScore(totalScore, j);
-
             }
+
+            genHighest = netHighest > genHighest ? netHighest : genHighest;
             
             totalScore += netTotalScore;
         }
-        cout << "Nets of generation " << i << " averaged: " << (float)totalScore / (this->numNets * this->numGamesPerNet) << endl;
+        cout << "Nets of generation " << i << " averaged: "
+            << (float)totalScore / (this->numNets * this->numGamesPerNet)
+            << "(" << genHighest << ")" << endl;
         mgr.selectAndMutateSurvivors();
     }
 

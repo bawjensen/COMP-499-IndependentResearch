@@ -33,6 +33,8 @@ int main(int argc, char** argv) {
     // Initialize game controller
     GameController gc;
 
+    cout << "Starting with defaults of 1000 generations, 100 nets, 10 games, 16 in hidden, and evaluation: highest" << endl;
+
     // Default values
     gc.setNumGenerations(1000);
     gc.setNumNets(100);
