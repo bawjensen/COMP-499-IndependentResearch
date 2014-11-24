@@ -162,7 +162,7 @@ float NeuralNet::activate(float value) const {
 
 float NeuralNet::mutationValue() {
     // return (rand() / (float)RAND_MAX) - 0.5f;
-    return RandomGen::generate(0.5f);
+    return RandomGen::generate(2.0f);
 }
 
 float NeuralNet::biasMutationValue() {
