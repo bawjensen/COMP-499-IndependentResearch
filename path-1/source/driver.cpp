@@ -81,10 +81,12 @@ int main(int argc, char** argv) {
                 case 'l':
                     if (i+1 < args.size()) gc.setNetHiddenLayerSize(toInt(args[i+1]));
                     else throw invalid_argument("Incorrect formatting of cmd line args");
+                    break;
 
                 case 'r':
                     if (i+1 < args.size()) RandomGen::setMode(toInt(args[i+1]));
                     else throw invalid_argument("Incorrect formatting of cmd line args");
+                    break;
             }
         }
     }
