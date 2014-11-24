@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <cmath>
 
 using namespace std;
 
@@ -65,7 +66,7 @@ void GameController::start() {
 }
 
 void GameController::testNets() {
-    ifstream inFile("nets/0.net");
+    ifstream inFile("nets/11-19-14/0.net");
     NeuralNet net;
 
     if (!inFile.is_open()) {
@@ -73,10 +74,15 @@ void GameController::testNets() {
     }
 
     net.deserialize(inFile);
+    inFile.close();
 
-    int numRuns = 10;
+    int numRuns = 1000;
 
-    auto start = chrono::system_clock::now();
+    int highest = -INFINITY;
+    int lowest = INFINITY;
+    int total = 0;
+
+    auto start = chrono::steady_clock::now();
     srand(start.time_since_epoch().count());
 
     this->board.initialize();
@@ -86,10 +92,22 @@ void GameController::testNets() {
         this->board.reset();
         this->board.manualSet(0, 0, 2, 0, 1, 2);
         score = this->runGameWithNet(net);
-        cout << "Run " << i << " got score: " << score << endl;
+        total += score;
+        highest = score > highest ? score : highest;
+        lowest = score < lowest ? score : lowest;
+        // cout << "Run " << i << " got score: " << score << endl;
     }
 
-    inFile.close();
+    auto end = chrono::steady_clock::now();
+
+    cout << "Net stats:" << endl;
+    cout << "highest: " << highest << endl;
+    cout << "lowest:  " << lowest << endl;
+    cout << "average: " << total / (float)numRuns << endl;
+
+    double numSec = chrono::duration<double>(end - start).count();
+    cout << numRuns << " games in " << numSec << " sec (" << (int)(numRuns / numSec) << " games per second)" << endl;
+
 }
 
 void GameController::runTraining() {
