@@ -25,4 +25,5 @@ public:
     static float generate(float stdDev);
 
     static void setMode(int intMode);
+    static int getMode();
 };

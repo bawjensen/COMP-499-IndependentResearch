@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
     // Initialize game controller
     GameController gc;
 
-    cout << "Starting with defaults of 1000 generations, 100 nets, 10 games, 16 in hidden, and evaluation: highest" << endl;
+    // cout << "Starting with defaults: 1000 generations, 100 nets, 10 games, 16 in hidden, evaluation: highest" << endl;
 
     // Default values
     gc.setNumGenerations(1000);
@@ -90,6 +90,17 @@ int main(int argc, char** argv) {
             }
         }
     }
+
+    if (!gc.getTestingNets()) {
+        cout << "Running with settings: " << endl
+            << "generations: " << gc.getNumGenerations() << endl
+            << "nets:        " << gc.getNumNets() << endl
+            << "games:       " << gc.getNumGamesPerNet() << endl
+            << "hidden size: " << gc.getNetHiddenLayerSize() << endl
+            << "random mode: " << RandomGen::getMode() << endl;
+    }
+    else
+        cout << "Running net testing mode, all other settings ignored" << endl;
 
     gc.start();
 

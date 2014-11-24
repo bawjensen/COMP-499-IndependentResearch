@@ -66,7 +66,7 @@ void GameController::start() {
 }
 
 void GameController::testNets() {
-    ifstream inFile("nets/11-19-14/0.net");
+    ifstream inFile("nets/11-24-14_32/0.net");
     NeuralNet net;
 
     if (!inFile.is_open()) {

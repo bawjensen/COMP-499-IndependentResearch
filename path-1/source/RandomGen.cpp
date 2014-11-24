@@ -27,6 +27,10 @@ void RandomGen::setMode(int intMode) {
     }
 }
 
+int RandomGen::getMode() {
+    return RandomGen::mode;
+}
+
 float RandomGen::generate_v1(float stdDev) {
     normal_distribution<float> distribution(0.0f, stdDev);
     return distribution(RandomGen::generator);

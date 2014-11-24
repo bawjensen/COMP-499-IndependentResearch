@@ -39,6 +39,10 @@ public:
 
     bool getTestingNets() { return this->testingNets; };
     bool getDebug() { return this->debug; };
+    int getNumNets() { return this->numNets; };
+    int getNumGenerations() { return this->numGenerations; };
+    int getNumGamesPerNet() { return this->numGamesPerNet; };
+    int getNetHiddenLayerSize() { return this->netHiddenLayerSize; };
 
     void reset();
     bool gameEnded();
