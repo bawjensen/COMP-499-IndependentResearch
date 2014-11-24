@@ -160,7 +160,7 @@ void GameController::runTraining() {
         }
         cout << "Nets of generation " << i << " averaged: "
             << (float)totalScore / (this->numNets * this->numGamesPerNet)
-            << "(" << genHighest << ")" << endl;
+            << " (top score: " << genHighest << ")" << endl;
         mgr.selectAndMutateSurvivors();
     }
 
