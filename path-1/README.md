@@ -10,3 +10,4 @@
 + Mutation Method (different distributions, different std dev's)
 + Random insertion of newcomers (yes/no, possibly how many/how often)
 + Cross-mutation (two parents instead of the current one)
++ Depth of game tree
