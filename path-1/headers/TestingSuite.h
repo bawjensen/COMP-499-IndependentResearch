@@ -1,0 +1,4 @@
+class TestingSuite {
+private:
+public:
+};
