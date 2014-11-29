@@ -11,9 +11,8 @@ void TestingSuite::start() {
     GameController gc;
 
     for (int i = 0; i < numRuns; ++i) {
-        // (int numNets, int numGenerations, int numGamesPerNet, int netHiddenLayerSize, char chMode)
-        gc.initialize(100, 1000, 10, 16, 't');
+        // (int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode)
+        gc.initialize(100, 10, 10, 16, 't');
         gc.start();
     }
-
 }
