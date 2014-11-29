@@ -47,7 +47,6 @@ public:
     int getNumGamesPerNet() { return this->numGamesPerNet; };
     int getNetHiddenLayerSize() { return this->netHiddenLayerSize; };
 
-    void reset();
     bool gameEnded();
     void start();
 

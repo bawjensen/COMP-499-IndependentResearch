@@ -36,23 +36,17 @@ $(out_dir)/%.lib: %.cpp %.h
 2048-b: $(libs) $(src_dir)/driver.cpp
 	g++ $(CFLAGS) $(src_dir)/driver.cpp $(libs) -o $(out_dir)/2048
 
-# Compile 2048
+# Compile and run 2048
 2048-r: 2048-b
 	bin/2048
-
-# Compile 2048
-2048-rn: 2048-b
-	bin/2048 -d -t
 
 # Compile 2048 with compiler optimization flags to make it faster
 2048f-b: $(libsf) $(src_dir)/driver.cpp
 	g++ -O3 $(CFLAGS) $(src_dir)/driver.cpp $(libsf) -o $(out_dir)/2048f
 
+# Compile and run 2048f
 2048f-r: 2048f-b
 	bin/2048f
-
-2048f-rn: 2048f-b
-	bin/2048f -d -t
 
 # Clean up
 clean:

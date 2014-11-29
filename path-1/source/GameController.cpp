@@ -25,8 +25,6 @@ GameController::GameController() {
     this->testingNets = false;
 
     this->initialize(0, 0, 0, 0, 't');
-
-    this->reset();
 }
 
 void GameController::initialize(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode) {
@@ -51,10 +49,6 @@ void GameController::setEvaluationMode(char chMode) {
         default:
             throw runtime_error("Impossible mode for evaluation.");
     }
-}
-
-void GameController::reset() {
-    this->numMoves = 0;
 }
 
 bool GameController::gameEnded() {
@@ -118,8 +112,7 @@ void GameController::testNets() {
 void GameController::runTraining() {
     NetManager mgr(this->numNets, this->netHiddenLayerSize);
 
-    auto start = chrono::steady_clock::now();
-    srand(start.time_since_epoch().count());
+    srand(chrono::system_clock::now().time_since_epoch().count());
 
     this->board.initialize();
     // this->board.seed();
@@ -130,6 +123,7 @@ void GameController::runTraining() {
     int netHighest;
     int tempScore;
     int genHighest;
+    float tempNetScore;
     // Run generations and mutations training
     for (int i = 0; i < this->numGenerations; ++i) {
         totalScore = 0;
@@ -144,20 +138,24 @@ void GameController::runTraining() {
                 tempScore = this->runGameWithNet(mgr[j]);
                 netTotalScore += tempScore;
 
-                if (this->mode == HIGHEST) 
-                    netHighest = tempScore > netHighest ? tempScore : netHighest;
+                netHighest = tempScore > netHighest ? tempScore : netHighest;
             }
 
             switch (this->mode) {
                 case HIGHEST:
-                    mgr.keepScore(netHighest, j);
+                    tempNetScore = netHighest;
                     break;
                 case AVERAGE:
-                    mgr.keepScore((float)totalScore / this->numGamesPerNet, j);
+                    tempNetScore = (float)netTotalScore / this->numGamesPerNet;
                     break;
                 case TOTAL:
-                    mgr.keepScore(totalScore, j);
+                    tempNetScore = netTotalScore;
+                    break;
             }
+
+            // cout << "tempNetScore: " << tempNetScore << endl;
+
+            mgr.keepScore(tempNetScore, j);
 
             genHighest = netHighest > genHighest ? netHighest : genHighest;
             
@@ -175,11 +173,6 @@ void GameController::runTraining() {
         outFile << mgr[i].serialize();
         outFile.close();
     }
-
-    auto end = chrono::steady_clock::now();
-
-    double numSec = chrono::duration<double>(end - start).count();
-    cout << this->numMoves << " moves in " << numSec << " sec (" << (int)(this->numMoves / numSec) << " moves per second)" << endl;
 }
 
 // void GameController::runGame() {
@@ -187,7 +180,6 @@ void GameController::runTraining() {
 
 //     while ( !this->gameEnded() ) {
 //         if (this->handleCommand(direction)) {
-//             ++this->numMoves;
 //             this->board.addRandomTile();
 //         }
 
@@ -217,7 +209,6 @@ int GameController::runGameWithNet(NeuralNet& net) {
 
         score += result.second;
 
-        ++this->numMoves;
         this->board.addRandomTile();
         if (GameController::debug) cout << "Added: " << endl << board << endl;
     }

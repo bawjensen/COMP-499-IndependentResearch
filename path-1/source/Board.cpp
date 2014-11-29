@@ -1,4 +1,5 @@
 #include "../headers/Board.h"
+#include "../headers/TestingSuite.h"
 
 #include <iomanip>
 #include <cmath>
@@ -289,6 +290,8 @@ pair<bool, int> Board::shift(int dir) {
     if (someTileMoved) {
         lastMove = dir;
     }
+
+    ++TestingSuite::numMoves;
 
     return make_pair(someTileMoved, score);
 }
