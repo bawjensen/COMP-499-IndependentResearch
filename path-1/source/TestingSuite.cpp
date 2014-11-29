@@ -6,11 +6,11 @@
 using namespace std;
 
 void TestingSuite::start() {
-    int numRuns = 10;
+    int numTests = 1;
 
     GameController gc;
 
-    for (int i = 0; i < numRuns; ++i) {
+    for (int i = 0; i < numTests; ++i) {
         // (int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode)
         gc.initialize(100, 10, 10, 16, 't');
         gc.start();
