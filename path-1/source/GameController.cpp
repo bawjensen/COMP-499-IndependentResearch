@@ -24,12 +24,17 @@ string str(int i) {
 GameController::GameController() {
     this->testingNets = false;
 
-    numNets = 0;
-    numGenerations = 0;
-    numGamesPerNet = 0;
-    netHiddenLayerSize = 0;
+    this->initialize(0, 0, 0, 0, 't');
 
     this->reset();
+}
+
+void GameController::initialize(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode) {
+    this->numGenerations = numGenerations;
+    this->numNets = numNets;
+    this->numGamesPerNet = numGamesPerNet;
+    this->netHiddenLayerSize = netHiddenLayerSize;
+    this->setEvaluationMode(chMode);
 }
 
 void GameController::setEvaluationMode(char chMode) {

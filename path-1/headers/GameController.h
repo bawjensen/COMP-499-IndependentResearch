@@ -30,6 +30,8 @@ public:
     GameController();
     GameController(int numNets, int numGenerations, int numGamesPerNet, int netHiddenLayerSize, char chMode);
 
+    void initialize(int numNets, int numGenerations, int numGamesPerNet, int netHiddenLayerSize, char chMode);
+
     void setTestingNets(bool testingNets) { this->testingNets = testingNets; };
     void setDebug(bool debug) { this->debug = debug; };
     void setNumNets(int numNets) { this->numNets = numNets; };
