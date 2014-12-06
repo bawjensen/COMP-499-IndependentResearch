@@ -49,6 +49,7 @@ public:
 
     bool gameEnded();
     void start();
+    void start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode);
 
     void testNets();
     void runTraining();

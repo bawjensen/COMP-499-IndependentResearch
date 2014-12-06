@@ -64,6 +64,11 @@ void GameController::start() {
     }
 }
 
+void GameController::start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode) {
+    this->initialize(numGenerations, numNets, numGamesPerNet, netHiddenLayerSize, chMode);
+    this->start();
+}
+
 void GameController::testNets() {
     ifstream inFile("nets/11-24-14_32/0.net");
     NeuralNet net;

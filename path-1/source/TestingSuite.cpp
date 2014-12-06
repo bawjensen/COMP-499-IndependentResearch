@@ -1,18 +1,24 @@
 #include "../headers/TestingSuite.h"
 #include "../headers/GameController.h"
 
-#include <cstdlib>
+#include <fstream>
 
 using namespace std;
 
 long TestingSuite::numMoves = 0;
 
-void TestingSuite::start() {
+void TestingSuite::start(string configFile) {
     int numTests = 1;
 
     GameController gc;
 
     auto start = chrono::steady_clock::now();
+
+    ifstream inFile(configFile);
+
+    if (!inFile.is_open()) {
+        throw runtime_error("File path invalid: " + configFile);
+    }
 
     for (int i = 0; i < numTests; ++i) {
         // Current (from method declaration):
@@ -30,8 +36,7 @@ void TestingSuite::start() {
         // o Cross-mutation (two parents instead of the current one)
         // o Depth of game tree
 
-        gc.initialize(1000, 100, 10, 16, 'h');
-        gc.start();
+        gc.start(1000, 100, 10, 16, 'h');
     }
 
     auto end = chrono::steady_clock::now();

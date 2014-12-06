@@ -8,6 +8,6 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    TestingSuite::start();
+    TestingSuite::start("test-configs/1.cfg");
     cout << "...done." << endl;
 }
