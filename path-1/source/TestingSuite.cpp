@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <fstream>
 #include <chrono>
+#include <stdexcept>
 
 using namespace std;
 
