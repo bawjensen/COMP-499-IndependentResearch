@@ -2,6 +2,9 @@
 
 #include "Board.h"
 #include "NeuralNet.h"
+#include "NetManager.h"
+
+#include <fstream>
 
 enum EMode {
     HIGHEST,
@@ -12,17 +15,19 @@ enum EMode {
 class GameController {
 private:
     Board board;
+    NetManager mgr;
     int score;
     int numMoves;
+
+    bool redirectingOutput;
+    std::ofstream logFile;
+    std::streambuf *coutbuf; // old buf location
 
     int numNets;
     int numGenerations;
     int numGamesPerNet;
     int netHiddenLayerSize;
-
     EMode mode;
-
-    bool testingNets;
 
 public:
     static bool debug;
@@ -30,9 +35,9 @@ public:
     GameController();
     GameController(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode);
 
+    void reset();
     void initialize(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode);
 
-    void setTestingNets(bool testingNets) { this->testingNets = testingNets; };
     void setDebug(bool debug) { this->debug = debug; };
     void setNumNets(int numNets) { this->numNets = numNets; };
     void setNumGenerations(int numGenerations) { this->numGenerations = numGenerations; };
@@ -40,7 +45,6 @@ public:
     void setNetHiddenLayerSize(int netHiddenLayerSize) { this->netHiddenLayerSize = netHiddenLayerSize; };
     void setEvaluationMode(char chMode);
 
-    bool getTestingNets() { return this->testingNets; };
     bool getDebug() { return this->debug; };
     int getNumNets() { return this->numNets; };
     int getNumGenerations() { return this->numGenerations; };
@@ -51,12 +55,15 @@ public:
     void start();
     void start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode);
 
-    void testNets();
+    // void testNets();
     void runTraining();
 
     // void runGame();
     int runGameWithNet(NeuralNet& net);
     
+    void redirectOutputTo(std::string logFilePath);
+    void restoreOutput();
+    void saveNetsTo(std::string outputDir);
     bool handleCommand(char& input);
     std::pair<bool, int> handleCommand(int& direction);
     // bool movesAvailable();

@@ -1,6 +1,7 @@
 #include "../headers/TestingSuite.h"
 #include "../headers/GameController.h"
 
+#include <sys/stat.h>
 #include <fstream>
 
 using namespace std;
@@ -8,8 +9,6 @@ using namespace std;
 long TestingSuite::numMoves = 0;
 
 void TestingSuite::start(string configFile) {
-    int numTests = 1;
-
     GameController gc;
 
     auto start = chrono::steady_clock::now();
@@ -20,7 +19,19 @@ void TestingSuite::start(string configFile) {
         throw runtime_error("File path invalid: " + configFile);
     }
 
-    for (int i = 0; i < numTests; ++i) {
+    string configSetLabel;
+    inFile >> configSetLabel;
+
+    int gens, nets, games, hSize;
+    char evalMode;
+    string configLabel;
+
+    if (inFile.eof()) {
+        throw runtime_error("Invalid file format, no configuration lines");
+    }
+
+    // for (int i = 0; i < numTests; ++i) {
+    while (inFile >> configLabel) {
         // Current (from method declaration):
         // (int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode)
 
@@ -36,8 +47,24 @@ void TestingSuite::start(string configFile) {
         // o Cross-mutation (two parents instead of the current one)
         // o Depth of game tree
 
-        gc.start(1000, 100, 10, 16, 'h');
+        string runLabel = configSetLabel + "_" + configLabel;
+
+        mkdir(runLabel.c_str(), 0755);
+        gc.redirectOutputTo(runLabel + "/output.log");
+
+        inFile >> gens;
+        inFile >> nets;
+        inFile >> games;
+        inFile >> hSize;
+        inFile >> evalMode;
+
+        gc.start(gens, nets, games, hSize, evalMode);
+        gc.saveNetsTo(runLabel);
+        // gc.start(1000, 100, 10, 16, 'h');
+        gc.reset();
     }
+
+    gc.restoreOutput();
 
     auto end = chrono::steady_clock::now();
 

@@ -22,9 +22,15 @@ string str(int i) {
 // =============================================================================
 
 GameController::GameController() {
-    this->testingNets = false;
-
+    this->redirectingOutput = false;
+    this->reset();
     this->initialize(0, 0, 0, 0, 't');
+}
+
+void GameController::reset() {
+    this->board.reset();
+    this->score = 0;
+    this->numMoves = 0;
 }
 
 void GameController::initialize(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode) {
@@ -47,7 +53,8 @@ void GameController::setEvaluationMode(char chMode) {
             this->mode = AVERAGE;
             break;
         default:
-            throw runtime_error("Impossible mode for evaluation.");
+            string strMode(&chMode, 1);
+            throw runtime_error("Impossible mode for evaluation:" + strMode);
     }
 }
 
@@ -56,78 +63,76 @@ bool GameController::gameEnded() {
 }
 
 void GameController::start() {
-    if (GameController::testingNets) {
-        this->testNets();
-    }
-    else {
-        this->runTraining();
-    }
+    this->runTraining();
 }
 
 void GameController::start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode) {
     this->initialize(numGenerations, numNets, numGamesPerNet, netHiddenLayerSize, chMode);
+
+    cout << "Initialized with: " << endl
+        << "numGenerations: " << numGenerations << endl
+        << "numNets: " << numNets << endl
+        << "numGamesPerNet: " << numGamesPerNet << endl
+        << "netHiddenLayerSize: " << netHiddenLayerSize << endl
+        << "chMode: " << chMode << endl;
+
     this->start();
 }
 
-void GameController::testNets() {
-    ifstream inFile("nets/11-24-14_32/0.net");
-    NeuralNet net;
+// void GameController::testNets() {
+//     ifstream inFile("nets/11-24-14_32/0.net");
+//     NeuralNet net;
 
-    if (!inFile.is_open()) {
-        throw runtime_error("Problem opening serialized net");
-    }
+//     if (!inFile.is_open()) {
+//         throw runtime_error("Problem opening serialized net");
+//     }
 
-    net.deserialize(inFile);
-    inFile.close();
+//     net.deserialize(inFile);
+//     inFile.close();
 
-    int numRuns = 1000;
+//     int numRuns = 1000;
 
-    int highest = -INFINITY;
-    int lowest = INFINITY;
-    int total = 0;
+//     int highest = -INFINITY;
+//     int lowest = INFINITY;
+//     int total = 0;
 
-    auto start = chrono::steady_clock::now();
-    srand(start.time_since_epoch().count());
+//     auto start = chrono::steady_clock::now();
+//     srand(start.time_since_epoch().count());
 
-    this->board.initialize();
+//        this->board.initialize();
 
-    int score;
-    for (int i = 0; i < numRuns; ++i) {
-        this->board.reset();
-        this->board.manualSet(0, 0, 2, 0, 1, 2);
-        score = this->runGameWithNet(net);
-        total += score;
-        highest = score > highest ? score : highest;
-        lowest = score < lowest ? score : lowest;
-        // cout << "Run " << i << " got score: " << score << endl;
-    }
+//     int score;
+//     for (int i = 0; i < numRuns; ++i) {
+//         this->board.reset();
+//         this->board.manualSet(0, 0, 2, 0, 1, 2);
+//         score = this->runGameWithNet(net);
+//         total += score;
+//         highest = score > highest ? score : highest;
+//         lowest = score < lowest ? score : lowest;
+//         // cout << "Run " << i << " got score: " << score << endl;
+//     }
 
-    auto end = chrono::steady_clock::now();
+//     auto end = chrono::steady_clock::now();
 
-    cout << "Net stats:" << endl;
-    cout << "highest: " << highest << endl;
-    cout << "lowest:  " << lowest << endl;
-    cout << "average: " << total / (float)numRuns << endl;
+//     cout << "Net stats:" << endl;
+//     cout << "highest: " << highest << endl;
+//     cout << "lowest:  " << lowest << endl;
+//     cout << "average: " << total / (float)numRuns << endl;
 
-    double numSec = chrono::duration<double>(end - start).count();
-    cout << numRuns << " games in " << numSec << " sec (" << (int)(numRuns / numSec) << " games per second)" << endl;
+//     double numSec = chrono::duration<double>(end - start).count();
+//     cout << numRuns << " games in " << numSec << " sec (" << (int)(numRuns / numSec) << " games per second)" << endl;
 
-}
+// }
 
 void GameController::runTraining() {
-    NetManager mgr(this->numNets, this->netHiddenLayerSize);
+    this->mgr.initialize(this->numNets, this->netHiddenLayerSize);
 
     srand(chrono::system_clock::now().time_since_epoch().count());
 
-    this->board.initialize();
+    // this->board.initialize();
     // this->board.seed();
 
-    int score;
-    int totalScore;
-    int netTotalScore;
-    int netHighest;
-    int tempScore;
-    int genHighest;
+    int score, totalScore, netTotalScore, netHighest, tempScore, genHighest;
     float tempNetScore;
     // Run generations and mutations training
     for (int i = 0; i < this->numGenerations; ++i) {
@@ -171,13 +176,6 @@ void GameController::runTraining() {
             << " (top score: " << genHighest << ")" << endl;
         mgr.selectAndMutateSurvivors();
     }
-
-    // Serialize and save nets
-    for (int i = 0; i < this->numNets; ++i) {
-        ofstream outFile("nets/" + str(i) + ".net");
-        outFile << mgr[i].serialize();
-        outFile.close();
-    }
 }
 
 // void GameController::runGame() {
@@ -219,6 +217,48 @@ int GameController::runGameWithNet(NeuralNet& net) {
     }
 
     return score;
+}
+
+void GameController::redirectOutputTo(string logFilePath) {
+    if (!this->redirectingOutput) { // If not already redirecting output
+        this->logFile.open(logFilePath);
+
+        if (!this->logFile.is_open()) throw runtime_error("Could not open file: " + logFilePath);
+
+        this->coutbuf = cout.rdbuf(); // save old buf
+        cout.rdbuf(this->logFile.rdbuf()); // redirect cout to log
+
+        this->redirectingOutput = true;
+    }
+    else { // If already redirecting output;
+        this->logFile.close();
+        this->logFile.open(logFilePath);
+
+        if (!this->logFile.is_open()) throw runtime_error("Could not open file: " + logFilePath);
+
+        cout.rdbuf(this->logFile.rdbuf()); // redirect cout to log
+        
+        this->redirectingOutput = true;
+    }
+}
+
+void GameController::restoreOutput() {
+    if (this->redirectingOutput) {
+        cout.rdbuf(this->coutbuf); // restore 
+        this->redirectingOutput = false;
+    }
+    else {
+        throw runtime_error("Cannot restore output that hasn't been redirected");
+    }
+}
+
+void GameController::saveNetsTo(string outputDir) {
+    // Serialize and save nets
+    for (int i = 0; i < this->numNets; ++i) {
+        ofstream outFile(outputDir + "/" + str(i) + ".net");
+        outFile << this->mgr[i].serialize();
+        outFile.close();
+    }
 }
 
 pair<bool, int> GameController::handleCommand(int& direction) {
