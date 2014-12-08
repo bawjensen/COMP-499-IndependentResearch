@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
         configFileName = argv[2];
     }
     else {
-        configFileName = "test-configs/1.cfg";
+        configFileName = "test-configs/test.cfg";
     }
     cout << "Running: " << configFileName << endl;
     TestingSuite::start(configFileName);

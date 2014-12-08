@@ -28,15 +28,16 @@ private:
     int numGamesPerNet;
     int netHiddenLayerSize;
     EMode mode;
+    int treeDepth;
 
 public:
     static bool debug;
 
     GameController();
-    GameController(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode);
+    GameController(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth);
 
     void reset();
-    void initialize(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode);
+    void initialize(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth);
 
     void setDebug(bool debug) { this->debug = debug; };
     void setNumNets(int numNets) { this->numNets = numNets; };
@@ -53,7 +54,7 @@ public:
 
     bool gameEnded();
     void start();
-    void start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode);
+    void start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth);
 
     // void testNets();
     void runTraining();

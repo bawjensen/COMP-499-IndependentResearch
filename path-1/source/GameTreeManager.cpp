@@ -16,6 +16,8 @@ string printArray(float* array, int size) {
     return buffer.str();
 }
 
+// ------------------------------------------------------------------------------------------------
+
 void GameTreeManager::findChildren(const Board& parent, Board* children, int& numChildren, bool playerMove) {
     if (playerMove) {
         pair<bool, int> result;
@@ -93,9 +95,8 @@ float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizi
     return bestVal;
 }
 
-int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net) {
+int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net, int treeDepth) {
     int bestOption = -1;
-    int depth = 1;
 
     // Manually perform first layer of minimax, in order to know which direction to go
     float tempVal,
@@ -106,7 +107,7 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net)
     GameTreeManager::findChildren(board, children, numChildren, true);
 
     for (int i = 0; i < numChildren; ++i) {
-        tempVal = minimax(children[i], net, depth - 1, false);
+        tempVal = minimax(children[i], net, treeDepth - 1, false);
 
         if (tempVal > bestVal) {
             bestVal = tempVal;

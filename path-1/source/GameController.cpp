@@ -24,7 +24,7 @@ string str(int i) {
 GameController::GameController() {
     this->redirectingOutput = false;
     this->reset();
-    this->initialize(0, 0, 0, 0, 't');
+    this->initialize(0, 0, 0, 0, 't', 2);
 }
 
 void GameController::reset() {
@@ -33,12 +33,13 @@ void GameController::reset() {
     this->numMoves = 0;
 }
 
-void GameController::initialize(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode) {
+void GameController::initialize(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth) {
     this->numGenerations = numGenerations;
     this->numNets = numNets;
     this->numGamesPerNet = numGamesPerNet;
     this->netHiddenLayerSize = netHiddenLayerSize;
     this->setEvaluationMode(chMode);
+    this->treeDepth = treeDepth;
 }
 
 void GameController::setEvaluationMode(char chMode) {
@@ -66,15 +67,16 @@ void GameController::start() {
     this->runTraining();
 }
 
-void GameController::start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode) {
-    this->initialize(numGenerations, numNets, numGamesPerNet, netHiddenLayerSize, chMode);
+void GameController::start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth) {
+    this->initialize(numGenerations, numNets, numGamesPerNet, netHiddenLayerSize, chMode, treeDepth);
 
     cout << "Initialized with: " << endl
         << "numGenerations: " << numGenerations << endl
         << "numNets: " << numNets << endl
         << "numGamesPerNet: " << numGamesPerNet << endl
         << "netHiddenLayerSize: " << netHiddenLayerSize << endl
-        << "chMode: " << chMode << endl;
+        << "chMode: " << chMode << endl
+        << "treeDepth: " << treeDepth << endl;
 
     this->start();
 }
@@ -198,7 +200,7 @@ int GameController::runGameWithNet(NeuralNet& net) {
     pair<bool, int> result;
 
     while ( !this->gameEnded() ) {
-        direction = GameTreeManager::determineBestMove(board, net);
+        direction = GameTreeManager::determineBestMove(board, net, this->treeDepth);
 
         result = this->handleCommand(direction);
 
@@ -237,14 +239,15 @@ void GameController::redirectOutputTo(string logFilePath) {
         if (!this->logFile.is_open()) throw runtime_error("Could not open file: " + logFilePath);
 
         cout.rdbuf(this->logFile.rdbuf()); // redirect cout to log
-        
-        this->redirectingOutput = true;
     }
 }
 
 void GameController::restoreOutput() {
     if (this->redirectingOutput) {
-        cout.rdbuf(this->coutbuf); // restore 
+        this->logFile.close();
+
+        cout.rdbuf(this->coutbuf); // restore old cout to cout
+
         this->redirectingOutput = false;
     }
     else {

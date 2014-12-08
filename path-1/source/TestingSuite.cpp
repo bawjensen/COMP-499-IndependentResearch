@@ -24,7 +24,7 @@ void TestingSuite::start(string configFile) {
     string configSetLabel;
     inFile >> configSetLabel;
 
-    int gens, nets, games, hSize;
+    int gens, nets, games, hSize, treeDepth;
     char evalMode;
     string configLabel;
 
@@ -61,8 +61,9 @@ void TestingSuite::start(string configFile) {
         inFile >> games;
         inFile >> hSize;
         inFile >> evalMode;
+        inFile >> treeDepth;
 
-        gc.start(gens, nets, games, hSize, evalMode);
+        gc.start(gens, nets, games, hSize, evalMode, treeDepth);
         gc.saveNetsTo(runLabel);
         // gc.start(1000, 100, 10, 16, 'h');
         gc.reset();
