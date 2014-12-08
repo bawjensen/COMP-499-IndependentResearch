@@ -42,7 +42,7 @@ void TestingSuite::start(string configFile) {
         // + Nets
         // + Games
         // + Hidden Size
-        // + Survivor Choice Method
+        // + Survivor Choice Method (which scoring system determines how 'well' a net did)
         // o Mutation Rate (random boolean to determine whether or not to mutate)
         // o Mutation Method (different distributions, different std dev's)
         // o Random insertion of newcomers (yes/no, possibly how many/how often)
