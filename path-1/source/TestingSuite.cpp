@@ -51,6 +51,8 @@ void TestingSuite::start(string configFile) {
 
         string runLabel = configSetLabel + "_" + configLabel;
 
+        cout << "Currently running: " << runLabel << endl;
+
         mkdir(runLabel.c_str(), 0755);
         gc.redirectOutputTo(runLabel + "/output.log");
 
@@ -64,9 +66,8 @@ void TestingSuite::start(string configFile) {
         gc.saveNetsTo(runLabel);
         // gc.start(1000, 100, 10, 16, 'h');
         gc.reset();
+        gc.restoreOutput();
     }
-
-    gc.restoreOutput();
 
     auto end = chrono::steady_clock::now();
 
