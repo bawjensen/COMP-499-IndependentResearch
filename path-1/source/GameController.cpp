@@ -218,7 +218,7 @@ pair<bool, int> GameController::handleCommand(const int& direction) {
         result = this->board.shift(direction);
     }
     else {
-        throw runtime_error("Tried to move in an invalid direction (outside of range 0 - 3)")
+        throw runtime_error("Tried to move in an invalid direction (outside of range 0 - 3)");
     }
 
     return result;
