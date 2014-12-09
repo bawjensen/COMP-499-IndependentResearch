@@ -12,3 +12,6 @@ forge/eclipse/crash-reports
 
 # IDEA stuff
 forge/forge.iws
+
+# Logs and Serialized Data
+runs/
