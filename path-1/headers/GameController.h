@@ -66,6 +66,6 @@ public:
     void restoreOutput();
     void saveNetsTo(std::string outputDir);
     bool handleCommand(char& input);
-    std::pair<bool, int> handleCommand(int& direction);
+    std::pair<bool, int> handleCommand(const int& direction);
     // bool movesAvailable();
 };

@@ -1,5 +1,6 @@
 #include "../headers/Board.h"
 #include "../headers/GameTreeManager.h"
+#include "../headers/GameController.h"
 #include "../headers/NeuralNet.h"
 
 #include <cmath>
@@ -105,6 +106,13 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net,
     int numChildren;
     Board* children = new Board[4];
     GameTreeManager::findChildren(board, children, numChildren, true);
+
+    if (GameController::debug) cout << "Parent: " << endl << board << endl;
+    if (GameController::debug) cout << "numChildren: " << numChildren << endl;
+
+    for (int i = 0; i < numChildren; ++i) {
+        if (GameController::debug) cout << "Child " << i << ": " << endl << board << endl;
+    }
 
     for (int i = 0; i < numChildren; ++i) {
         tempVal = minimax(children[i], net, treeDepth - 1, false);

@@ -11,7 +11,7 @@
 
 using namespace std;
 
-bool GameController::debug = false;
+bool GameController::debug = true;
 
 string str(int i) {
     ostringstream convert;
@@ -155,8 +155,8 @@ int GameController::runGameWithNet(NeuralNet& net) {
         success = result.first;
 
         if (!success) {
-            cout << this->board << endl;
-            throw runtime_error("^Board tried a bad direction");
+            if (GameController::debug) cout << "Direction: " << direction << " - Board:" << endl << this->board << endl;
+            throw runtime_error("Board tried a bad direction");
         }
 
         score += result.second;
@@ -211,11 +211,14 @@ void GameController::saveNetsTo(string outputDir) {
     }
 }
 
-pair<bool, int> GameController::handleCommand(int& direction) {
+pair<bool, int> GameController::handleCommand(const int& direction) {
     pair<bool, int> result;
 
     if (direction < 4 && direction >= 0) {
         result = this->board.shift(direction);
+    }
+    else {
+        throw runtime_error("Tried to move in an invalid direction (outside of range 0 - 3)")
     }
 
     return result;
