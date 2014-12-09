@@ -214,10 +214,10 @@ void GameController::saveNetsTo(string outputDir) {
 pair<bool, int> GameController::handleCommand(const int& direction) {
     pair<bool, int> result;
 
-    if (direction < 4 && direction >= 0) {
+    if (direction < 4 && direction >= 0)
         result = this->board.shift(direction);
-    }
     else {
+        cout << "Bad move was: " << direction << endl;
         throw runtime_error("Tried to move in an invalid direction (outside of range 0 - 3)");
     }
 

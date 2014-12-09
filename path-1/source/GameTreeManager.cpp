@@ -111,7 +111,7 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net,
     if (GameController::debug) cout << "numChildren: " << numChildren << endl;
 
     for (int i = 0; i < numChildren; ++i) {
-        if (GameController::debug) cout << "Child " << i << ": " << endl << board << endl;
+        if (GameController::debug) cout << "Child " << i << ": " << endl << children[i] << endl;
     }
 
     for (int i = 0; i < numChildren; ++i) {
@@ -123,7 +123,16 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net,
         }
     }
 
+    int goOne = children[bestOption].getLastMove();
+
     delete[] children;
 
-    return children[bestOption].getLastMove();
+    int goTwo = children[bestOption].getLastMove();
+
+    if (goOne != goTwo) {
+        // throw runtime_error("BAD TIMES");
+        cout << "BAD TIMES" << endl;
+    }
+
+    return goOne;
 }
