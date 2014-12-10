@@ -47,7 +47,8 @@ void TestingSuite::start(string configFile) {
         // o Mutation Method (different distributions, different std dev's)
         // o Random insertion of newcomers (yes/no, possibly how many/how often)
         // o Cross-mutation (two parents instead of the current one)
-        // o Depth of game tree
+        // + Depth of game tree
+        // o Normalize or just flatten
 
         string runLabel = configSetLabel + "_" + configLabel;
 

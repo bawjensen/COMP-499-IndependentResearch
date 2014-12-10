@@ -332,6 +332,7 @@ Board& Board::operator=(const Board& other) {
     if (!this->initialized) this->initialize();
 
     this->highestValue = other.highestValue;
+    this->lastMove = other.lastMove;
 
     for (int i = 0; i < this->width; ++i) {
         for (int j = 0; j < this->width; ++j) {

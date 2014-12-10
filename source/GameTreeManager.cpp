@@ -55,6 +55,7 @@ void GameTreeManager::findChildren(const Board& parent, Board* children, int& nu
 }
 
 float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizing) {
+    cout << "Recursed, depth: " << depth << " - " << (maximizing ? "max" : "mini") << endl;
     float bestVal;
     if (depth == 0) {
         // bestVal = net.run(board.flatten());
@@ -63,6 +64,7 @@ float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizi
         // cout << "Board evalled to: " << bestVal << endl << printArray(board.flattenNormalize(), 16) << endl;
     }
     else if (maximizing) {
+        // cout << "Our move, depth: " << depth << endl;
         float tempVal;
         bestVal = -INFINITY;
 
@@ -71,13 +73,15 @@ float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizi
         GameTreeManager::findChildren(board, children, numChildren, maximizing);
 
         for (int i = 0; i < numChildren; ++i) {
-            tempVal = minimax(children[i], net, depth - 1, false);
+            tempVal = minimax(children[i], net, depth - 1, !maximizing);
+            cout << "Depth: " << depth << " - Minimizing damage: " << tempVal << endl;
             bestVal = max(bestVal, tempVal);
         }
 
         delete[] children;
     }
     else {
+        // cout << "Random addition, depth: " << depth << endl;
         float tempVal;
         bestVal = INFINITY;
 
@@ -86,7 +90,8 @@ float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizi
         GameTreeManager::findChildren(board, children, numChildren, maximizing);
 
         for (int i = 0; i < numChildren; ++i) {
-            tempVal = minimax(children[i], net, depth - 1, true);
+            tempVal = minimax(children[i], net, depth - 1, !maximizing);
+            cout << "Depth: " << depth << " - Maximizing gain: " << tempVal << endl;
             bestVal = min(bestVal, tempVal);
         }
 
@@ -96,7 +101,7 @@ float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizi
     return bestVal;
 }
 
-int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net, int treeDepth) {
+int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net, int depth) {
     int bestOption = -1;
 
     // Manually perform first layer of minimax, in order to know which direction to go
@@ -111,11 +116,13 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net,
     if (GameController::debug) cout << "numChildren: " << numChildren << endl;
 
     for (int i = 0; i < numChildren; ++i) {
-        if (GameController::debug) cout << "Child " << i << ": " << endl << children[i] << endl;
+        // if (GameController::debug) cout << "Child " << i << ": " << endl << children[i] << endl;
     }
 
     for (int i = 0; i < numChildren; ++i) {
-        tempVal = minimax(children[i], net, treeDepth - 1, false);
+        tempVal = minimax(children[i], net, depth - 1, false);
+
+        if (GameController::debug) cout << "Depth: " << depth << " - score: " << tempVal << endl;
 
         if (tempVal > bestVal) {
             bestVal = tempVal;
