@@ -1,6 +1,5 @@
 #include "../headers/GameController.h"
 #include "../headers/GameTreeManager.h"
-#include "../headers/NetManager.h"
 
 #include <iostream>
 #include <chrono>
@@ -11,7 +10,7 @@
 
 using namespace std;
 
-bool GameController::debug = true;
+bool GameController::debug = false;
 
 string str(int i) {
     ostringstream convert;

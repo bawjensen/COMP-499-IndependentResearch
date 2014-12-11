@@ -172,7 +172,7 @@ void Board::addRandomTile() {
     this->addPiece(randX, randY);
 }
 
-pair<int, int> Board::getVector(int dir) {
+pair<int, int> Board::getVector(int dir) const {
     pair<int, int> vec;
 
     switch(dir) {
@@ -219,12 +219,12 @@ void Board::getYTraversals(pair<int, int> dir, int* traversals) {
     }
 }
 
-bool Board::coordsInBounds(pair<int, int> pos) {
+bool Board::coordsInBounds(pair<int, int> pos) const {
     return (pos.first >= 0  && pos.first < this->width) &&
            (pos.second >= 0 && pos.second < this->width);
 }
 
-bool Board::slotOccupied(pair<int, int> pos) {
+bool Board::slotOccupied(pair<int, int> pos) const {
     return !this->board[pos.first][pos.second].isEmpty();
 }
 
@@ -296,7 +296,7 @@ pair<bool, int> Board::shift(int dir) {
     return make_pair(someTileMoved, score);
 }
 
-bool Board::slotsAvailable() {
+bool Board::slotsAvailable() const {
     for (int x = 0; x < this->width; ++x) {
         for (int y = 0; y < this->width; ++y) {
             if (this->board[x][y].isEmpty())
@@ -306,7 +306,7 @@ bool Board::slotsAvailable() {
     return false;
 }
 
-bool Board::matchesPossible() {
+bool Board::matchesPossible() const {
     for (int x = 0; x < this->width; ++x) {
         for (int y = 0; y < this->width; ++y) {
             if (this->board[x][y].isEmpty()) continue;
@@ -324,7 +324,7 @@ bool Board::matchesPossible() {
     return false;
 }
 
-bool Board::movesAvailable() {
+bool Board::movesAvailable() const {
     return this->slotsAvailable() || this->matchesPossible();
 }
 

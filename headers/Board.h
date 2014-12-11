@@ -70,15 +70,15 @@ public:
     std::pair<bool, int> shift(int dir);
     std::pair<int, int> findShiftDestination(int x, int y, std::pair<int, int> vec);
 
-    std::pair<int, int> getVector(int dir);
+    std::pair<int, int> getVector(int dir) const;
     void getXTraversals(std::pair<int, int> vec, int* traversals);
     void getYTraversals(std::pair<int, int> vec, int* traversals);
-    bool coordsInBounds(std::pair<int, int> vec);
-    bool slotOccupied(std::pair<int, int> vec);
+    bool coordsInBounds(std::pair<int, int> vec) const;
+    bool slotOccupied(std::pair<int, int> vec) const;
 
-    bool slotsAvailable();
-    bool matchesPossible();
-    bool movesAvailable();
+    bool slotsAvailable() const;
+    bool matchesPossible() const;
+    bool movesAvailable() const;
 
     Board& operator=(const Board& other);
 
