@@ -54,12 +54,16 @@ void GameTreeManager::findChildren(const Board& parent, Board* children, int& nu
     }
 }
 
+float evaluateBoard(const NeuralNet& net, const Board& board) {
+    bestVal = net.run(board.flattenNormalize());
+}
+
 float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizing) {
     cout << "Recursed, depth: " << depth << " - " << (maximizing ? "max" : "mini") << endl;
     float bestVal;
     if (depth == 0) {
         // bestVal = net.run(board.flatten());
-        bestVal = net.run(board.flattenNormalize());
+        bestVal = evaluateBoard(net, board);
         // cout << "Board evalled to: " << bestVal << endl << printArray(board.flatten(), 16) << endl;
         // cout << "Board evalled to: " << bestVal << endl << printArray(board.flattenNormalize(), 16) << endl;
     }
@@ -73,7 +77,12 @@ float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizi
         GameTreeManager::findChildren(board, children, numChildren, maximizing);
 
         for (int i = 0; i < numChildren; ++i) {
-            tempVal = minimax(children[i], net, depth - 1, !maximizing);
+            if (!board.movesAvailable()) {
+                tempVal = evaluateBoard(net, board);
+            }
+            else {
+                tempVal = minimax(children[i], net, depth - 1, !maximizing);
+            }
             cout << "Depth: " << depth << " - Minimizing damage: " << tempVal << endl;
             bestVal = max(bestVal, tempVal);
         }

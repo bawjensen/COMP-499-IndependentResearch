@@ -151,7 +151,7 @@ int GameController::runGameWithNet(NeuralNet& net) {
 
         result = this->handleCommand(direction);
 
-        if (GameController::debug) cout << "Move: " << endl << board << endl;
+        if (GameController::debug) cout << "After move: " << endl << board << endl;
         success = result.first;
 
         if (!success) {
