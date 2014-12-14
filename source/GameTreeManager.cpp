@@ -111,7 +111,8 @@ float minimax(const Board& board, const NeuralNet& net, int depth, bool maximizi
 }
 
 int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net, int depth) {
-    int bestOption = -1;
+    int bestOptionIndex = -1,
+        bestOptionDir;
 
     // Manually perform first layer of minimax, in order to know which direction to go
     float tempVal,
@@ -135,20 +136,13 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net,
 
         if (tempVal > bestVal) {
             bestVal = tempVal;
-            bestOption = i;
+            bestOptionIndex = i;
         }
     }
 
-    int goOne = children[bestOption].getLastMove();
+    bestOptionDir = children[bestOptionIndex].getLastMove();
 
     delete[] children;
 
-    int goTwo = children[bestOption].getLastMove();
-
-    if (goOne != goTwo) {
-        // throw runtime_error("BAD TIMES");
-        cout << "BAD TIMES" << endl;
-    }
-
-    return goOne;
+    return bestOptionDir;
 }
