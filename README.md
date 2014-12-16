@@ -1,5 +1,7 @@
 # General Notes
 
+Making a neural network setup that can play 2048 well (or at least decently well).
+
 ## Tweaking Parameters:
 
 + Generations
