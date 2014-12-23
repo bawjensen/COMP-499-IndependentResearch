@@ -1,6 +1,6 @@
 # General Notes
 
-Making a neural network setup that can play 2048 well (or at least decently well).
+Making a neural network setup that can play [2048](http://gabrielecirulli.github.io/2048/) well (or at least as well as a semi-skilled human).
 
 ## Tweaking Parameters:
 
