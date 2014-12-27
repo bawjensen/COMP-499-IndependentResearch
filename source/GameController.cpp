@@ -69,13 +69,17 @@ void GameController::start() {
 void GameController::start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth) {
     this->initialize(numGenerations, numNets, numGamesPerNet, netHiddenLayerSize, chMode, treeDepth);
 
-    cout << "Initialized with: " << endl
-        << "numGenerations: " << numGenerations << endl
-        << "numNets: " << numNets << endl
-        << "numGamesPerNet: " << numGamesPerNet << endl
-        << "netHiddenLayerSize: " << netHiddenLayerSize << endl
-        << "chMode: " << chMode << endl
-        << "treeDepth: " << treeDepth << endl;
+    // cout << "Initialized with: " << endl
+    //     << "numGenerations: " << numGenerations << endl
+    //     << "numNets: " << numNets << endl
+    //     << "numGamesPerNet: " << numGamesPerNet << endl
+    //     << "netHiddenLayerSize: " << netHiddenLayerSize << endl
+    //     << "chMode: " << chMode << endl
+    //     << "treeDepth: " << treeDepth << endl;
+
+    cout << "numGenerations,"     << "numNets,"     << "numGamesPerNet,"     << "netHiddenLayerSize,"     << "chMode,"     << "treeDepth" << endl
+         << numGenerations << "," << numNets << "," << numGamesPerNet << "," << netHiddenLayerSize << "," << chMode << "," << treeDepth   << endl
+         << endl;
 
     this->start();
 }
@@ -125,9 +129,13 @@ void GameController::runTraining() {
 
             totalScore += netTotalScore;
         }
-        cout << "Nets of generation " << i << " averaged: "
-            << (float)totalScore / (this->numNets * this->numGamesPerNet)
-            << " (top score: " << genHighest << ")" << endl;
+        // cout << "Nets of generation " << i << " averaged: "
+        //     << (float)totalScore / (this->numNets * this->numGamesPerNet)
+        //     << " (top score: " << genHighest << ")" << endl;
+
+        cout << i << ","
+            << (float)totalScore / (this->numNets * this->numGamesPerNet) << ","
+            << genHighest << endl;
 
         // Update overall top score
         overallTopScore = genHighest > overallTopScore ? genHighest : overallTopScore;
@@ -135,7 +143,7 @@ void GameController::runTraining() {
         mgr.selectAndMutateSurvivors();
     }
 
-    cout << "Best score overall: " << overallTopScore << endl;
+    cout << "Best score overall," << overallTopScore << endl;
 }
 
 int GameController::runGameWithNet(NeuralNet& net) {

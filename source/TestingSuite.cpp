@@ -13,7 +13,6 @@ long TestingSuite::numMoves = 0;
 void TestingSuite::start(string configFile) {
     GameController gc;
 
-    auto start = chrono::steady_clock::now();
 
     ifstream inFile(configFile);
 
@@ -32,12 +31,8 @@ void TestingSuite::start(string configFile) {
         throw runtime_error("Invalid file format, no configuration lines");
     }
 
-    // for (int i = 0; i < numTests; ++i) {
     while (inFile >> configLabel) {
-        // Current (from method declaration):
-        // (int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode)
-
-        // Needed (from README):
+        // Needed (from README) (o is incomplete, + is already a feature):
         // + Generations
         // + Nets
         // + Games
@@ -55,7 +50,7 @@ void TestingSuite::start(string configFile) {
         cout << "Currently running: " << runLabel << endl;
 
         mkdir(runLabel.c_str(), 0755);
-        gc.redirectOutputTo(runLabel + "/output.log");
+        gc.redirectOutputTo(runLabel + "/output.csv");
 
         inFile >> gens;
         inFile >> nets;
@@ -63,16 +58,27 @@ void TestingSuite::start(string configFile) {
         inFile >> hSize;
         inFile >> evalMode;
         inFile >> treeDepth;
+        
+        auto start = chrono::steady_clock::now();
 
         gc.start(gens, nets, games, hSize, evalMode, treeDepth);
+
+        auto end = chrono::steady_clock::now();
+        
+        double numSec = chrono::duration<double>(end - start).count();
+        cout << endl
+            << "moves," << TestingSuite::numMoves << endl
+            << "moves/sec," << (int)(TestingSuite::numMoves / numSec) << endl
+            << "seconds," << numSec << endl
+            << "minutes," << (numSec / 60.0f) << endl
+            << "hours," << (numSec / 3600.0f) << endl
+            << "days," << (numSec / 86400.0f) << endl;
+
+        
         gc.saveNetsTo(runLabel);
-        // gc.start(1000, 100, 10, 16, 'h');
         gc.reset();
         gc.restoreOutput();
     }
 
-    auto end = chrono::steady_clock::now();
 
-    double numSec = chrono::duration<double>(end - start).count();
-    cout << TestingSuite::numMoves << " moves in " << numSec << " sec (" << (int)(TestingSuite::numMoves / numSec) << " moves per second)" << endl;
 }
