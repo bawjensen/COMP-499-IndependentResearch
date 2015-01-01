@@ -1,2 +1,0 @@
-Sentence to understand:
-"Backpropagation, an abbreviation for "backward propagation of errors", is a common method of training artificial neural networks used in conjunction with an optimization method such as gradient descent."
