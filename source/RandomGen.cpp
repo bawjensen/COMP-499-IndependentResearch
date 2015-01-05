@@ -7,6 +7,13 @@ using namespace std;
 
 default_random_engine RandomGen::generator;
 Mode RandomGen::mode = MODE_ONE;
+float RandomGen::mean = 0.0f;
+float RandomGen::stdDev = 0.5f;
+
+void RandomGen::initialize(float mean, float stdDev) {
+    RandomGen::mean = mean;
+    RandomGen::stdDev = stdDev;
+}
 
 void RandomGen::setMode(int intMode) {
     switch (intMode) {
@@ -31,8 +38,8 @@ int RandomGen::getMode() {
     return RandomGen::mode;
 }
 
-float RandomGen::generate_v1(float stdDev) {
-    normal_distribution<float> distribution(0.0f, stdDev);
+float RandomGen::generate_v1() {
+    normal_distribution<float> distribution(0.0f, 0.5f);
     return distribution(RandomGen::generator);
 }
 
@@ -49,10 +56,10 @@ float RandomGen::generate_v4() {
     return distribution(RandomGen::generator);
 }
 
-float RandomGen::generate(float stdDev) {
+float RandomGen::generate() {
     switch(RandomGen::mode) {
         case MODE_ONE:
-            return RandomGen::generate_v1(stdDev);
+            return RandomGen::generate_v1();
         case MODE_TWO:
             return RandomGen::generate_v2();
         case MODE_THREE:

@@ -22,9 +22,9 @@ NeuralNet::~NeuralNet() {
     if (this->initialized) this->destroy();
 }
 
-float NeuralNet::generateRand() {
+float NeuralNet::randomInitialValue() {
     // return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-    return RandomGen::generate(0.5f);
+    return RandomGen::generate();
 }
 
 void NeuralNet::initialize(int inputSize, int hiddenSize) {
@@ -54,7 +54,7 @@ void NeuralNet::initialize(int inputSize, int hiddenSize) {
         this->edgeWeights[0][i] = new float[this->hiddenSize];
 
         for (int j = 0; j < this->hiddenSize; ++j) {
-            this->edgeWeights[0][i][j] = this->generateRand();
+            this->edgeWeights[0][i][j] = this->randomInitialValue();
         }
     }
 
@@ -63,7 +63,7 @@ void NeuralNet::initialize(int inputSize, int hiddenSize) {
 
     for (int i = 0; i < this->hiddenSize; ++i) {
         this->edgeWeights[1][i] = new float[1]; // Only one output node
-        this->edgeWeights[1][i][0] = this->generateRand();
+        this->edgeWeights[1][i][0] = this->randomInitialValue();
     }
 
     // Hidden layer and biases
@@ -71,7 +71,7 @@ void NeuralNet::initialize(int inputSize, int hiddenSize) {
     this->hiddenBiases = new float[this->hiddenSize];
 
     for (int i = 0; i < this->hiddenSize; ++i) {
-        this->hiddenBiases[i] = this->generateRand();
+        this->hiddenBiases[i] = this->randomInitialValue();
     }
 }
 
@@ -160,13 +160,13 @@ float NeuralNet::activate(float value) const {
     return (float)1 / (1 + exp(-value));
 }
 
-float NeuralNet::mutationValue() {
+float NeuralNet::randomMutationValue() {
     // return (rand() / (float)RAND_MAX) - 0.5f;
-    return RandomGen::generate(2.0f);
+    return RandomGen::generate();
 }
 
-float NeuralNet::biasMutationValue() {
-    return RandomGen::generate(2.0f);
+float NeuralNet::randomBiasMutationValue() {
+    return RandomGen::generate();
 }
 
 void NeuralNet::mutate() {
@@ -175,18 +175,18 @@ void NeuralNet::mutate() {
     // Mutate input layer to hidden layer edge weights
     for (int i = 0; i < this->inputSize; ++i) {
         for (int j = 0; j < this->hiddenSize; ++j) {
-            this->edgeWeights[0][i][j] += this->mutationValue();
+            this->edgeWeights[0][i][j] += this->randomMutationValue();
         }
     }
 
     // Mutate hidden layer to output layer edge weights
     for (int i = 0; i < this->hiddenSize; ++i) {
-        this->edgeWeights[1][i][0] += this->mutationValue();
+        this->edgeWeights[1][i][0] += this->randomMutationValue();
     }
 
     // Mutate hidden layer bias values
     for (int i = 0; i < this->hiddenSize; ++i) {
-        this->hiddenBiases[i] += this->biasMutationValue();
+        this->hiddenBiases[i] += this->randomBiasMutationValue();
     }
 }
 

@@ -1,5 +1,6 @@
-#include "../headers/TestingSuite.h"
 #include "../headers/GameController.h"
+#include "../headers/RandomGen.h"
+#include "../headers/TestingSuite.h"
 
 #include <sys/stat.h>
 #include <chrono>
@@ -11,20 +12,22 @@ using namespace std;
 
 long TestingSuite::numMoves = 0;
 
-void TestingSuite::start(string configFile) {
+void TestingSuite::start(string configFileName) {
     GameController gc;
 
-
-    ifstream inFile(configFile);
+    ifstream inFile(configFileName);
 
     if (!inFile.is_open()) {
-        throw runtime_error("File path invalid: " + configFile);
+        throw runtime_error("Config file path invalid: " + configFileName);
     }
 
     string configSetLabel;
-    inFile >> configSetLabel;
+    getline(inFile, configSetLabel);
+
+    if (configSetLabel.find(' ') != string::npos) { throw runtime_error("Improperly formatted file (first line label had spaces in it"); };
 
     int gens, nets, games, hSize, treeDepth;
+    float randomMean, randomStdDev;
     char evalMode;
     string configLabel;
 
@@ -52,7 +55,17 @@ void TestingSuite::start(string configFile) {
         // o Normalize or just flatten
 
         // Grab all the data
-        if (!(streamBuffer >> configLabel >> gens >> nets >> games >> hSize >> evalMode >> treeDepth)) { throw runtime_error("Improperly formatted file"); };
+        if (!(streamBuffer >> configLabel
+                           >> gens
+                           >> nets
+                           >> games
+                           >> hSize
+                           >> evalMode
+                           >> treeDepth
+                           >> randomMean
+                           >> randomStdDev)) {
+            throw runtime_error("Improperly formatted file (config line format doens't match)");
+        }
 
         // Create new directory for the data
 
@@ -67,6 +80,7 @@ void TestingSuite::start(string configFile) {
         
         auto start = chrono::steady_clock::now();
 
+        RandomGen::initialize(randomMean, randomStdDev);
         gc.start(gens, nets, games, hSize, evalMode, treeDepth);
 
         auto end = chrono::steady_clock::now();

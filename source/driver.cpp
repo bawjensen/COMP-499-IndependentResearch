@@ -10,7 +10,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-    // Block for setting cwd only on Mac, for profiling using Instruments application
+    // ifdef block for setting cwd only on Mac, for profiling using Instruments application
     // #ifdef __APPLE__
     // chdir("/Users/bryanjensen/Desktop/499IR/");
     // #endif

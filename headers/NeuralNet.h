@@ -15,9 +15,9 @@ private:
 
     bool initialized;
 
-    float generateRand();
-    float mutationValue();
-    float biasMutationValue();
+    float randomInitialValue();
+    float randomMutationValue();
+    float randomBiasMutationValue();
 
     void copyFrom(const NeuralNet& other);
 
