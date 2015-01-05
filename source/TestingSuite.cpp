@@ -2,8 +2,9 @@
 #include "../headers/GameController.h"
 
 #include <sys/stat.h>
-#include <fstream>
 #include <chrono>
+#include <fstream>
+#include <sstream>
 #include <stdexcept>
 
 using namespace std;
@@ -31,7 +32,12 @@ void TestingSuite::start(string configFile) {
         throw runtime_error("Invalid file format, no configuration lines");
     }
 
-    while (inFile >> configLabel) {
+    string stringBuffer;
+
+    // while (inFile >> configLabel) {
+    while (getline(inFile, stringBuffer)) {
+        istringstream streamBuffer(stringBuffer);
+
         // Needed (from README) (o is incomplete, + is already a feature):
         // + Generations
         // + Nets
@@ -45,19 +51,19 @@ void TestingSuite::start(string configFile) {
         // + Depth of game tree
         // o Normalize or just flatten
 
+        // Grab all the data
+        if (!(streamBuffer >> configLabel >> gens >> nets >> games >> hSize >> evalMode >> treeDepth)) { throw runtime_error("Improperly formatted file"); };
+
+        // Create new directory for the data
+
         string runLabel = configSetLabel + "_" + configLabel;
 
         cout << "Currently running: " << runLabel << endl;
 
-        mkdir(runLabel.c_str(), 0755);
+        mkdir(runLabel.c_str(), 0755); // 0755 is the code for rwxr-xr-x as permissions (0 is essential)
         gc.redirectOutputTo(runLabel + "/output.csv");
 
-        inFile >> gens;
-        inFile >> nets;
-        inFile >> games;
-        inFile >> hSize;
-        inFile >> evalMode;
-        inFile >> treeDepth;
+        // Actually run the thing
         
         auto start = chrono::steady_clock::now();
 
@@ -74,6 +80,7 @@ void TestingSuite::start(string configFile) {
             << "hours," << (numSec / 3600.0f) << endl
             << "days," << (numSec / 86400.0f) << endl;
 
+        // Save and clean up
         
         gc.saveNetsTo(runLabel);
         gc.reset();

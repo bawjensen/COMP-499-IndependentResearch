@@ -91,7 +91,11 @@ void GameController::runTraining() {
 
     int overallTopScore = 0; // Top score of every net in every generation of this setup
 
-    int score, totalScore, netTotalScore, netHighest, tempScore, genHighest;
+    int tempScore, // Temp storage of score for the net
+        totalScore, // Total score of the generation
+        netTotalScore, // Total score of the net in the generation
+        netHighest, // Top score of the net in the generation
+        genHighest; // Top score of the generation
     float tempNetScore;
 
     // Run generations and mutations training
@@ -129,9 +133,6 @@ void GameController::runTraining() {
 
             totalScore += netTotalScore;
         }
-        // cout << "Nets of generation " << i << " averaged: "
-        //     << (float)totalScore / (this->numNets * this->numGamesPerNet)
-        //     << " (top score: " << genHighest << ")" << endl;
 
         cout << i << ","
             << (float)totalScore / (this->numNets * this->numGamesPerNet) << ","

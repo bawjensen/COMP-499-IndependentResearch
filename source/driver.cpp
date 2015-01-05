@@ -10,6 +10,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
+    // Block for setting cwd only on Mac, for profiling using Instruments application
     // #ifdef __APPLE__
     // chdir("/Users/bryanjensen/Desktop/499IR/");
     // #endif
@@ -21,6 +22,7 @@ int main(int argc, char** argv) {
     else {
         configFileName = "test-configs/test.cfg";
     }
+
     cout << "Running: " << configFileName << endl;
     TestingSuite::start(configFileName);
     cout << "...done." << endl;
