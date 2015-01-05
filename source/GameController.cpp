@@ -1,5 +1,6 @@
 #include "../headers/GameController.h"
 #include "../headers/GameTreeManager.h"
+#include "../headers/RandomGen.h"
 
 #include <iostream>
 #include <chrono>
@@ -77,8 +78,8 @@ void GameController::start(int numGenerations, int numNets, int numGamesPerNet, 
     //     << "chMode: " << chMode << endl
     //     << "treeDepth: " << treeDepth << endl;
 
-    cout << "numGenerations,"     << "numNets,"     << "numGamesPerNet,"     << "netHiddenLayerSize,"     << "chMode,"     << "treeDepth" << endl
-         << numGenerations << "," << numNets << "," << numGamesPerNet << "," << netHiddenLayerSize << "," << chMode << "," << treeDepth   << endl
+    cout << "numGenerations,"     << "numNets,"     << "numGamesPerNet,"     << "netHiddenLayerSize,"     << "chMode,"     << "treeDepth,"     << "randomMean,"               << "randomStdDev"         << endl
+         << numGenerations << "," << numNets << "," << numGamesPerNet << "," << netHiddenLayerSize << "," << chMode << "," << treeDepth << "," << RandomGen::getMean() << "," << RandomGen::getStdDev() << endl
          << endl;
 
     this->start();

@@ -24,7 +24,10 @@ private:
 
 public:
     static void setMode(int intMode);
+
     static int getMode();
+    static float getMean() { return RandomGen::mean; };
+    static float getStdDev() { return RandomGen::stdDev; };
 
     static void initialize(float mean, float stdDev);
 
