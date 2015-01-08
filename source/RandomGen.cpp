@@ -39,7 +39,7 @@ int RandomGen::getMode() {
 }
 
 float RandomGen::generate_v1() {
-    normal_distribution<float> distribution(0.0f, 0.5f);
+    normal_distribution<float> distribution(RandomGen::mean, RandomGen::stdDev);
     return distribution(RandomGen::generator);
 }
 
