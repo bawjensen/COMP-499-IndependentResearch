@@ -15,3 +15,6 @@ forge/forge.iws
 
 # Logs and Serialized Data
 runs/
+
+# Node stuff
+node_modules/

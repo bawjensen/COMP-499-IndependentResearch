@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/bawjensen/COMP-499-IndependentResearch/issues"
   },
-  "homepage": "https://github.com/bawjensen/COMP-499-IndependentResearch"
+  "homepage": "https://github.com/bawjensen/COMP-499-IndependentResearch",
+  "dependencies": {
+    "express": "^4.11.1",
+    "jade": "^1.9.1"
+  }
 }
