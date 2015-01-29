@@ -1,0 +1,23 @@
+{
+  "name": "data-viewer",
+  "version": "1.0.0",
+  "description": "Viewing the data output of my work on neural networks",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bawjensen/COMP-499-IndependentResearch.git"
+  },
+  "keywords": [
+    "neural",
+    "networks"
+  ],
+  "author": "bawjensen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bawjensen/COMP-499-IndependentResearch/issues"
+  },
+  "homepage": "https://github.com/bawjensen/COMP-499-IndependentResearch"
+}
