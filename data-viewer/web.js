@@ -44,7 +44,6 @@ app.get('/data/', function(req, res) {
             })
         )
         .then(function sendData(data) {
-            console.log(data);
             res.send(data);
         })
         .catch(function handleErr(err) {
