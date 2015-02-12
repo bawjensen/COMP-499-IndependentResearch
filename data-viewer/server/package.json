@@ -1,7 +1,7 @@
 {
   "name": "data-viewer",
-  "version": "1.0.0",
-  "description": "Viewing the data output of my work on neural networks",
+  "version": "0.0.1",
+  "description": "Simple localhost setup to view the data from neural network runs",
   "main": "web.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,10 +10,6 @@
     "type": "git",
     "url": "git@github.com:bawjensen/COMP-499-IndependentResearch.git"
   },
-  "keywords": [
-    "neural",
-    "networks"
-  ],
   "author": "bawjensen",
   "license": "ISC",
   "bugs": {
@@ -21,7 +17,9 @@
   },
   "homepage": "https://github.com/bawjensen/COMP-499-IndependentResearch",
   "dependencies": {
-    "express": "^4.11.1",
-    "jade": "^1.9.1"
+    "body-parser": "^1.11.0",
+    "express": "^4.11.2",
+    "jade": "^1.9.2",
+    "request": "^2.53.0"
   }
 }
