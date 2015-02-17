@@ -42,7 +42,7 @@ app.post('/', function(req, res) {
     });
 });
 
-var port = 7500;
+var port = process.argv[2] || 5000;
 app.listen(port, function() {
     console.log('Listening on ' + port);
 });

@@ -4,17 +4,11 @@
 # Compiled files
 bin/
 
-# Eclipse stuff
-forge/eclipse/.metadata/
-forge/eclipse/saves/
-forge/eclipse/logs/
-forge/eclipse/crash-reports
-
-# IDEA stuff
-forge/forge.iws
-
 # Logs and Serialized Data
 runs/
 
 # Node stuff
 node_modules/
+
+# Server and visualizer stuff
+data-viewer/server/img/
