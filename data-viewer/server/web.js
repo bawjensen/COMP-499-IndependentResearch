@@ -36,7 +36,7 @@ app.post('/', function(req, res) {
             res.status(500).end();
         }
         else {
-            console.log(stdout);
+            console.log('success');
             res.send(plotName);
         }
     });

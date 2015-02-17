@@ -8,8 +8,9 @@ html
     link(rel='stylesheet' href='/css/style.css')
 
   body
-    each run in runs
-      div.option= run
+    #content
+      each run in runs
+        div.option= run
 
-    div#go Recompute the plot
-  
+      div#go Recompute the plot
+    

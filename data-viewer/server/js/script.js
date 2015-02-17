@@ -14,25 +14,31 @@ $(function() {
             selected.push($(ele).text());
         });
 
-        $.ajax({
-            url: '/',
-            method: 'POST',
-            data: {
-                selected: selected,
-                reqNum: requestNumber++
-            },
-            success: function(data, status) {
-                // console.log('yay');
-                // console.log(status);
-                // console.log(data);
 
-                $('#plot').remove();
+        if (selected.length) {
+            $.ajax({
+                url: '/',
+                method: 'POST',
+                data: {
+                    selected: selected,
+                    reqNum: requestNumber++
+                },
+                success: function(data, status) {
+                    // console.log('yay');
+                    // console.log(status);
+                    // console.log(data);
 
-                $('<img>', {
-                    id: 'plot',
-                    src: data
-                }).appendTo($('body'));
-            }
-        });
+                    $('#plot').remove();
+
+                    $('<img>', {
+                        id: 'plot',
+                        src: data
+                    }).appendTo($('#content'));
+                }
+            });
+        }
+        else {
+            alert('Please select some runs to be plotted');
+        }
     });
 });
