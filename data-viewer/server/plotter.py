@@ -1,7 +1,10 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import pandas as pd
 import seaborn as sns
 import sys
+
+matplotlib.use('Agg')
 
 def read_csv_for_plot(filename):
     averages = []
