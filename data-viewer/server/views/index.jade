@@ -9,8 +9,26 @@ html
 
   body
     #content
-      each run in runs
-        div.option= run
-
       div#go Recompute the plot
-    
+
+      #runs-table-container
+        div#run-label
+          span.label label
+          span.gens gens
+          span.nets nets
+          span.games games
+          span.layer layer
+          span.mode mode
+          span.depth depth
+        #all-runs
+          each run, runLabel in runs
+            div.run
+              span.label= runLabel
+              span.gens= run.numGenerations
+              span.nets= run.numNets
+              span.games= run.numGamesPerNet
+              span.layer= run.netHiddenLayerSize
+              span.mode= run.chMode
+              span.depth= run.treeDepth
+
+      #plot-container

@@ -1,39 +1,51 @@
 #content {
-    width: 1170px;
-    margin: 0 auto;
+  #runs-table-container {
+    float: left;
 
-    .option {
-        float: left;
-        // clear: left;
+    #run-label,
+    .run {
+      cursor: pointer;
 
-        padding: 10px;
-        margin: 10px;
-        border: 1px solid #E2E2E2;
-
-        background-color: #F9F9F9;
-
-        cursor: pointer;
-
-        &.selected {
-            background-color: #6CEA6C;
-        }
-    }
-
-    #go {
-        cursor: pointer;
-
-        clear: left;
-
-        background-color: #00AE31;
-        padding: 5px;
-
+      .label {
         width: 200px;
+        text-align: right;
+      }
+
+      &:nth-child(odd) {
+        background-color: #F2F2F2;
+      }
+
+      &.selected {
+        background-color: #00DD00;
+      }
+      
+      & > span {
+        display: inline-block;
+        width: 60px;
         text-align: center;
-        margin: 0 auto;
+      }
     }
 
-    #plot {
-        display: block;
-        margin: 0 auto;
+    #run-label {
+      font-weight: bold;
     }
+  }
+
+  #go {
+    cursor: pointer;
+
+    clear: left;
+
+    background-color: #00AE31;
+    padding: 5px;
+
+    width: 200px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  #plot {
+    display: block;
+    float: right;
+  }
 }
