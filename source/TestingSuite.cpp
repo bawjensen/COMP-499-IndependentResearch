@@ -64,7 +64,7 @@ void TestingSuite::start(string configFileName) {
                            >> treeDepth
                            >> randomMean
                            >> randomStdDev)) {
-            throw runtime_error("Improperly formatted file (config line format doens't match)");
+            throw runtime_error("Improperly formatted file (config line format doesn't match)");
         }
 
         // Create new directory for the data
