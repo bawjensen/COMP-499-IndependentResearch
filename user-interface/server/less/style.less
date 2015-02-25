@@ -1,5 +1,43 @@
+@label-width: 200px;
+@column-width: 50px;
+
 #content {
+  #new-run {
+    float: left;
+
+    input {
+      width: @column-width - 5px;
+      margin-right: 5px;
+
+      &#label {
+        width: @label-width;
+      }
+    }
+
+    #run-new {
+      position: absolute;
+      display: inline-block;
+      background-color: #5691ED;
+    }
+  }
+
+  #plot-it {
+    cursor: pointer;
+    clear: left;
+
+    background-color: #59EC59;
+
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  #plot {
+    display: block;
+    float: right;
+  }
+
   #runs-table-container {
+    clear: left;
     float: left;
 
     #run-label,
@@ -7,7 +45,7 @@
       cursor: pointer;
 
       .label {
-        width: 200px;
+        width: @label-width;
         text-align: right;
       }
 
@@ -21,7 +59,7 @@
       
       & > span {
         display: inline-block;
-        width: 50px;
+        width: @column-width;
         text-align: center;
       }
     }
@@ -29,23 +67,5 @@
     #run-label {
       font-weight: bold;
     }
-  }
-
-  #go {
-    cursor: pointer;
-
-    clear: left;
-
-    background-color: #00AE31;
-    padding: 5px;
-
-    width: 200px;
-    text-align: center;
-    margin: 0 auto;
-  }
-
-  #plot {
-    display: block;
-    float: right;
   }
 }

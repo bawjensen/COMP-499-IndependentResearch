@@ -1,6 +1,6 @@
 html
   head
-    title Hi
+    title Neural Network Interface
 
     script(type='text/javascript' src='//code.jquery.com/jquery-2.1.3.min.js')
     script(type='text/javascript' src='/js/script.js')
@@ -9,19 +9,22 @@ html
 
   body
     #content
-      div#go Recompute the plot
+      button#plot-it Recompute the plot
 
       #runs-table-container
-        div#run-label
-          span.label label
+        #run-label
           each keyObj in allKeys
             span(class=keyObj._class)= keyObj.display
 
         #all-runs
           each run, runLabel in runs
-            div.run
-              span.label= runLabel
+            .run
               each keyObj in allKeys
                 span(class=keyObj._class)= run[keyObj.key]
+                
+        form#new-run
+          each keyObj in allKeys
+            input(type='text' id=keyObj._class name=keyObj._class placeholder=keyObj.display value=keyObj._default)
+          button#run-new Start a new training run
 
       #plot-container

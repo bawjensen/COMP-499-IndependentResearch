@@ -17,7 +17,6 @@ private:
     Board board;
     NetManager mgr;
     int score;
-    int numMoves;
 
     bool redirectingOutput;
     std::ofstream logFile;
@@ -32,6 +31,7 @@ private:
 
 public:
     static bool debug;
+    static int numMoves;
 
     GameController();
     GameController(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth);

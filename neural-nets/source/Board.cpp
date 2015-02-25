@@ -1,5 +1,5 @@
 #include "../headers/Board.h"
-#include "../headers/TestingSuite.h"
+#include "../headers/GameController.h"
 
 #include <iomanip>
 #include <cmath>
@@ -291,7 +291,7 @@ pair<bool, int> Board::shift(int dir) {
         lastMove = dir;
     }
 
-    ++TestingSuite::numMoves;
+    ++GameController::numMoves;
 
     return make_pair(someTileMoved, score);
 }

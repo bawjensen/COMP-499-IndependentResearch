@@ -1,9 +1,12 @@
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import pandas as pd
+import numpy as np
 import seaborn as sns
 import sys
+
+# sns.set(rc={"figure.figsize": (6, 6)})
+# np.random.seed(sum(map(ord, "palettes")))
 
 def read_csv_for_plot(filename):
     averages = []
@@ -32,11 +35,17 @@ def read_csv_for_plot(filename):
 def plotAllCsvs():
     linewidth = 0.75
     
-    pngName = sys.argv[1]
-    csvDirs = sys.argv[2:]
+    pngName     = sys.argv[1]
+    csvSuperDir = sys.argv[2]
+    csvDirs     = sys.argv[3:]
+
+    sns.set_palette(sns.color_palette("hls", len(csvDirs)))
+    # sns.set_palette(sns.husl_palette(len(csvDirs)))
+    # sns.set_palette('hls')
+    print 'Setting', len(csvDirs), 'different colors'
 
     for csvDir in csvDirs:
-        csvPath = '../../runs/saved-runs/' + csvDir + '/output.csv'
+        csvPath = csvSuperDir + csvDir + '/output.csv'
         print 'Using:', csvPath
 
         try:

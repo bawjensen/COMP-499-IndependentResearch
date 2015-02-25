@@ -1,11 +1,33 @@
 var requestNumber = 0;
 
 $(function() {
-    $(document).on('click', '.run', function() {
-        $(this).toggleClass('selected');
+    var defaultLabel = $('input#label').val();
+    $('#new-run').submit(function(evt) {
+        evt.preventDefault();
+
+        var data = $(this).find('input').map(function() { return { key: this.name, value: this.value }; }).get();
+
+        dataObj = {};
+        data.forEach(function(entry) {
+            dataObj[entry.key] = entry.value;
+        });
+
+        if (dataObj.label === defaultLabel) {
+            alert('Must use a distinct label');
+            return;
+        }
+
+        $.ajax({
+            url: '/run',
+            method: 'POST',
+            data: dataObj,
+            success: function(data, status) {
+                console.log(data, status);
+            }
+        });
     });
 
-    $('#go').click(function() {
+    $('#plot-it').click(function() {
         var selected = [];
 
         $('.selected').each(function(i, ele) {
@@ -14,7 +36,7 @@ $(function() {
 
         if (selected.length) {
             $.ajax({
-                url: '/',
+                url: '/plot',
                 method: 'POST',
                 data: {
                     selected: selected,
@@ -33,6 +55,10 @@ $(function() {
         else {
             alert('Please select some runs to be plotted');
         }
+    });
+
+    $(document).on('click', '.run', function() {
+        $(this).toggleClass('selected');
     });
 
     var lastSorted;

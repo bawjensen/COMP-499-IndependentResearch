@@ -12,6 +12,7 @@
 using namespace std;
 
 bool GameController::debug = false;
+int GameController::numMoves = 0;
 
 string str(int i) {
     ostringstream convert;
@@ -30,7 +31,6 @@ GameController::GameController() {
 void GameController::reset() {
     this->board.reset();
     this->score = 0;
-    this->numMoves = 0;
 }
 
 void GameController::initialize(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth) {
@@ -177,44 +177,47 @@ int GameController::runGameWithNet(NeuralNet& net) {
     return score;
 }
 
-void GameController::redirectOutputTo(string logFilePath) {
-    if (!this->redirectingOutput) { // If not already redirecting output
-        this->logFile.open(logFilePath);
+// void GameController::redirectOutputTo(string logFilePath) {
+//     if (!this->redirectingOutput) { // If not already redirecting output
+//         this->logFile.open(logFilePath);
 
-        if (!this->logFile.is_open()) throw runtime_error("Could not open file: " + logFilePath);
+//         if (!this->logFile.is_open()) throw runtime_error("Could not open file: " + logFilePath);
 
-        this->coutbuf = cout.rdbuf(); // save old buf
-        cout.rdbuf(this->logFile.rdbuf()); // redirect cout to log
+//         this->coutbuf = cout.rdbuf(); // save old buf
+//         cout.rdbuf(this->logFile.rdbuf()); // redirect cout to log
 
-        this->redirectingOutput = true;
-    }
-    else { // If already redirecting output;
-        this->logFile.close();
-        this->logFile.open(logFilePath);
+//         this->redirectingOutput = true;
+//     }
+//     else { // If already redirecting output;
+//         this->logFile.close();
+//         this->logFile.open(logFilePath);
 
-        if (!this->logFile.is_open()) throw runtime_error("Could not open file: " + logFilePath);
+//         if (!this->logFile.is_open()) throw runtime_error("Could not open file: " + logFilePath);
 
-        cout.rdbuf(this->logFile.rdbuf()); // redirect cout to log
-    }
-}
+//         cout.rdbuf(this->logFile.rdbuf()); // redirect cout to log
+//     }
+// }
 
-void GameController::restoreOutput() {
-    if (this->redirectingOutput) {
-        this->logFile.close();
+// void GameController::restoreOutput() {
+//     if (this->redirectingOutput) {
+//         this->logFile.close();
 
-        cout.rdbuf(this->coutbuf); // restore old cout to cout
+//         cout.rdbuf(this->coutbuf); // restore old cout to cout
 
-        this->redirectingOutput = false;
-    }
-    else {
-        throw runtime_error("Cannot restore output that hasn't been redirected");
-    }
-}
+//         this->redirectingOutput = false;
+//     }
+//     else {
+//         throw runtime_error("Cannot restore output that hasn't been redirected");
+//     }
+// }
 
 void GameController::saveNetsTo(string outputDir) {
     // Serialize and save nets
+    cout << "Saving nets " << outputDir << endl;
     for (int i = 0; i < this->numNets; ++i) {
         ofstream outFile(outputDir + "/" + str(i) + ".net");
+        if (!outFile.is_open())
+            throw new runtime_error("File to serialize net into didn't open");
         outFile << this->mgr[i].serialize();
         outFile.close();
     }
