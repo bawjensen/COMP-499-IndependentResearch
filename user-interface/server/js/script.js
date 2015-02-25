@@ -23,6 +23,10 @@ $(function() {
             data: dataObj,
             success: function(data, status) {
                 console.log(data, status);
+            },
+            error: function(xhr, status, err) {
+                console.log(err);
+                alert('Label was already used');
             }
         });
     });

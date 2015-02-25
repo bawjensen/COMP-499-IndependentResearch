@@ -87,14 +87,17 @@ app.post('/plot', function(req, res) {
 app.post('/run', function(req, res) {
     var data = req.body;
 
-    try {
-        nnInterface.run(data, PROJECT_ROOT);
-    }
-    catch (err) {
-        console.log(err.stack);
-    }
+    var destinationDir = path.join(PROJECT_ROOT, 'runs', data.label);
 
-    res.send('started');
+    fs.exists(destinationDir, function(exists) {
+        if (!exists) {
+            nnInterface.run(data, PROJECT_ROOT);
+            res.status(200).send('started');
+        }
+        else {
+            res.status(500).end();
+        }
+    })
 });
 
 var port = process.argv[2] || 5000;

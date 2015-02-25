@@ -213,7 +213,6 @@ int GameController::runGameWithNet(NeuralNet& net) {
 
 void GameController::saveNetsTo(string outputDir) {
     // Serialize and save nets
-    cout << "Saving nets " << outputDir << endl;
     for (int i = 0; i < this->numNets; ++i) {
         ofstream outFile(outputDir + "/" + str(i) + ".net");
         if (!outFile.is_open())
