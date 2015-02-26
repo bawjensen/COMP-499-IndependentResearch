@@ -1,6 +1,6 @@
 var bodyParser  = require('body-parser'),
-    nnInterface = require('../controller/interface.js'),
     exec        = require('child_process').exec,
+    fork        = require('child_process').fork,
     express     = require('express'),
     fs          = require('fs'),
     jade        = require('jade'),
@@ -91,16 +91,42 @@ app.post('/run', function(req, res) {
 
     fs.exists(destinationDir, function(exists) {
         if (!exists) {
-            nnInterface.run(data, PROJECT_ROOT);
-            res.status(200).send('started');
+            fs.mkdir(destinationDir, function(err) {
+                if (err) throw err;
+                console.log('Created', destinationDir);
+
+                console.log('Starting the detached child process');
+
+                var interfaceChild = fork('./interface', { detached: true, stdio: ['pipe', 'pipe', 'pipe']/*, stdio: [0, 1, 2]*/ });
+
+                interfaceChild.stdout.on('data', function(data) {
+                    console.log(data.toString()); 
+                });
+
+                interfaceChild.send({ runConfig: data, projectRoot: PROJECT_ROOT, outDir: destinationDir });
+
+                interfaceChild.unref();
+
+                res.status(200).send('started');
+            });
         }
         else {
             res.status(500).end();
         }
-    })
+    });
 });
 
-var port = process.argv[2] || 5000;
+function createDetachedChild() {
+    var interfaceChild = fork('./interface', { detached: true });
+
+    interfaceChild.send({ runConfig: null, projectRoot: null, outDir: null });
+
+    interfaceChild.unref();
+}
+
+createDetachedChild();
+
+var port = process.argv[2] || 8000;
 app.listen(port, function() {
     console.log('Listening on ' + port);
 });
