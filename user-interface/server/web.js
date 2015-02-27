@@ -90,41 +90,21 @@ app.post('/run', function(req, res) {
     var destinationDir = path.join(PROJECT_ROOT, 'runs', data.label);
 
     fs.exists(destinationDir, function(exists) {
-        if (!exists) {
-            fs.mkdir(destinationDir, function(err) {
-                if (err) throw err;
-                console.log('Created', destinationDir);
+        // if (!exists) {
+        if (true) {
+            console.log('Starting the detached child process');
 
-                console.log('Starting the detached child process');
+            var interfaceChild = fork('./interface', { detached: true });
+            interfaceChild.send({ runConfig: data, projectRoot: PROJECT_ROOT, outDir: destinationDir });
+            interfaceChild.unref();
 
-                var interfaceChild = fork('./interface', { detached: true, stdio: ['pipe', 'pipe', 'pipe']/*, stdio: [0, 1, 2]*/ });
-
-                interfaceChild.stdout.on('data', function(data) {
-                    console.log(data.toString()); 
-                });
-
-                interfaceChild.send({ runConfig: data, projectRoot: PROJECT_ROOT, outDir: destinationDir });
-
-                interfaceChild.unref();
-
-                res.status(200).send('started');
-            });
+            res.status(200).send('started');
         }
         else {
             res.status(500).end();
         }
     });
 });
-
-function createDetachedChild() {
-    var interfaceChild = fork('./interface', { detached: true });
-
-    interfaceChild.send({ runConfig: null, projectRoot: null, outDir: null });
-
-    interfaceChild.unref();
-}
-
-createDetachedChild();
 
 var port = process.argv[2] || 8000;
 app.listen(port, function() {

@@ -1,13 +1,21 @@
+var fs = require('fs'),
+    path = require('path');
+
 process.on('message', function(m) {
-    console.log('Child got:', m);
-    m.test2 = false;
+    // console.log('Child got:', m);
+    // m.test2 = false;
 
-    var i = 0;
-    while (++i < 10000000000) {
-        if (i % 100000000 === 0) {
-            console.log(i);
-        }
-    }
+    // var i = 0;
+    // while (++i < 1000000000) {
+    //     if (i % 100000000 === 0) {
+    //         console.log(i);
+    //     }
+    // }
 
-    process.send(m);
+    // process.send(m);
+    console.log(__dirname);
+    
+    var outLog = fs.createWriteStream(path.join(__dirname, 'morenew.log'));
+
+    outLog.write('test1');
 });
