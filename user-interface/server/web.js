@@ -90,11 +90,10 @@ app.post('/run', function(req, res) {
     var destinationDir = path.join(PROJECT_ROOT, 'runs', data.label);
 
     fs.exists(destinationDir, function(exists) {
-        // if (!exists) {
-        if (true) {
+        if (!exists) {
             console.log('Starting the detached child process');
 
-            var interfaceChild = fork('./interface', { detached: true });
+            var interfaceChild = fork('./interface', { detached: true/*, silent: true*/ });
             interfaceChild.send({ runConfig: data, projectRoot: PROJECT_ROOT, outDir: destinationDir });
             interfaceChild.unref();
 

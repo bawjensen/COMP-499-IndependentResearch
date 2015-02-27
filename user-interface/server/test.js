@@ -1,12 +1,15 @@
+var fs = require('fs');
 var fork = require('child_process').fork;
+var out = fs.createWriteStream('./out.log');
+var err = fs.openSync('./out.log', 'a');
 
-function createDetachedChild() {
-    // console.log('test');
-    var interfaceChild = fork('./child', { detached: true });
+var child = fork('./child', {
+  detached: true,
+  silent: true
+});
 
-    interfaceChild.send({ runConfig: null, projectRoot: null, outDir: __dirname });
+child.stdout.pipe(out);
 
-    interfaceChild.unref();
-}
+child.send('Test');
 
-createDetachedChild();
+child.unref();
