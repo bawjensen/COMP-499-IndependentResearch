@@ -35,6 +35,11 @@ function trainingRun(runConfig, projectRoot, outDir) {
     exec(cmd, { cwd: projectRoot }, function(err, stdout, stderr) {
         if (err) throw err;
 
+        if (stderr) {
+            console.log('Error:', stderr);
+            throw new Error(stderr);
+        }
+
         logFile.write('Training run successful, parsing output\n');
 
         var reportObj = {};
