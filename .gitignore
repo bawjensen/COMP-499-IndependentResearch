@@ -11,4 +11,7 @@ runs/
 node_modules/
 
 # Server and visualizer stuff
-data-viewer/server/img/
+user-interface/server/img/
+
+# Server log
+user-interface/server/full.log
