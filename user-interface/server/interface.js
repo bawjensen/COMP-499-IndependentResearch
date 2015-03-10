@@ -69,7 +69,7 @@ function trainingRun(runConfig, projectRoot, outDir) {
 
         reportObj.generations = tmpArray;
 
-        fs.writeFile(path.join(outDir, 'test.json'), JSON.stringify(reportObj, null, 2), function(err) { if (err) logFile.write(err); });
+        fs.writeFile(path.join(outDir, 'output.json'), JSON.stringify(reportObj, null, 2), function(err) { if (err) logFile.write(err); });
         
         logFile.write('Output parsed and saved\n');
     });

@@ -46,18 +46,12 @@ app.get('/', function(req, res) {
 
             var runs = [];
             runDirs.forEach(function(runDir) {
-                var csvLines = fs.readFileSync(path.join(savedRunsRelativePath, runDir, 'output.csv'), 'utf8').split('\n');
+                var metaData = JSON.parse(fs.readFileSync(path.join(savedRunsRelativePath, runDir, 'output.json')));
 
-                var keys = csvLines[0].split(',');
-                var values = csvLines[1].split(',');
+                delete metaData.generations;
+                metaData['label'] = runDir;
 
-                var tmp = {};
-                tmp.label = runDir;
-                keys.forEach(function(key, i) {
-                    tmp[key] = values[i];
-                });
-
-                runs.push(tmp);
+                runs.push(metaData);
             });
 
             res.render('index.jade', { runs: runs, allKeys: allKeys });
