@@ -99,6 +99,8 @@ void GameController::runTraining() {
         genHighest; // Top score of the generation
     float tempNetScore;
 
+    ofstream logFile("training.log");
+
     // Run generations and mutations training
     for (int i = 0; i < this->numGenerations; ++i) {
         totalScore = 0;
@@ -138,6 +140,7 @@ void GameController::runTraining() {
         cout << i << ","
             << (float)totalScore / (this->numNets * this->numGamesPerNet) << ","
             << genHighest << endl;
+        logFile << "Generation " << i << " finished." << endl;
 
         // Update overall top score
         overallTopScore = genHighest > overallTopScore ? genHighest : overallTopScore;
@@ -211,10 +214,10 @@ int GameController::runGameWithNet(NeuralNet& net) {
 //     }
 // }
 
-void GameController::saveNetsTo(string outputDir) {
+void GameController::saveNets() {
     // Serialize and save nets
     for (int i = 0; i < this->numNets; ++i) {
-        ofstream outFile(outputDir + "/" + str(i) + ".net");
+        ofstream outFile(str(i) + ".net");
         if (!outFile.is_open())
             throw new runtime_error("File to serialize net into didn't open");
         outFile << this->mgr[i].serialize();

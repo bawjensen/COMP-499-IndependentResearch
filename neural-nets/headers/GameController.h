@@ -64,7 +64,7 @@ public:
     
     void redirectOutputTo(std::string logFilePath);
     void restoreOutput();
-    void saveNetsTo(std::string outputDir);
+    void saveNets();
     bool handleCommand(char& input);
     std::pair<bool, int> handleCommand(const int& direction);
     // bool movesAvailable();

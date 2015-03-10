@@ -3,7 +3,7 @@ var exec        = require('child_process').exec,
     path        = require('path');
 
 function trainingRun(runConfig, projectRoot, outDir) {
-    var logFilePath = path.join(outDir, 'full.log');
+    var logFilePath = path.join(outDir, 'interface.log');
     var logFile = fs.createWriteStream(logFilePath);
 
     console.log('Created log file at', logFilePath, '- logging all results there');
@@ -13,7 +13,7 @@ function trainingRun(runConfig, projectRoot, outDir) {
 
     // Must match the order in the driver.cpp interfacing file
     var keyOrdering = [
-        'label',
+        // 'label',
         'gens',
         'nets',
         'games',
@@ -29,10 +29,10 @@ function trainingRun(runConfig, projectRoot, outDir) {
         configArgs.push(runConfig[key]);
     });
 
-    var cmd = 'neural-nets/bin/2048f ' + configArgs.join(' ') + ' &';
+    var cmd = path.join(projectRoot, 'neural-nets/bin/2048f') + ' ' + configArgs.join(' ') + ' &';
 
     logFile.write('Starting training run\n');
-    exec(cmd, { cwd: projectRoot }, function(err, stdout, stderr) {
+    exec(cmd, { cwd: outDir }, function(err, stdout, stderr) {
         if (err) throw err;
 
         if (stderr) {

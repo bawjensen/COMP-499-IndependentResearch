@@ -8,6 +8,8 @@
 
 using namespace std;
 
+const int NUM_ARGS = 9;
+
 int main(int argc, char** argv) {
     // string configFileName;
     // if (argc > 2 && string(argv[1]) == "-t") {
@@ -24,7 +26,6 @@ int main(int argc, char** argv) {
     int gens, nets, games, hSize, treeDepth;
     float randomMean, randomStdDev;
     char evalMode;
-    string trainingRunLabel;
 
     /*
     Arguments to the executable:
@@ -38,35 +39,27 @@ int main(int argc, char** argv) {
     8. Standard deviation for gaussian random number
     9. Mode for evaluating the "quality" of a net
     */
-    if (argc != 10) // Number of arguments plus the executable
+    if (argc != NUM_ARGS) // Number of arguments plus the executable
         throw runtime_error("Invalid number of arguments");
 
-    istringstream convertedArgv[10];
-    for (int i = 0; i < argc; ++i) {
+    istringstream convertedArgv[NUM_ARGS];
+    for (int i = 0; i < NUM_ARGS; ++i) {
         convertedArgv[i].str(argv[i]);
     }
 
-    trainingRunLabel = argv[1];
-
-    convertedArgv[2] >> gens;
-    convertedArgv[3] >> nets;
-    convertedArgv[4] >> games;
-
-    convertedArgv[5] >> hSize;
-    convertedArgv[6] >> treeDepth;
-
-    convertedArgv[7] >> randomMean;
-    convertedArgv[8] >> randomStdDev;
-
-    convertedArgv[9] >> evalMode;
+    convertedArgv[1] >> gens;
+    convertedArgv[2] >> nets;
+    convertedArgv[3] >> games;
+    convertedArgv[4] >> hSize;
+    convertedArgv[5] >> treeDepth;
+    convertedArgv[6] >> randomMean;
+    convertedArgv[7] >> randomStdDev;
+    convertedArgv[8] >> evalMode;
 
     GameController gc;
-
-    if (trainingRunLabel.find(' ') != string::npos) 
-        throw runtime_error("Label cannot contain spaces");
 
     RandomGen::initialize(randomMean, randomStdDev);
     gc.start(gens, nets, games, hSize, evalMode, treeDepth);
     
-    gc.saveNetsTo("runs/" + trainingRunLabel);
+    gc.saveNets();
 }
