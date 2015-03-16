@@ -4,7 +4,6 @@ Making a neural network setup that can play [2048](http://gabrielecirulli.github
 
 ## Goals
 + (^ above)
-+ 
 
 ## Tweaking Parameters:
 
