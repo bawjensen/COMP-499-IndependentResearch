@@ -18,7 +18,7 @@ app.use('/css', express.static(__dirname + '/css'));
 app.use('/img', express.static(__dirname + '/img'));
 
 var PROJECT_ROOT = path.join(__dirname, '../..');
-var savedRunsRelativePath = path.join(PROJECT_ROOT, 'runs/saved-runs/');
+var savedRunsRelativePath = path.join(PROJECT_ROOT, 'saved-runs/');
 
 console.log('Running in:', __dirname);
 console.log('Project root:', PROJECT_ROOT);
