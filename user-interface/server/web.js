@@ -67,8 +67,9 @@ app.post('/plot', function(req, res) {
     }
 
     var plotName = 'img/plot' + req.body.reqNum + '.png';
+    var plotMode = req.body.plotMode;
 
-    exec('python plotter.py ' + plotName + ' ' + savedRunsRelativePath + ' ' + selected.join(' '), { cwd: '.' }, function(err, stdout) {
+    exec('python plotter.py ' + plotName + ' ' + savedRunsRelativePath + ' ' + plotMode + ' ' + selected.join(' '), { cwd: '.' }, function(err, stdout) {
         if (err) {
             console.log(err.stack);
             res.status(500).end();

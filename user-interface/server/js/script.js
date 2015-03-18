@@ -31,7 +31,9 @@ $(function() {
         });
     });
 
-    $('#plot-it').click(function() {
+    $('#new-plot').submit(function(evt) {
+        evt.preventDefault();
+
         var selected = [];
 
         $('.selected').each(function(i, ele) {
@@ -39,12 +41,15 @@ $(function() {
         });
 
         if (selected.length) {
+            var mode = $('input[name=plotMode]:checked').val();
+
             $.ajax({
                 url: '/plot',
                 method: 'POST',
                 data: {
                     selected: selected,
-                    reqNum: requestNumber++
+                    reqNum: requestNumber++,
+                    plotMode: mode
                 },
                 success: function(data, status) {
                     var $newPlot = $('<img>', {

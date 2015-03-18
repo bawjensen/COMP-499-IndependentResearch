@@ -9,7 +9,18 @@ html
 
   body
     #content
-      button#plot-it Recompute the plot
+      #input-area
+        form#new-plot
+          label(for='avg') Average
+          input(type='radio' name='plotMode' id='avg' value='avg')
+          label(for='highest') Highest
+          input(type='radio' name='plotMode' id='highest' value='highest')
+          button#plot-it Recompute the plot
+
+        form#new-run
+          each keyObj in allKeys
+            input(type='text' id=keyObj._class name=keyObj._class placeholder=keyObj.display value=keyObj._default)
+          button#run-new Start a new training run
 
       #runs-table-container
         #run-label
@@ -21,10 +32,5 @@ html
             .run
               each keyObj in allKeys
                 span(class=keyObj._class)= run[keyObj.key]
-                
-        form#new-run
-          each keyObj in allKeys
-            input(type='text' id=keyObj._class name=keyObj._class placeholder=keyObj.display value=keyObj._default)
-          button#run-new Start a new training run
 
       #plot-container

@@ -11,19 +11,22 @@ import json
 # sns.set(rc={"figure.figsize": (6, 6)})
 # np.random.seed(sum(map(ord, "palettes")))
 
-def read_data_for_plot(filename):
+def read_data_for_plot(filename, dataKey):
     jsonFile = open(filename, 'r')
     data = json.load(jsonFile)
     jsonFile.close()
 
-    return [gen['avg'] for gen in data['generations']]
+    return [gen[dataKey] for gen in data['generations']]
 
 def plotAllData():
     linewidth = 0.75
     
     pngName     = sys.argv[1]
     runSuperDir = sys.argv[2]
-    runDirs     = sys.argv[3:]
+    plotMode    = sys.argv[3]
+    runDirs     = sys.argv[4:]
+
+    print 'plotMode:', plotMode
 
     print 'Setting', len(runDirs), 'different colors'
 
@@ -32,9 +35,9 @@ def plotAllData():
         print 'Using:', csvPath
 
         try:
-            print 'here'
-            df = read_data_for_plot(csvPath)
-            print 'df:', df
+            print 'Before reading the file'
+            df = read_data_for_plot(csvPath, plotMode)
+            print 'After reading the file, df:', df
             plt.plot(df, label=csvDir, lw=linewidth)
             plt.legend(loc=4)
             
