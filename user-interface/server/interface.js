@@ -71,7 +71,13 @@ function trainingRun(runConfig, projectRoot, outDir) {
 
         fs.writeFile(path.join(outDir, 'output.json'), JSON.stringify(reportObj, null, 2), function(err) { if (err) logFile.write(err); });
         
-        logFile.write('Output parsed and saved\n');
+        logFile.write('Output parsed and saved, moving to saved runs\n');
+
+        exec('mv ' + outDir + ' ' + path.join(projectRoot, 'saved-runs/'), function(err, stdout, stderr) {
+            if (err) throw err;
+
+            logFile.write('Moved successfully');
+        });
     });
 }
 
