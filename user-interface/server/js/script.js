@@ -23,6 +23,7 @@ $(function() {
             data: dataObj,
             success: function(data, status) {
                 console.log(data, status);
+                alert('Run successfully started');
             },
             error: function(xhr, status, err) {
                 console.log(err);
