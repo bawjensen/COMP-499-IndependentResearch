@@ -17,15 +17,15 @@ html
           input(type='radio' name='plotMode' id='highest' value='highest')
           button#plot-it Recompute the plot
 
-        form#new-run
-          each keyObj in allKeys
-            input(type='text' id=keyObj._class name=keyObj._class placeholder=keyObj.display value=keyObj._default)
-          button#run-new Start a new training run
-
       #runs-table-container
         #run-label
           each keyObj in allKeys
             span(class=keyObj._class)= keyObj.display
+
+        form#new-run
+          each keyObj in allKeys
+            input(type='text' id=keyObj._class name=keyObj._class placeholder=keyObj.display value=keyObj._default)
+          button#run-new Start a new training run
 
         #all-runs
           each run, runLabel in runs
