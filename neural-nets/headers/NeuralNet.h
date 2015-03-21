@@ -24,6 +24,7 @@ private:
     void destroy();
 public:
     NeuralNet();
+    NeuralNet(int inputSize, int hiddenSize);
     // NeuralNet(const NeuralNet& other);
     ~NeuralNet();
 

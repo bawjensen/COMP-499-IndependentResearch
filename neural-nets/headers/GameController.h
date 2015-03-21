@@ -40,8 +40,8 @@ public:
 
     bool gameEnded();
 
-    void runTesting();
-    void runTraining(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth);
+    void runTesting(std::string filename, int ply);
+    NeuralNet runTraining(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth);
 
     int runGameWithNet(NeuralNet& net);
     

@@ -10,6 +10,15 @@ using namespace std;
 
 const int NUM_ARGS = 9;
 
+void saveNet(NeuralNet& net) {
+    // Serialize and save net
+    ofstream outFile("best.net");
+    if (!outFile.is_open())
+        throw new runtime_error("File to serialize best net into didn't open");
+    outFile << net.serialize();
+    outFile.close();
+}
+
 int main(int argc, char** argv) {
     // string configFileName;
     // if (argc > 2 && string(argv[1]) == "-t") {
@@ -59,7 +68,8 @@ int main(int argc, char** argv) {
     GameController gc;
 
     RandomGen::initialize(randomMean, randomStdDev);
-    gc.runTraining(gens, nets, games, hSize, evalMode, treeDepth);
+    NeuralNet bestNet = gc.runTraining(gens, nets, games, hSize, evalMode, treeDepth);
     
     gc.saveNets(nets);
+    saveNet(bestNet);
 }

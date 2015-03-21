@@ -13,6 +13,11 @@ NeuralNet::NeuralNet() {
     this->initialized = false;
 }
 
+NeuralNet::NeuralNet(int inputSize, int hiddenSize) {
+    this->initialized = false;
+    this->initialize(inputSize, hiddenSize);
+}
+
 // NeuralNet::NeuralNet(const NeuralNet& other) {
 //     cout << "Called copy constructor" << endl;
 //     this->copyFrom(other);
@@ -32,7 +37,7 @@ void NeuralNet::initialize(int inputSize, int hiddenSize) {
         throw runtime_error("Cannot reinitialize a net!");
     }
     else if (inputSize == 0 || hiddenSize == 0) {
-        throw invalid_argument("Cannot create a new with a layer of size 0");
+        throw invalid_argument("Cannot create a new net with a layer of size 0");
     }
     else {
         this->initialized = true;

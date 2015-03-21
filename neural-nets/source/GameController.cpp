@@ -53,30 +53,41 @@ bool GameController::gameEnded() {
     return !this->board.movesAvailable();
 }
 
-void GameController::runTesting() {
-    NeuralNet testNet;
-    ifstream netFile("saved-runs/3-21-15_test/1.net");
-
-    testNet.deserialize(netFile);
-
+void GameController::runTesting(string filename, int ply) {
+    GameTreeManager::ply = ply;
     srand(chrono::system_clock::now().time_since_epoch().count());
 
-    const int numRuns = 100;
+    NeuralNet testNet;
+    ifstream netFile(filename);
+    if (!netFile.is_open()) throw runtime_error("Issue opening net file for deserialization and testing");
+    testNet.deserialize(netFile);
 
-    int scores[numRuns];
-    int tempScore;
+
+    const int numRuns = 1000;
+
+    // int scores[numRuns];
+    int totalScore = 0,
+        tempScore,
+        highest = 0;
     ofstream logFile("testing.log");
 
     for (int i = 0; i < numRuns; ++i) {
         tempScore = this->runGameWithNet(testNet);
 
-        logFile << "Score: " << tempScore << endl;
+        logFile << tempScore << ',';
 
-        scores[i] = tempScore;
+        totalScore += tempScore;
+
+        highest = highest < tempScore ? tempScore : highest;
+
+        // scores[i] = tempScore;
     }
+
+    cout << "Average: " << (float)totalScore / numRuns << endl;
+    cout << "Highest: " << highest << endl;
 }
 
-void GameController::runTraining(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth) {
+NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth) {
     cout << "numGenerations,"     << "numNets,"     << "numGamesPerNet,"     << "netHiddenLayerSize,"     << "chMode,"     << "treeDepth,"     << "randomMean,"               << "randomStdDev"         << endl
          << numGenerations << "," << numNets << "," << numGamesPerNet << "," << netHiddenLayerSize << "," << chMode << "," << treeDepth << "," << RandomGen::getMean() << "," << RandomGen::getStdDev() << endl
          << endl;
@@ -87,13 +98,15 @@ void GameController::runTraining(int numGenerations, int numNets, int numGamesPe
 
     srand(chrono::system_clock::now().time_since_epoch().count());
 
-    int overallTopScore = 0; // Top score of every net in every generation of this setup
-
     int tempScore, // Temp storage of score for the net
         totalScore, // Total score of the generation
         netTotalScore, // Total score of the net in the generation
         netHighest, // Top score of the net in the generation
-        genHighest; // Top score of the generation
+        genHighest, // Top score of the generation
+        overallHighest = 0, // Top score of the entire thing
+        bestInGenIndex; // Index of best net in the generation
+
+    NeuralNet bestNet(16, netHiddenLayerSize);
     float tempNetScore;
 
     ofstream logFile("training.log");
@@ -108,7 +121,6 @@ void GameController::runTraining(int numGenerations, int numNets, int numGamesPe
             netHighest = 0;
 
             for (int k = 0; k < numGamesPerNet; ++k) {
-                this->board.reset();
                 tempScore = this->runGameWithNet(mgr[j]);
                 netTotalScore += tempScore;
 
@@ -129,7 +141,11 @@ void GameController::runTraining(int numGenerations, int numNets, int numGamesPe
 
             mgr.keepScore(tempNetScore, j);
 
-            genHighest = netHighest > genHighest ? netHighest : genHighest;
+            // Get the new best in gen
+            if (netHighest > genHighest) {
+                genHighest = netHighest;
+                bestInGenIndex = j;
+            }
 
             totalScore += netTotalScore;
         }
@@ -139,16 +155,23 @@ void GameController::runTraining(int numGenerations, int numNets, int numGamesPe
             << genHighest << endl;
         logFile << "Generation " << i << " finished." << endl;
 
-        // Update overall top score
-        overallTopScore = genHighest > overallTopScore ? genHighest : overallTopScore;
+        // Update overall top score and store the best net
+        if (genHighest > overallHighest) {
+            overallHighest = genHighest;
+            bestNet = this->mgr[bestInGenIndex];
+        }
 
         mgr.selectAndMutateSurvivors();
     }
 
-    cout << "Best score overall," << overallTopScore << endl;
+    cout << "Best score overall," << overallHighest << endl;
+
+    return bestNet;
 }
 
 int GameController::runGameWithNet(NeuralNet& net) {
+    this->board.reset();
+
     int direction;
     int score = 0;
     float netOutput;
