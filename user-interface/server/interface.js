@@ -29,7 +29,7 @@ function trainingRun(runConfig, projectRoot, outDir) {
         configArgs.push(runConfig[key]);
     });
 
-    var cmd = path.join(projectRoot, 'neural-nets/bin/2048f') + ' ' + configArgs.join(' ') + ' &';
+    var cmd = path.join(projectRoot, 'neural-nets/bin/2048-trainer-f') + ' ' + configArgs.join(' ') + ' &';
 
     logFile.write('Starting training run\n');
     exec(cmd, { cwd: outDir }, function(err, stdout, stderr) {

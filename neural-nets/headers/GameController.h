@@ -57,6 +57,7 @@ public:
     void start(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth);
 
     // void testNets();
+    void runTesting();
     void runTraining();
 
     // void runGame();

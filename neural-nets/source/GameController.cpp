@@ -85,6 +85,72 @@ void GameController::start(int numGenerations, int numNets, int numGamesPerNet, 
     this->start();
 }
 
+void GameController::runTesting() {
+    this->mgr.initialize(this->numNets, this->netHiddenLayerSize);
+
+    srand(chrono::system_clock::now().time_since_epoch().count());
+
+    // int overallTopScore = 0; // Top score of every net in every generation of this setup
+
+    // int tempScore, // Temp storage of score for the net
+    //     totalScore, // Total score of the generation
+    //     netTotalScore, // Total score of the net in the generation
+    //     netHighest, // Top score of the net in the generation
+    //     genHighest; // Top score of the generation
+    // float tempNetScore;
+
+    // ofstream logFile("training.log");
+
+    // // Run generations and mutations training
+    // for (int i = 0; i < this->numGenerations; ++i) {
+    //     totalScore = 0;
+    //     genHighest = 0;
+
+    //     for (int j = 0; j < this->numNets; ++j) {
+    //         netTotalScore = 0;
+    //         netHighest = 0;
+
+    //         for (int k = 0; k < this->numGamesPerNet; ++k) {
+    //             this->board.reset();
+    //             tempScore = this->runGameWithNet(mgr[j]);
+    //             netTotalScore += tempScore;
+
+    //             netHighest = tempScore > netHighest ? tempScore : netHighest;
+    //         }
+
+    //         switch (this->mode) {
+    //             case HIGHEST:
+    //                 tempNetScore = netHighest;
+    //                 break;
+    //             case AVERAGE:
+    //                 tempNetScore = (float)netTotalScore / this->numGamesPerNet;
+    //                 break;
+    //             case TOTAL:
+    //                 tempNetScore = netTotalScore;
+    //                 break;
+    //         }
+
+    //         mgr.keepScore(tempNetScore, j);
+
+    //         genHighest = netHighest > genHighest ? netHighest : genHighest;
+
+    //         totalScore += netTotalScore;
+    //     }
+
+    //     cout << i << ","
+    //         << (float)totalScore / (this->numNets * this->numGamesPerNet) << ","
+    //         << genHighest << endl;
+    //     logFile << "Generation " << i << " finished." << endl;
+
+    //     // Update overall top score
+    //     overallTopScore = genHighest > overallTopScore ? genHighest : overallTopScore;
+
+    //     mgr.selectAndMutateSurvivors();
+    // }
+
+    // cout << "Best score overall," << overallTopScore << endl;
+}
+
 void GameController::runTraining() {
     this->mgr.initialize(this->numNets, this->netHiddenLayerSize);
 
@@ -179,40 +245,6 @@ int GameController::runGameWithNet(NeuralNet& net) {
 
     return score;
 }
-
-// void GameController::redirectOutputTo(string logFilePath) {
-//     if (!this->redirectingOutput) { // If not already redirecting output
-//         this->logFile.open(logFilePath);
-
-//         if (!this->logFile.is_open()) throw runtime_error("Could not open file: " + logFilePath);
-
-//         this->coutbuf = cout.rdbuf(); // save old buf
-//         cout.rdbuf(this->logFile.rdbuf()); // redirect cout to log
-
-//         this->redirectingOutput = true;
-//     }
-//     else { // If already redirecting output;
-//         this->logFile.close();
-//         this->logFile.open(logFilePath);
-
-//         if (!this->logFile.is_open()) throw runtime_error("Could not open file: " + logFilePath);
-
-//         cout.rdbuf(this->logFile.rdbuf()); // redirect cout to log
-//     }
-// }
-
-// void GameController::restoreOutput() {
-//     if (this->redirectingOutput) {
-//         this->logFile.close();
-
-//         cout.rdbuf(this->coutbuf); // restore old cout to cout
-
-//         this->redirectingOutput = false;
-//     }
-//     else {
-//         throw runtime_error("Cannot restore output that hasn't been redirected");
-//     }
-// }
 
 void GameController::saveNets() {
     // Serialize and save nets
