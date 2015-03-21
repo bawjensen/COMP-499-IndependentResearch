@@ -86,9 +86,20 @@ app.post('/run', function(req, res) {
     var data = req.body;
 
     var destinationDir = path.join(PROJECT_ROOT, 'runs', data.label);
+    var savedRunsDir = path.join(PROJECT_ROOT, 'saved-runs', data.label);
 
     fs.exists(destinationDir, function(exists) {
-        if (!exists) {
+        if (exists) {
+            res.status(500).end();
+            return;
+        }
+
+        fs.exists(savedRunsDir, function(exists) {
+            if (exists) {
+                res.status(500).end();
+                return;
+            }
+
             console.log('Starting the detached child process');
 
             var interfaceChild = fork('./interface', { detached: true/*, silent: true*/ });
@@ -96,10 +107,7 @@ app.post('/run', function(req, res) {
             interfaceChild.unref();
 
             res.status(200).send('started');
-        }
-        else {
-            res.status(500).end();
-        }
+        });
     });
 });
 

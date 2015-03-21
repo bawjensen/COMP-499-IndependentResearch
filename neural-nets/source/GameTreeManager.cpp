@@ -8,6 +8,8 @@
 
 using namespace std;
 
+int GameTreeManager::ply = 0;
+
 string printArray(float* array, int size) {
     ostringstream buffer;
     for (int i = 0; i < size; ++i) {
@@ -101,7 +103,7 @@ float minimax_alphabeta(const Board& board, const NeuralNet& net, int depth, flo
     return bufferVal;
 }
 
-int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net, int depth) {
+int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net) {
     int bestOptionIndex = -1,
         bestOptionDir;
 
@@ -115,7 +117,7 @@ int GameTreeManager::determineBestMove(const Board& board, const NeuralNet& net,
     GameTreeManager::findChildren(board, children, numChildren, true);
 
     for (int i = 0; i < numChildren; ++i) {
-        tempVal = minimax_alphabeta(children[i], net, depth - 1, alpha, beta, false);
+        tempVal = minimax_alphabeta(children[i], net, GameTreeManager::ply - 1, alpha, beta, false);
 
         if (tempVal > alpha) {
             alpha = tempVal;
