@@ -53,7 +53,7 @@ bool GameController::gameEnded() {
     return !this->board.movesAvailable();
 }
 
-void GameController::runTesting(string filename, int ply) {
+void GameController::runTesting(string filename, int ply, int runs) {
     GameTreeManager::ply = ply;
     srand(chrono::system_clock::now().time_since_epoch().count());
 
@@ -63,7 +63,7 @@ void GameController::runTesting(string filename, int ply) {
     testNet.deserialize(netFile);
 
 
-    const int numRuns = 1000;
+    const int numRuns = runs;
 
     // int scores[numRuns];
     int totalScore = 0,
