@@ -15,7 +15,6 @@ enum EvalMode {
 class GameController {
 private:
     Board board;
-    NetManager mgr;
     int score;
 
     bool redirectingOutput;
@@ -44,10 +43,10 @@ public:
     NeuralNet runTraining(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth, int numParents);
 
     int runGameWithNet(NeuralNet& net);
-    
+
     void redirectOutputTo(std::string logFilePath);
     void restoreOutput();
-    void saveNets(int numNets);
+    void saveNets(NetManager mgr, int numNets);
     bool handleCommand(char& input);
     std::pair<bool, int> handleCommand(const int& direction);
 };

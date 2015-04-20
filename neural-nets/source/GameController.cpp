@@ -92,7 +92,7 @@ NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGa
          << numGenerations << "," << numNets << "," << numGamesPerNet << "," << netHiddenLayerSize << "," << chMode << "," << treeDepth << "," << numParents << "," << RandomGen::getMean() << "," << RandomGen::getStdDev()  << endl
          << endl;
 
-    this->mgr.initialize(numNets, netHiddenLayerSize);
+    NetManager mgr(numNets, netHiddenLayerSize);
     GameTreeManager::ply = treeDepth;
     this->setEvaluationMode(chMode);
 
@@ -158,7 +158,7 @@ NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGa
         // Update overall top score and store the best net
         if (genHighest > overallHighest) {
             overallHighest = genHighest;
-            bestNet = this->mgr[bestInGenIndex];
+            bestNet = mgr[bestInGenIndex];
         }
 
         mgr.selectAndMutateSurvivors(numParents);
@@ -200,13 +200,13 @@ int GameController::runGameWithNet(NeuralNet& net) {
     return score;
 }
 
-void GameController::saveNets(int numNets) {
+void GameController::saveNets(NetManager mgr, int numNets) {
     // Serialize and save nets
     for (int i = 0; i < numNets; ++i) {
         ofstream outFile(str(i) + ".net");
         if (!outFile.is_open())
             throw new runtime_error("File to serialize net into didn't open");
-        outFile << this->mgr[i].serialize();
+        outFile << mgr[i].serialize();
         outFile.close();
     }
 }
