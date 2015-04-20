@@ -88,7 +88,7 @@ void GameController::runTesting(string filename, int ply, int runs) {
 }
 
 NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth, int numParents) {
-    cout << "numGenerations,"     << "numNets,"     << "numGamesPerNet,"     << "netHiddenLayerSize,"     << "chMode,"     << "treeDepth,"     << "numParents"      << "randomMean,"               << "randomStdDev,"         << endl 
+    cout << "numGenerations,"     << "numNets,"     << "numGamesPerNet,"     << "netHiddenLayerSize,"     << "chMode,"     << "treeDepth,"     << "numParents,"     << "randomMean,"               << "randomStdDev"         << endl 
          << numGenerations << "," << numNets << "," << numGamesPerNet << "," << netHiddenLayerSize << "," << chMode << "," << treeDepth << "," << numParents << "," << RandomGen::getMean() << "," << RandomGen::getStdDev()  << endl
          << endl;
 
@@ -165,6 +165,8 @@ NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGa
     }
 
     cout << "Best score overall," << overallHighest << endl;
+
+    this->saveNets(mgr, numNets);
 
     return bestNet;
 }

@@ -10,7 +10,6 @@
 using namespace std;
 
 NeuralNet::NeuralNet() {
-    cout << "Created net:" << this << endl;
     this->initialized = false;
 }
 
@@ -25,12 +24,7 @@ NeuralNet::NeuralNet(int inputSize, int hiddenSize) {
 // }
 
 NeuralNet::~NeuralNet() {
-    cout << "Destroying p1: " << this << endl;
     if (this->initialized) this->destroy();
-    cout << "Destroying p2" << endl;
-    cout << "test" << endl;
-    cout << "test" << endl;
-    cout << "test" << endl;
 }
 
 float NeuralNet::randomInitialValue() {

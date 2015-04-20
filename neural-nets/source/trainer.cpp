@@ -72,6 +72,5 @@ int main(int argc, char** argv) {
     RandomGen::initialize(randomMean, randomStdDev);
     NeuralNet bestNet = gc.runTraining(gens, nets, games, hSize, evalMode, treeDepth, numParents);
     
-    gc.saveNets(nets);
     saveNet(bestNet);
 }

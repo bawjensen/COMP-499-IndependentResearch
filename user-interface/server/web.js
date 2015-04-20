@@ -32,7 +32,7 @@ app.get('/', function(req, res) {
             var date = new Date();
             var dateStr = [date.getMonth()+1, date.getDate(), date.getUTCFullYear()%100].join('-');
 
-            var allKeys = [
+            res.locals.allKeys = [
                 { key: 'label',                 display: 'Label',       _class: 'label',    _default: dateStr + '_'},
                 { key: 'numGenerations',        display: 'Gens',        _class: 'gens',     _default: '1000'},
                 { key: 'numNets',               display: 'Nets',        _class: 'nets',     _default: '100'},
@@ -55,7 +55,7 @@ app.get('/', function(req, res) {
                 runs.push(metaData);
             });
 
-            res.render('index.jade', { runs: runs, allKeys: allKeys });
+            res.render('index.jade', { runs: runs });
         }
     });
 });
