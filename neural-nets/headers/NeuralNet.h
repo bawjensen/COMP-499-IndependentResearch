@@ -33,6 +33,7 @@ public:
     float run(float* inputLayer) const;
     float activate(float value) const;
 
+    void inheritFrom(NeuralNet** parents, int numParents);
     void mutate();
 
     NeuralNet& operator=(const NeuralNet& other);

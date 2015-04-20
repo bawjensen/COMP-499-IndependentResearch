@@ -21,7 +21,7 @@ public:
     void setHiddenLayerSize(int hiddenLayerSize) { this->hiddenLayerSize = hiddenLayerSize; };
 
     void keepScore(const float& score, const int& index);
-    void selectAndMutateSurvivors();
+    void selectAndMutateSurvivors(int numParents);
 
     NeuralNet& operator[](const int& index);
 };

@@ -41,7 +41,8 @@ app.get('/', function(req, res) {
                 { key: 'chMode',                display: 'Mode',        _class: 'mode',     _default: 'h'},
                 { key: 'treeDepth',             display: 'Depth',       _class: 'depth',    _default: '2'},
                 { key: 'randomMean',            display: 'Mean',        _class: 'mean',     _default: '0'},
-                { key: 'randomStdDev',          display: 'StdDev',      _class: 'std-dev',  _default: '2'}
+                { key: 'randomStdDev',          display: 'StdDev',      _class: 'std-dev',  _default: '2'},
+                { key: 'numParents',            display: 'Parents',     _class: 'parents',  _default: '1'}
             ];
 
             var runs = [];

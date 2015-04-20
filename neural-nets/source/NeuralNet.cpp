@@ -174,6 +174,25 @@ float NeuralNet::randomBiasMutationValue() {
     return RandomGen::generate();
 }
 
+void NeuralNet::inheritFrom(NeuralNet** parents, int numParents) {
+    // Set up input layer to hidden layer edge weights
+    for (int i = 0; i < this->inputSize; ++i) {
+        for (int j = 0; j < this->hiddenSize; ++j) {
+            this->edgeWeights[0][i][j] = parents[rand() % numParents]->edgeWeights[0][i][j];
+        }
+    }
+
+    // Set up hidden layer to output layer edge weights
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        this->edgeWeights[1][i][0] = parents[rand() % numParents]->edgeWeights[1][i][0];
+    }
+
+    // Hidden layer and biases
+    for (int i = 0; i < this->hiddenSize; ++i) {
+        this->hiddenBiases[i] = parents[rand() % numParents]->hiddenBiases[i];
+    }
+}
+
 void NeuralNet::mutate() {
     // Mutate full array of edge weight arrays
 

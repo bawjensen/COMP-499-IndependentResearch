@@ -81,19 +81,33 @@ bool compare(const pair<float, NeuralNet*>& first, const pair<float, NeuralNet*>
     return first.first > second.first;
 }
 
-void NetManager::selectAndMutateSurvivors() {
+void NetManager::selectAndMutateSurvivors(int numParents) {
     int k = this->numNets / 2;
 
-    // Partial sorts it, not worrying about order but keeping everything less than the kth element to the first half
+    // Partial sorts it, not worrying about order but moving everything less than the kth element to the front half
     // Performs a little like quicksort
     nth_element(this->scoreNetPairs, this->scoreNetPairs + k, this->scoreNetPairs + this->numNets, compare);
 
     for (int i = 0; i < k; ++i) {
-        // Second element of pairs is the net
-        (*this->scoreNetPairs[i+k].second) = (*this->scoreNetPairs[i].second);
+        NeuralNet** parents = new NeuralNet*[numParents]; // Pointers to the parents of the baby net
+        parents[0] = this->scoreNetPairs[i].second; // Manually choose first parent to be the current net
+        int randChoice;
 
-        // Mutate one copy of the net
-        this->scoreNetPairs[i].second->mutate();
+        for (int j = 1; j < numParents; ++j) {
+            while ( ( randChoice = (rand() % k) ) == i ); // Loop until our random choice isn't our original choice
+            parents[j] = this->scoreNetPairs[rand() % k].second; // Randomly choose other parents
+        }
+
+        this->scoreNetPairs[i+k].second->inheritFrom(parents, numParents);
+
+        // Second element of pair is the net
+        // Take the survivor (in the front half) and assign it into the "killed" net
+        // (*this->scoreNetPairs[i+k].second) = (*this->scoreNetPairs[i].second);
+
+        // Mutate the new copy of the net
+        this->scoreNetPairs[i+k].second->mutate();
+
+        delete[] parents;
     }
 }
 

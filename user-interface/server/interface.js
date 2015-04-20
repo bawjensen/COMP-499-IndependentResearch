@@ -11,7 +11,7 @@ function trainingRun(runConfig, projectRoot, outDir) {
     var date = new Date;
     var dateStr = [date.getMonth(), date.getDate(), date.getYear()].join('-');
 
-    // Must match the order in the driver.cpp interfacing file
+    // Must match the order in the 'trainer.cpp' file
     var keyOrdering = [
         // 'label',
         'gens',
@@ -21,7 +21,8 @@ function trainingRun(runConfig, projectRoot, outDir) {
         'depth',
         'mean',
         'std-dev',
-        'mode'
+        'mode',
+        'parents'
     ];
 
     var configArgs = [];

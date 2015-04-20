@@ -87,9 +87,9 @@ void GameController::runTesting(string filename, int ply, int runs) {
     cout << "Highest: " << highest << endl;
 }
 
-NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth) {
-    cout << "numGenerations,"     << "numNets,"     << "numGamesPerNet,"     << "netHiddenLayerSize,"     << "chMode,"     << "treeDepth,"     << "randomMean,"               << "randomStdDev"         << endl
-         << numGenerations << "," << numNets << "," << numGamesPerNet << "," << netHiddenLayerSize << "," << chMode << "," << treeDepth << "," << RandomGen::getMean() << "," << RandomGen::getStdDev() << endl
+NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGamesPerNet, int netHiddenLayerSize, char chMode, int treeDepth, int numParents) {
+    cout << "numGenerations,"     << "numNets,"     << "numGamesPerNet,"     << "netHiddenLayerSize,"     << "chMode,"     << "treeDepth,"     << "numParents"      << "randomMean,"               << "randomStdDev,"         << endl 
+         << numGenerations << "," << numNets << "," << numGamesPerNet << "," << netHiddenLayerSize << "," << chMode << "," << treeDepth << "," << numParents << "," << RandomGen::getMean() << "," << RandomGen::getStdDev()  << endl
          << endl;
 
     this->mgr.initialize(numNets, netHiddenLayerSize);
@@ -161,7 +161,7 @@ NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGa
             bestNet = this->mgr[bestInGenIndex];
         }
 
-        mgr.selectAndMutateSurvivors();
+        mgr.selectAndMutateSurvivors(numParents);
     }
 
     cout << "Best score overall," << overallHighest << endl;
