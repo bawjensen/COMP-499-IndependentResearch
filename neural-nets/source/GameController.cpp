@@ -104,10 +104,11 @@ NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGa
         netHighest, // Top score of the net in the generation
         genHighest, // Top score of the generation
         overallHighest = 0, // Top score of the entire thing
-        bestInGenIndex; // Index of best net in the generation
+        bestInGenIndex; // Index of best net in the generation (purely by highest score)
 
     NeuralNet bestNet(16, netHiddenLayerSize);
-    float tempNetScore;
+    float tempNetScore,
+          averageGenScore;
 
     ofstream logFile("training.log");
 
@@ -150,10 +151,11 @@ NeuralNet GameController::runTraining(int numGenerations, int numNets, int numGa
             totalScore += netTotalScore;
         }
 
+        averageGenScore = (float)totalScore / (numNets * numGamesPerNet);
         cout << i << ","
-            << (float)totalScore / (numNets * numGamesPerNet) << ","
+            << averageGenScore << ","
             << genHighest << endl;
-        logFile << "Generation " << i << " finished." << endl;
+        logFile << "Generation " << i << " finished: " << averageGenScore << endl;
 
         // Update overall top score and store the best net
         if (genHighest > overallHighest) {
